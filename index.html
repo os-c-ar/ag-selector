@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selección de Agitador – NFS</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ===== HEADER ===== -->
+  <header class="page-header">
+    <div class="header-logo">
+      <img src="FILES/logo-nfs.png" alt="NFS Logo" class="logo-img" />
+    </div>
+    <div class="header-title">
+      <h1>SELECCIÓN DE AGITADOR</h1>
+      <p class="header-sub">Mezcladores &amp; Agitadores Industriales</p>
+    </div>
+    <div class="header-meta">
+      <div class="meta-row">
+        <label>FECHA:</label>
+        <input type="date" id="fecha" />
+      </div>
+      <div class="meta-row">
+        <label>COTIZACIÓN / PEDIDO No.:</label>
+        <input type="text" id="cotizacion" placeholder="Ej. OT-2024-001" />
+      </div>
+      <div class="meta-row">
+        <label>CLIENTE:</label>
+        <input type="text" id="cliente" placeholder="Nombre del cliente" />
+      </div>
+      <div class="meta-row">
+        <label>ELABORÓ:</label>
+        <input type="text" id="elaboro" placeholder="Nombre del ingeniero" />
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-save-sel" onclick="saveCurrentSelection()">💾 Guardar selección</button>
+      <button class="btn-history" onclick="openRecordsModal()">
+        📋 Historial
+        <span id="recBadge" class="rec-badge" style="display:none"></span>
+      </button>
+      <button class="btn-database" onclick="openDbModal()">🗄 Base de datos</button>
+      <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
+    </div>
+  </header>
+
+  <!-- ===== TAB NAV ===== -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab(1)" id="tabBtn1">① Selección de Agitador</button>
+    <button class="tab-btn" onclick="switchTab(2)" id="tabBtn2" style="display:none">② Diseño del Eje</button>
+  </nav>
+
+  <div id="page1" class="page-content">
+  <div class="main-content">
+
+    <!-- ===== TANK INFO ===== -->
+    <div class="tank-info-row">
+      <div class="info-field">
+        <label>NOMBRE DEL TANQUE:</label>
+        <input type="text" id="nombreTanque" placeholder="Ej. T-101" />
+      </div>
+      <div class="info-field">
+        <label>TAG DEL TANQUE:</label>
+        <input type="text" id="tagTanque" placeholder="TAG" />
+      </div>
+      <div class="info-field">
+        <label>TAG DEL AGITADOR:</label>
+        <input type="text" id="tagAgitador" placeholder="TAG" />
+      </div>
+    </div>
+
+    <!-- ===== SECTION 1: FLUID ===== -->
+    <section class="card">
+      <h2 class="section-title">1. CARACTERISTICAS FISICOQUÍMICAS DE LA APLICACIÓN</h2>
+      <div class="section-body">
+        <div class="form-grid">
+
+          <div class="form-row full-width">
+            <label class="field-label">Descripción del proceso:</label>
+            <select id="proceso" class="input-select"><!-- populated by database.js --></select>
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">Intensidad recomendada:</label>
+            <input type="text" id="intensidadRecomendada" class="input-calc highlight-blue" readonly />
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">Viscosidad:</label>
+            <input type="number" id="viscosidad" value="15000" step="1" min="1" class="input-value" />
+            <span class="unit">cps</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Factor por viscosidad:</label>
+            <input type="text" id="factorViscosidad" class="input-calc" readonly />
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">Densidad:</label>
+            <input type="number" id="densidad" value="1.44" step="0.01" min="0.1" class="input-value" />
+            <span class="unit">Ton/m³</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="two-col-layout">
+      <div class="two-col-left">
+    <!-- ===== SECTION 2: TANK ===== -->
+    <section class="card">
+      <h2 class="section-title">2. CARACTERÍSTICAS DEL TANQUE</h2>
+      <div class="section-body">
+
+        <div class="form-grid">
+          <!-- Tank type -->
+          <div class="form-row full-width">
+            <label class="field-label">Tipo de tanque:</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="tipoTanque" value="CIRCULAR" id="tipoCircular" checked />
+                Circular
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="tipoTanque" value="RECTANGULAR" id="tipoRectangular" />
+                Rectangular
+              </label>
+            </div>
+          </div>
+
+          <!-- Circular inputs -->
+          <div id="inputsCircular">
+            <div class="form-row">
+              <label class="field-label">Diámetro:</label>
+              <input type="number" id="diametro" value="2" step="0.01" min="0" class="input-value" />
+              <span class="unit">m</span>
+            </div>
+          </div>
+
+          <!-- Rectangular inputs -->
+          <div id="inputsRectangular" class="hidden">
+            <div class="form-row">
+              <label class="field-label">Ancho:</label>
+              <input type="number" id="ancho" value="2" step="0.01" min="0" class="input-value" />
+              <span class="unit">m</span>
+            </div>
+            <div class="form-row">
+              <label class="field-label">Longitud:</label>
+              <input type="number" id="longitud" value="3" step="0.01" min="0" class="input-value" />
+              <span class="unit">m</span>
+            </div>
+            <div class="form-row">
+              <label class="field-label">Diámetro equivalente:</label>
+              <input type="text" id="diametroEquiv" class="input-calc" readonly />
+              <span class="unit">m</span>
+            </div>
+          </div>
+
+          <!-- Heights -->
+          <div class="form-row">
+            <label class="field-label">Altura útil:</label>
+            <input type="number" id="alturaUtil" value="2" step="0.01" min="0" class="input-value" />
+            <span class="unit">m</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Altura total:</label>
+            <input type="number" id="alturaTotal" value="2.56" step="0.01" min="0" class="input-value" />
+            <span class="unit">m</span>
+          </div>
+
+          <!-- Calculated tank properties -->
+          <div class="form-row">
+            <label class="field-label">Área superficial:</label>
+            <input type="text" id="areaSuperficial" class="input-calc" readonly />
+            <span class="unit">m²</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Volumen útil:</label>
+            <input type="text" id="volumenUtil" class="input-calc" readonly />
+            <span class="unit">m³</span>
+          </div>
+
+          <!-- Baffles -->
+          <div class="form-row full-width">
+            <label class="field-label">¿El sistema lleva bafles?</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="bafles" value="SI" id="baflesSi" checked /> SI
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="bafles" value="NO" id="baflesNo" /> NO
+              </label>
+            </div>
+          </div>
+
+          <!-- Circulation parameter -->
+          <div class="form-row full-width">
+            <label class="field-label">Parámetro de circulación:</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="paramCirculacion" value="Tiempo de Residencia" checked /> Tiempo de Residencia (h)
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="paramCirculacion" value="Flujo del Tanque" /> Flujo del Tanque (m³/h)
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: AGITATOR SELECTION ===== -->
+    <section class="card">
+      <h2 class="section-title">3. SELECCIÓN AGITADOR</h2>
+      <div class="section-body">
+
+        <div class="form-row">
+          <label class="field-label">Número de propelas requeridas (máx.):</label>
+          <input type="text" id="numPropelas" class="input-calc highlight-orange" readonly />
+        </div>
+
+        <p class="section-note">Selección de propelas – enumeradas desde la inferior hacia arriba (de mayor a menor)</p>
+
+        <!-- Propeller table -->
+        <div class="propeller-table">
+          <div class="prop-header-row">
+            <span class="ph-num">#</span>
+            <span class="ph-tipo">Tipo de propela</span>
+            <span class="ph-modelo">Modelo</span>
+            <span class="ph-diam">Diámetro (mm)</span>
+            <span class="ph-rp">Rp (D/Dtq)</span>
+            <span class="ph-kp">Kp</span>
+            <span class="ph-nq">Nq</span>
+            <span class="ph-idx">Índice local</span>
+          </div>
+
+          <!-- Propeller 1 -->
+          <div class="prop-row" id="propRow1">
+            <span class="ph-num">1</span>
+            <select id="tipo1" class="input-select-sm" onchange="onTipoChange(1)">
+              <option value="TRIPALA">TRIPALA</option>
+              <option value="TURBINA" selected>TURBINA</option>
+              <option value="GRAN CAUDAL">GRAN CAUDAL</option>
+              <option value="FLOC. BIPALA">FLOC. BIPALA</option>
+              <option value="FLOC. TRIPALA">FLOC. TRIPALA</option>
+              <option value="N.A.">N.A.</option>
+            </select>
+            <select id="modelo1" class="input-select-sm" onchange="calculate()"></select>
+            <input type="text" id="diam1" class="input-calc-sm" readonly />
+            <input type="text" id="rp1" class="input-calc-sm" readonly />
+            <input type="text" id="kp1" class="input-calc-sm" readonly />
+            <input type="text" id="nq1" class="input-calc-sm" readonly />
+            <input type="text" id="idxLocal1" class="input-calc-sm" readonly />
+          </div>
+
+          <!-- Propeller 2 -->
+          <div class="prop-row" id="propRow2">
+            <span class="ph-num">2</span>
+            <select id="tipo2" class="input-select-sm" onchange="onTipoChange(2)">
+              <option value="TRIPALA">TRIPALA</option>
+              <option value="TURBINA" selected>TURBINA</option>
+              <option value="GRAN CAUDAL">GRAN CAUDAL</option>
+              <option value="FLOC. BIPALA">FLOC. BIPALA</option>
+              <option value="FLOC. TRIPALA">FLOC. TRIPALA</option>
+              <option value="N.A.">N.A.</option>
+            </select>
+            <select id="modelo2" class="input-select-sm" onchange="calculate()"></select>
+            <input type="text" id="diam2" class="input-calc-sm" readonly />
+            <input type="text" id="rp2" class="input-calc-sm" readonly />
+            <input type="text" id="kp2" class="input-calc-sm" readonly />
+            <input type="text" id="nq2" class="input-calc-sm" readonly />
+            <input type="text" id="idxLocal2" class="input-calc-sm" readonly />
+          </div>
+
+          <!-- Propeller 3 -->
+          <div class="prop-row" id="propRow3">
+            <span class="ph-num">3</span>
+            <select id="tipo3" class="input-select-sm" onchange="onTipoChange(3)">
+              <option value="TRIPALA">TRIPALA</option>
+              <option value="TURBINA">TURBINA</option>
+              <option value="GRAN CAUDAL">GRAN CAUDAL</option>
+              <option value="FLOC. BIPALA">FLOC. BIPALA</option>
+              <option value="FLOC. TRIPALA">FLOC. TRIPALA</option>
+              <option value="N.A." selected>N.A.</option>
+            </select>
+            <select id="modelo3" class="input-select-sm" onchange="calculate()"></select>
+            <input type="text" id="diam3" class="input-calc-sm" readonly />
+            <input type="text" id="rp3" class="input-calc-sm" readonly />
+            <input type="text" id="kp3" class="input-calc-sm" readonly />
+            <input type="text" id="nq3" class="input-calc-sm" readonly />
+            <input type="text" id="idxLocal3" class="input-calc-sm" readonly />
+          </div>
+
+          <!-- Propeller 4 -->
+          <div class="prop-row" id="propRow4">
+            <span class="ph-num">4</span>
+            <select id="tipo4" class="input-select-sm" onchange="onTipoChange(4)">
+              <option value="TRIPALA">TRIPALA</option>
+              <option value="TURBINA">TURBINA</option>
+              <option value="GRAN CAUDAL">GRAN CAUDAL</option>
+              <option value="FLOC. BIPALA">FLOC. BIPALA</option>
+              <option value="FLOC. TRIPALA">FLOC. TRIPALA</option>
+              <option value="N.A." selected>N.A.</option>
+            </select>
+            <select id="modelo4" class="input-select-sm" onchange="calculate()"></select>
+            <input type="text" id="diam4" class="input-calc-sm" readonly />
+            <input type="text" id="rp4" class="input-calc-sm" readonly />
+            <input type="text" id="kp4" class="input-calc-sm" readonly />
+            <input type="text" id="nq4" class="input-calc-sm" readonly />
+            <input type="text" id="idxLocal4" class="input-calc-sm" readonly />
+          </div>
+        </div>
+
+        <!-- RPM and flow results -->
+        <div class="form-grid mt-20">
+          <div class="form-row">
+            <label class="field-label">Velocidad de rotación:</label>
+            <input type="number" id="rpm" value="170" step="1" min="1" class="input-value" />
+            <span class="unit">rpm</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">RPM referencia (propela 1):</label>
+            <input type="text" id="rpmRef" class="input-calc" readonly />
+            <span class="unit">rpm</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">RPM máx. permitida (×1.1):</label>
+            <input type="text" id="rpmMax" class="input-calc" readonly />
+            <span class="unit">rpm</span>
+          </div>
+        </div>
+
+        <!-- Intermediate results -->
+        <div class="subsection-title">Resultados técnicos</div>
+        <div class="form-grid">
+          <div class="form-row">
+            <label class="field-label">Caudal con 1 propela:</label>
+            <input type="text" id="caudal1" class="input-calc" readonly />
+            <span class="unit">m³/h</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Caudal con 2 propelas:</label>
+            <input type="text" id="caudal2" class="input-calc" readonly />
+            <span class="unit">m³/h</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Caudal con 3 propelas:</label>
+            <input type="text" id="caudal3" class="input-calc" readonly />
+            <span class="unit">m³/h</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Caudal con 4 propelas:</label>
+            <input type="text" id="caudal4" class="input-calc" readonly />
+            <span class="unit">m³/h</span>
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">Renovaciones / hora:</label>
+            <input type="text" id="vueltas" class="input-calc" readonly />
+            <span class="unit">vueltas/h</span>
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">Potencia absorbida en agua – propela 1:</label>
+            <input type="text" id="potAgua1" class="input-calc" readonly />
+            <span class="unit">kW</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Potencia absorbida en agua – propela 2:</label>
+            <input type="text" id="potAgua2" class="input-calc" readonly />
+            <span class="unit">kW</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Potencia absorbida en agua – propela 3:</label>
+            <input type="text" id="potAgua3" class="input-calc" readonly />
+            <span class="unit">kW</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Potencia absorbida en agua – propela 4:</label>
+            <input type="text" id="potAgua4" class="input-calc" readonly />
+            <span class="unit">kW</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Potencia total absorbida en agua:</label>
+            <input type="text" id="potAguaTotal" class="input-calc highlight-orange" readonly />
+            <span class="unit">kW</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+      </div><!-- end two-col-left -->
+      <div class="two-col-right">
+        <section class="card card-diagram">
+          <h2 class="section-title">DIAGRAMA GENERAL</h2>
+          <div class="section-body diagram-body">
+            <svg id="tankDiagram" class="tank-svg" viewBox="0 0 580 440"
+                 xmlns="http://www.w3.org/2000/svg"
+                 aria-label="Diagrama del tanque y el agitador">
+              <text x="290" y="220" text-anchor="middle" fill="#9ba3ae"
+                    font-size="13" font-family="Segoe UI,sans-serif">
+                Ingrese dimensiones válidas para ver el diagrama
+              </text>
+            </svg>
+          </div>
+        </section>
+      </div><!-- end two-col-right -->
+    </div><!-- end two-col-layout -->
+
+    <!-- ===== SECTION 4: RESULTS ===== -->
+    <section class="card">
+      <h2 class="section-title">4. RESULTADOS</h2>
+      <div class="section-body">
+        <div class="form-grid">
+
+          <div class="form-row">
+            <label class="field-label">5. Propela No.1 ubicación desde el fondo (%):</label>
+            <input type="number" id="pctFondo" value="90" step="1" min="0" max="100" class="input-value" />
+            <span class="unit">%</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Longitud máxima del eje:</label>
+            <input type="text" id="longitudEje" class="input-calc" readonly />
+            <span class="unit">m</span>
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">6. Nivel de agitación obtenido:</label>
+            <input type="text" id="nivelAgitacion" class="input-calc highlight-result" readonly />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Intensidad recomendada:</label>
+            <input type="text" id="intensidadRecomendada2" class="input-calc highlight-blue" readonly />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Estado:</label>
+            <input type="text" id="estadoAgitacion" class="input-calc" readonly />
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">7. Potencia requerida:</label>
+            <input type="text" id="potenciaRequerida" class="input-calc highlight-result" readonly />
+            <span class="unit">kW</span>
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">Motor más cercano (estándar):</label>
+            <input type="text" id="motorCercano" class="input-calc highlight-result" readonly />
+            <span class="unit">kW</span>
+          </div>
+
+          <div class="form-row full-width">
+            <label class="field-label">8. Agitador seleccionado:</label>
+            <input type="text" id="agitadorSeleccionado" class="input-calc highlight-result wide" readonly placeholder="Generado desde Codificación del Agitador" />
+          </div>
+
+          <div class="form-row full-width">
+            <label class="field-label">9. Motoreductor seleccionado:</label>
+            <input type="text" id="motoreductorSeleccionado" class="input-value wide" placeholder="Especificar modelo del motoreductor" />
+          </div>
+
+        </div>
+
+        <div class="summary-grid" style="margin-top:16px">
+          <div class="summary-item">
+            <div class="summary-label">10. CAUDAL RESULTANTE</div>
+            <div class="summary-value"><span id="sumCaudal">–</span> <span class="summary-unit">m³/h</span></div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">11. INTENSIDAD RESULTANTE</div>
+            <div class="summary-value"><span id="sumIntensidad">–</span></div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">12. RENOVACIONES/h</div>
+            <div class="summary-value"><span id="sumRenovaciones">–</span> <span class="summary-unit">vueltas/h</span></div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">13. POTENCIA TOTAL REQUERIDA</div>
+            <div class="summary-value"><span id="sumPotencia">–</span> <span class="summary-unit">kW</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CODING ===== -->
+    <section class="card">
+      <h2 class="section-title">CODIFICACIÓN DEL AGITADOR</h2>
+      <div class="section-body">
+        <p class="section-note">Los campos con fondo azul se actualizan automáticamente con los datos calculados. Complete los campos adicionales para generar el código de modelo.</p>
+        <div class="cod-form">
+
+          <!-- ── Propela tipo 1 (inferior) ── -->
+          <div class="subsection-title cod-full">Propelas – Tipo 1 (posición inferior)</div>
+
+          <div class="cod-row cod-full">
+            <label class="cod-lbl">Tipo de propela 1:</label>
+            <select id="cod_tipo1" class="input-select" onchange="buildAgitatorCode()">
+              <option value="TURBINA">TURBINA</option>
+              <option value="CURVA TRIPALA - CT">CURVA TRIPALA - CT</option>
+              <option value="GRAN CAUDAL - GC">GRAN CAUDAL - GC</option>
+              <option value="BIPALA - CB">BIPALA - CB</option>
+              <option value="TURBINA TRIPALA - TT">TURBINA TRIPALA - TT</option>
+              <option value="CURVA TRIPALA COMBINADA - CTT">CURVA TRIPALA COMBINADA - CTT</option>
+              <option value="CURVA TRIPALA ESQUALIZABLE - CE">CURVA TRIPALA ESQUALIZABLE - CE</option>
+              <option value="COWLES - CW">COWLES - CW</option>
+              <option value="HIPERBOLICA">HIPERBOLICA</option>
+              <option value="ITC POLIPROPILENO">ITC POLIPROPILENO</option>
+            </select>
+          </div>
+
+          <div class="cod-row">
+            <label class="cod-lbl">N° de propelas tipo 1:</label>
+            <select id="cod_num1" class="input-select" onchange="buildAgitatorCode()" style="width:90px">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+
+          <div class="cod-row">
+            <label class="cod-lbl">Diámetro propela 1:</label>
+            <select id="cod_diam1" class="input-select" onchange="buildAgitatorCode()">
+              <option value="160">160 mm</option>
+              <option value="200">200 mm</option>
+              <option value="300">300 mm</option>
+              <option value="350">350 mm</option>
+              <option value="400">400 mm</option>
+              <option value="500">500 mm</option>
+              <option value="550">550 mm</option>
+              <option value="600">600 mm</option>
+              <option value="700">700 mm</option>
+              <option value="750">750 mm</option>
+              <option value="800">800 mm</option>
+              <option value="900">900 mm</option>
+              <option value="1000">1000 mm</option>
+              <option value="1200">1200 mm</option>
+              <option value="1400">1400 mm</option>
+              <option value="1500">1500 mm</option>
+              <option value="1600">1600 mm</option>
+              <option value="1800">1800 mm</option>
+              <option value="2000">2000 mm</option>
+              <option value="2200">2200 mm</option>
+              <option value="2500">2500 mm</option>
+              <option value="3000">3000 mm</option>
+              <option value="3600">3600 mm</option>
+            </select>
+          </div>
+
+          <!-- ── Propela tipo 2 (superior, opcional) ── -->
+          <div class="subsection-title cod-full" style="margin-top:6px">Propelas – Tipo 2 (posición superior, opcional)</div>
+
+          <div class="cod-row cod-full">
+            <label class="cod-lbl">Tipo de propela 2:</label>
+            <select id="cod_tipo2" class="input-select">
+              <option value="NO APLICA">NO APLICA</option>
+              <option value="TURBINA">TURBINA</option>
+              <option value="CURVA TRIPALA - CT">CURVA TRIPALA - CT</option>
+              <option value="GRAN CAUDAL - GC">GRAN CAUDAL - GC</option>
+              <option value="BIPALA - CB">BIPALA - CB</option>
+              <option value="TURBINA TRIPALA - TT">TURBINA TRIPALA - TT</option>
+              <option value="CURVA TRIPALA COMBINADA - CTT">CURVA TRIPALA COMBINADA - CTT</option>
+              <option value="CURVA TRIPALA ESQUALIZABLE - CE">CURVA TRIPALA ESQUALIZABLE - CE</option>
+              <option value="COWLES - CW">COWLES - CW</option>
+              <option value="HIPERBOLICA">HIPERBOLICA</option>
+              <option value="ITC POLIPROPILENO">ITC POLIPROPILENO</option>
+            </select>
+          </div>
+
+          <div class="cod-row" id="cod_p2_num_row">
+            <label class="cod-lbl">N° de propelas tipo 2:</label>
+            <select id="cod_num2" class="input-select" onchange="buildAgitatorCode()" style="width:90px">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+
+          <div class="cod-row" id="cod_p2_diam_row">
+            <label class="cod-lbl">Diámetro propela 2:</label>
+            <select id="cod_diam2" class="input-select" onchange="buildAgitatorCode()">
+              <option value="160">160 mm</option>
+              <option value="200">200 mm</option>
+              <option value="300">300 mm</option>
+              <option value="350">350 mm</option>
+              <option value="400">400 mm</option>
+              <option value="500">500 mm</option>
+              <option value="550">550 mm</option>
+              <option value="600">600 mm</option>
+              <option value="700">700 mm</option>
+              <option value="750">750 mm</option>
+              <option value="800">800 mm</option>
+              <option value="900">900 mm</option>
+              <option value="1000">1000 mm</option>
+              <option value="1200">1200 mm</option>
+              <option value="1400">1400 mm</option>
+              <option value="1500">1500 mm</option>
+              <option value="1600">1600 mm</option>
+              <option value="1800">1800 mm</option>
+              <option value="2000">2000 mm</option>
+              <option value="2200">2200 mm</option>
+              <option value="2500">2500 mm</option>
+              <option value="3000">3000 mm</option>
+              <option value="3600">3600 mm</option>
+            </select>
+          </div>
+
+          <!-- ── Datos técnicos (auto-calculados) ── -->
+          <div class="subsection-title cod-full" style="margin-top:6px">Datos técnicos (actualizados automáticamente)</div>
+
+          <div class="cod-row">
+            <label class="cod-lbl">Longitud del eje:</label>
+            <input type="text" id="cod_eje" class="input-calc" readonly style="width:80px" />
+            <span class="unit">m</span>
+          </div>
+
+          <div class="cod-row">
+            <label class="cod-lbl">Potencia del motor:</label>
+            <input type="text" id="cod_potencia" class="input-calc" readonly style="width:80px" />
+            <span class="unit">kW</span>
+          </div>
+
+          <div class="cod-row">
+            <label class="cod-lbl">Velocidad de rotación:</label>
+            <input type="text" id="cod_rpm" class="input-calc" readonly style="width:80px" />
+            <span class="unit">rpm</span>
+          </div>
+
+          <!-- ── Configuración adicional ── -->
+          <div class="subsection-title cod-full" style="margin-top:6px">Configuración adicional</div>
+
+          <div class="cod-row">
+            <label class="cod-lbl">Manejo de velocidad:</label>
+            <select id="cod_velocidad" class="input-select" onchange="buildAgitatorCode()">
+              <option value="VELOCIDAD REDUCIDA">VELOCIDAD REDUCIDA</option>
+              <option value="VELOCIDAD DIRECTA">VELOCIDAD DIRECTA</option>
+            </select>
+          </div>
+
+          <div class="cod-row">
+            <label class="cod-lbl">Elemento motriz:</label>
+            <select id="cod_motor" class="input-select" onchange="buildAgitatorCode()">
+              <option value="TRIFASICO">TRIFÁSICO (default)</option>
+              <option value="MOTOR ELECTRICO A PRUEBA DE EXPLOSIÓN">MOTOR ELÉCTRICO ANTIEXPLOSIVO</option>
+              <option value="MOTOR NEUMATICO">MOTOR NEUMÁTICO</option>
+              <option value="INVERT DUTY">INVERT DUTY</option>
+              <option value="110V (REVISAR)">110V (REVISAR)</option>
+              <option value="WASH DOWN">WASH DOWN</option>
+            </select>
+          </div>
+
+          <div class="cod-row">
+            <label class="cod-lbl">Linterna:</label>
+            <select id="cod_linterna" class="input-select" onchange="buildAgitatorCode()">
+              <option value="Sin linterna">Sin linterna</option>
+              <option value="Con linterna">Con linterna</option>
+            </select>
+          </div>
+
+          <div class="cod-row">
+            <label class="cod-lbl">Sello mecánico:</label>
+            <select id="cod_sello" class="input-select" onchange="buildAgitatorCode()">
+              <option value="Sin sello">Sin sello</option>
+              <option value="Con sello">Con sello</option>
+            </select>
+          </div>
+
+          <div class="cod-row">
+            <label class="cod-lbl">Material:</label>
+            <select id="cod_material" class="input-select" onchange="buildAgitatorCode()">
+              <option value="304SS">304SS – Acero inoxidable 304 (default)</option>
+              <option value="316SS">316SS – Acero inoxidable 316</option>
+              <option value="ACERO AL CARBON">ACERO AL CARBONO (A36/A516)</option>
+              <option value="904L">904L – Acero inoxidable 904L</option>
+            </select>
+          </div>
+
+          <div class="cod-row">
+            <label class="cod-lbl">Acabado / Adicional:</label>
+            <select id="cod_adicional" class="input-select" onchange="buildAgitatorCode()">
+              <option value="NINGUNO">NINGUNO</option>
+              <option value="ACERO 316L SCH10">ACERO 316L SCH 10</option>
+              <option value="PINTURA EPOXICA">PINTURA EPÓXICA</option>
+              <option value="FIBRA DE VIDRIO">FIBRA DE VIDRIO</option>
+              <option value="POLIPROPILENO">POLIPROPILENO</option>
+              <option value="POLIETILENO">POLIETILENO</option>
+              <option value="EJE">EJE</option>
+            </select>
+          </div>
+
+        </div><!-- end cod-form -->
+
+        <!-- ── Code result ── -->
+        <div class="cod-result-box">
+          <div class="cod-result-label">CÓDIGO DEL AGITADOR</div>
+          <div class="cod-code-wrap">
+            <div id="cod_resultado" class="cod-code">–</div>
+            <button class="btn-copy-code" onclick="copyCodigo()">📋 Copiar código</button>
+          </div>
+        </div>
+
+        <!-- ── Breakdown ── -->
+        <div id="cod_breakdown" class="cod-breakdown-grid"></div>
+
+      </div>
+    </section>
+
+    <!-- ===== COMMENTS ===== -->
+    <section class="card">
+      <h2 class="section-title">14. COMENTARIOS U OBSERVACIONES</h2>
+      <div class="section-body">
+        <textarea id="comentarios" rows="5" class="textarea-comments" placeholder="Ingresar comentarios u observaciones relevantes del proceso..."></textarea>
+      </div>
+    </section>
+
+    <!-- ===== REFERENCE TABLE ===== -->
+    <section class="card card-reference" style="display:none">
+      <h2 class="section-title">TABLA DE REFERENCIA – INTENSIDADES DE AGITACIÓN NFS</h2>
+      <div class="section-body">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Aplicación de mezcla</th>
+              <th>Intensidad recomendada</th>
+            </tr>
+          </thead>
+          <tbody id="refTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </div><!-- end main-content -->
+  </div><!-- end page1 -->
+
+  <!-- ===== PAGE 2: SHAFT DESIGN ===== -->
+  <div id="page2" class="page-content hidden">
+  <div class="main-content">
+
+    <!-- Datos del agitador (readonly, populated from page1) -->
+    <section class="card">
+      <h2 class="section-title">DATOS DEL AGITADOR (de la selección)</h2>
+      <div class="section-body">
+        <div class="form-grid">
+          <div class="form-row">
+            <label class="field-label">Longitud del eje (L):</label>
+            <input type="text" id="sh_L" class="input-calc" readonly />
+            <span class="unit">m</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Potencia del motor:</label>
+            <input type="text" id="sh_Pmotor" class="input-calc" readonly />
+            <span class="unit">kW</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Velocidad de rotación:</label>
+            <input type="text" id="sh_rpm" class="input-calc" readonly />
+            <span class="unit">rpm</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Diámetro propela 1:</label>
+            <input type="text" id="sh_D1" class="input-calc" readonly />
+            <span class="unit">mm</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Diámetro propela 2:</label>
+            <input type="text" id="sh_D2" class="input-calc" readonly />
+            <span class="unit">mm</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Diámetro propela 3:</label>
+            <input type="text" id="sh_D3" class="input-calc" readonly />
+            <span class="unit">mm</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Diámetro propela 4:</label>
+            <input type="text" id="sh_D4" class="input-calc" readonly />
+            <span class="unit">mm</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Parámetros del eje -->
+    <section class="card">
+      <h2 class="section-title">PARÁMETROS DEL EJE</h2>
+      <div class="section-body">
+        <div class="form-grid">
+
+          <div class="form-row">
+            <label class="field-label">Material del eje:</label>
+            <select id="sh_material" class="input-select" onchange="calculateShaft()">
+              <option value="SS 304">SS 304 – σy = 207 MPa</option>
+              <option value="SS 316">SS 316 – σy = 138 MPa</option>
+              <option value="A36">A36 – σy = 250 MPa</option>
+              <option value="1045">AISI 1045 – σy = 530 MPa</option>
+              <option value="1020">AISI 1020 – σy = 352 MPa</option>
+              <option value="4140">AISI 4140 – σy = 735 MPa</option>
+              <option value="4340">AISI 4340 – σy = 784 MPa</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">Diámetro del eje a verificar:</label>
+            <select id="sh_diam_in" class="input-select" onchange="calculateShaft()">
+              <option value="1.5">1½"  (38.1 mm)</option>
+              <option value="2">2"    (50.8 mm)</option>
+              <option value="2.5">2½"  (63.5 mm)</option>
+              <option value="3" selected>3"    (76.2 mm)</option>
+              <option value="3.5">3½"  (88.9 mm)</option>
+              <option value="4">4"    (101.6 mm)</option>
+              <option value="5">5"    (127.0 mm)</option>
+              <option value="6">6"    (152.4 mm)</option>
+              <option value="8">8"    (203.2 mm)</option>
+              <option value="10">10"   (254.0 mm)</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">Schedule del eje tubular:</label>
+            <select id="sh_schedule" class="input-select" onchange="calculateShaft()">
+              <option value="SCH40">SCH 40</option>
+              <option value="SCH80">SCH 80</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">Factor de seguridad (FS):</label>
+            <input type="number" id="sh_FS" value="2" step="0.1" min="1" class="input-value" />
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">Factor de servicio hidráulico:</label>
+            <input type="number" id="sh_SF" value="4" step="0.5" min="1" class="input-value" />
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">Distancia Sb (rodamiento sup.):</label>
+            <input type="number" id="sh_Sb" value="0" step="0.01" min="0" class="input-value" />
+            <span class="unit">m</span>
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">Diámetro del embone (acople):</label>
+            <select id="sh_coup_diam" class="input-select" onchange="calculateShaft()">
+              <option value="1.5">1½"</option>
+              <option value="2">2"</option>
+              <option value="2.5">2½"</option>
+              <option value="3" selected>3"</option>
+              <option value="3.5">3½"</option>
+              <option value="4">4"</option>
+              <option value="5">5"</option>
+              <option value="6">6"</option>
+              <option value="8">8"</option>
+              <option value="10">10"</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label class="field-label">Longitud del embone:</label>
+            <input type="number" id="sh_coup_L" value="0.15" step="0.01" min="0" class="input-value" />
+            <span class="unit">m</span>
+          </div>
+
+          <div class="subsection-title full-width" style="width:100%;margin-top:10px">Distribución geométrica de propelas (distancia desde rodamiento superior)</div>
+
+          <div class="form-row">
+            <label class="field-label">L1 – dist. a propela 4 (superior):</label>
+            <input type="number" id="sh_L1" value="0.5" step="0.01" min="0" class="input-value" />
+            <span class="unit">m</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">L2 – dist. a propela 3:</label>
+            <input type="number" id="sh_L2" value="1.0" step="0.01" min="0" class="input-value" />
+            <span class="unit">m</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">L3 – dist. a propela 2:</label>
+            <input type="number" id="sh_L3" value="1.5" step="0.01" min="0" class="input-value" />
+            <span class="unit">m</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Pesos de propelas -->
+    <section class="card">
+      <h2 class="section-title">PESO EQUIVALENTE DE PROPELAS</h2>
+      <div class="section-body">
+        <div class="form-grid">
+          <div class="form-row"><label class="field-label">Peso propela 1 (F7):</label><input type="text" id="sh_W1" class="input-calc" readonly /><span class="unit">kg</span></div>
+          <div class="form-row"><label class="field-label">Peso propela 2 (F9):</label><input type="text" id="sh_W2" class="input-calc" readonly /><span class="unit">kg</span></div>
+          <div class="form-row"><label class="field-label">Peso propela 3 (F11):</label><input type="text" id="sh_W3" class="input-calc" readonly /><span class="unit">kg</span></div>
+          <div class="form-row"><label class="field-label">Peso propela 4 (F13):</label><input type="text" id="sh_W4" class="input-calc" readonly /><span class="unit">kg</span></div>
+          <div class="form-row"><label class="field-label">Peso embone (acople):</label><input type="text" id="sh_Wcoup" class="input-calc" readonly /><span class="unit">kg</span></div>
+          <div class="form-row"><label class="field-label">Peso equiv. propelas (We):</label><input type="text" id="sh_We" class="input-calc" readonly /><span class="unit">kg</span></div>
+          <div class="form-row"><label class="field-label">Masa total propelas + embone (D47):</label><input type="text" id="sh_D47" class="input-calc highlight-orange" readonly /><span class="unit">kg</span></div>
+          <div class="form-row"><label class="field-label">Masa eje tubular (D48):</label><input type="text" id="sh_D48" class="input-calc" readonly /><span class="unit">kg</span></div>
+          <div class="form-row"><label class="field-label">Masa eje macizo (D49):</label><input type="text" id="sh_D49" class="input-calc" readonly /><span class="unit">kg</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cálculo del eje -->
+    <section class="card">
+      <h2 class="section-title">CÁLCULO DEL EJE</h2>
+      <div class="section-body">
+
+        <div class="subsection-title">Momentos y esfuerzos</div>
+        <div class="form-grid">
+          <div class="form-row">
+            <label class="field-label">Torque motor (Mr'):</label>
+            <input type="text" id="sh_Mr" class="input-calc" readonly />
+            <span class="unit">N·m</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Momento flector (Mb):</label>
+            <input type="text" id="sh_Mb" class="input-calc" readonly />
+            <span class="unit">N·m</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Momento equivalente (Mbe = √(Mb²+Mr²)·FS):</label>
+            <input type="text" id="sh_Mbe" class="input-calc highlight-orange" readonly />
+            <span class="unit">N·m</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">SIGMAy material seleccionado:</label>
+            <input type="text" id="sh_sigmay" class="input-calc" readonly />
+            <span class="unit">MPa</span>
+          </div>
+        </div>
+
+        <div class="subsection-title">Diámetros críticos</div>
+        <div class="form-grid">
+          <div class="form-row">
+            <label class="field-label">Diám. mín. @torsión (D53):</label>
+            <input type="text" id="sh_D53" class="input-calc" readonly />
+            <span class="unit">mm</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Diám. mín. @flexión (D52):</label>
+            <input type="text" id="sh_D52" class="input-calc" readonly />
+            <span class="unit">mm</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Diámetro crítico recomendado (D54):</label>
+            <input type="text" id="sh_D54" class="input-calc highlight-result" readonly />
+            <span class="unit">mm</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Equivale a:</label>
+            <input type="text" id="sh_D54in" class="input-calc highlight-result" readonly />
+            <span class="unit">in</span>
+          </div>
+        </div>
+
+        <div class="subsection-title">Verificación del diámetro seleccionado</div>
+        <div class="form-grid">
+          <div class="form-row">
+            <label class="field-label">Esfuerzo eje crítico @ D54 (D55):</label>
+            <input type="text" id="sh_D55" class="input-calc" readonly />
+            <span class="unit">MPa</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Esfuerzo eje macizo @ D56 (D58):</label>
+            <input type="text" id="sh_D58" class="input-calc" readonly />
+            <span class="unit">MPa</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Check eje macizo (F58):</label>
+            <input type="text" id="sh_F58" class="input-calc" readonly />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Esfuerzo eje tubular @ D56 (D59):</label>
+            <input type="text" id="sh_D59" class="input-calc" readonly />
+            <span class="unit">MPa</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Check eje tubular (F59):</label>
+            <input type="text" id="sh_F59" class="input-calc" readonly />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Velocidad crítica -->
+    <section class="card">
+      <h2 class="section-title">COMPROBACIÓN VELOCIDAD CRÍTICA</h2>
+      <div class="section-body">
+        <div class="form-grid">
+          <div class="form-row">
+            <label class="field-label">Velocidad crítica – eje tubular (D69):</label>
+            <input type="text" id="sh_D69" class="input-calc" readonly />
+            <span class="unit">rpm</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Check tubular (0.9 × Ncr ≥ RPM):</label>
+            <input type="text" id="sh_F69" class="input-calc" readonly />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Velocidad crítica – eje macizo (D70):</label>
+            <input type="text" id="sh_D70" class="input-calc" readonly />
+            <span class="unit">rpm</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Check macizo (0.9 × Ncr ≥ RPM):</label>
+            <input type="text" id="sh_F70" class="input-calc" readonly />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Motoreductor -->
+    <section class="card">
+      <h2 class="section-title">COMPROBACIÓN LINTERNA MOTOREDUCTOR</h2>
+      <div class="section-body">
+        <div class="form-grid">
+          <div class="form-row">
+            <label class="field-label">Diámetro mínimo eje MR (D83/Z52):</label>
+            <input type="text" id="sh_D83" class="input-calc highlight-result" readonly />
+            <span class="unit">mm</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Carga radial requerida (D63):</label>
+            <input type="text" id="sh_D63" class="input-calc highlight-result" readonly />
+            <span class="unit">N</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Longitud eje MR (ver datasheet):</label>
+            <input type="number" id="sh_D64" value="200" step="5" min="50" class="input-value" />
+            <span class="unit">mm</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Carga radial MR (ver datasheet):</label>
+            <input type="number" id="sh_D65" value="20300" step="100" min="0" class="input-value" />
+            <span class="unit">N</span>
+          </div>
+          <div class="form-row">
+            <label class="field-label">Check carga radial MR (F65):</label>
+            <input type="text" id="sh_F65" class="input-calc" readonly />
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- end main-content -->
+  </div><!-- end page2 -->
+
+  <footer class="page-footer">
+    <p>NFS – Mezcladores &amp; Agitadores Industriales | Herramienta de Selección v1.0</p>
+  </footer>
+
+  <!-- ===== DB MODAL ===== -->
+  <div id="dbModal" class="modal-overlay hidden" onclick="_dbModalOverlayClick(event)">
+    <div class="modal-container">
+
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <span class="modal-icon">🗄</span>
+          <h2>Base de Datos – Procesos de Agitación</h2>
+        </div>
+        <button class="modal-close" onclick="closeDbModal()" title="Cerrar">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- File status bar -->
+        <div id="dbFileStatus" class="db-file-status db-file-disconnected">
+          <span class="db-file-icon">💾</span>
+          Cambios guardados en el navegador.
+          <button class="btn-db-link" onclick="dbConnectFile()">Vincular archivo JSON…</button>
+          para persistencia permanente.
+        </div>
+
+        <table class="db-table">
+          <thead>
+            <tr>
+              <th class="db-td-num">#</th>
+              <th>Descripción del proceso</th>
+              <th class="db-td-intens">Intensidad</th>
+              <th class="db-td-actions">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="dbTableBody"></tbody>
+        </table>
+        <button class="btn-db-add" onclick="dbAddRow()">＋ Agregar proceso</button>
+      </div>
+
+      <div class="modal-footer">
+        <div class="modal-footer-left">
+          <button class="btn-db-reset" onclick="dbResetAll()">↺ Restaurar predeterminados</button>
+        </div>
+        <div class="modal-footer-right">
+          <button class="btn-modal-io" onclick="dbImportJSON()" title="Cargar desde archivo JSON">⬆ Importar</button>
+          <button class="btn-modal-io" onclick="dbExportJSON()" title="Descargar como archivo JSON">⬇ Exportar</button>
+          <button class="btn-modal-close" onclick="closeDbModal()">Cerrar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== RECORDS MODAL ===== -->
+  <div id="recModal" class="modal-overlay hidden" onclick="_recModalOverlayClick(event)">
+    <div class="modal-container modal-wide">
+
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <span class="modal-icon">📋</span>
+          <h2>Historial de Selecciones</h2>
+        </div>
+        <button class="modal-close" onclick="closeRecordsModal()" title="Cerrar">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-hint">
+          Selecciones guardadas localmente en este navegador. Use <strong>📂 Cargar</strong> para
+          restaurar todos los datos de una selección anterior, o <strong>📊 Excel</strong> para
+          descargar el informe. El archivo Excel generado puede reimportarse con
+          <strong>⬆ Importar desde Excel</strong>.
+        </div>
+        <table class="db-table rec-table">
+          <thead>
+            <tr>
+              <th class="rec-td-date">Guardado</th>
+              <th>Cliente</th>
+              <th>Cotización</th>
+              <th>Tanque</th>
+              <th class="rec-td-code">Código Agitador</th>
+              <th class="rec-td-actions">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="recTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <div class="modal-footer-left">
+          <button class="btn-modal-io" onclick="recImportExcel()" title="Importar desde archivo Excel generado por NFS">⬆ Importar desde Excel</button>
+        </div>
+        <div class="modal-footer-right">
+          <button class="btn-modal-close" onclick="closeRecordsModal()">Cerrar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="database.js"></script>
+  <script src="diagram.js"></script>
+  <script src="coding.js"></script>
+  <script src="calculator.js"></script>
+  <script src="shaft.js"></script>
+  <script src="records.js"></script>
+  <script>
+    function _dbModalOverlayClick(e) {
+      if (e.target === document.getElementById('dbModal')) closeDbModal();
+    }
+    function _recModalOverlayClick(e) {
+      if (e.target === document.getElementById('recModal')) closeRecordsModal();
+    }
+  </script>
+</body>
+</html>

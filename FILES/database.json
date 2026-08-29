@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "procesos": [
+    {
+      "id": 1,
+      "label": "Acondicionamiento de lodos (polímero, cal, etc.)",
+      "intensidad": "5 - 7"
+    },
+    {
+      "id": 2,
+      "label": "Homogeinización de lodos floculentos",
+      "intensidad": "4 - 5"
+    },
+    {
+      "id": 3,
+      "label": "Homogeinización de lodos no floculentos",
+      "intensidad": "5 - 7"
+    },
+    {
+      "id": 4,
+      "label": "Preparación de polímeros sólidos",
+      "intensidad": "6 - 7"
+    },
+    {
+      "id": 5,
+      "label": "Maduración de polímero",
+      "intensidad": "5 - 6"
+    },
+    {
+      "id": 6,
+      "label": "Mantenimiento y preparación de lechada de cal",
+      "intensidad": "8 - 9"
+    },
+    {
+      "id": 7,
+      "label": "Suspensión de carbón activado",
+      "intensidad": "7 - 8"
+    },
+    {
+      "id": 8,
+      "label": "Preparación de coagulantes sólidos",
+      "intensidad": "5 - 6"
+    },
+    {
+      "id": 9,
+      "label": "Coagulación o neutralización",
+      "intensidad": "6 - 8"
+    },
+    {
+      "id": 10,
+      "label": "Floculación",
+      "intensidad": "1 - 3"
+    },
+    {
+      "id": 11,
+      "label": "Mezcla de líquidos miscibles",
+      "intensidad": "2 - 4"
+    },
+    {
+      "id": 12,
+      "label": "Homogeinización de temperatura",
+      "intensidad": "1 - 3"
+    },
+    {
+      "id": 13,
+      "label": "Tanque de almacenamiento",
+      "intensidad": "2 - 4"
+    }
+  ]
+}
