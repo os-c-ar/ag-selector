@@ -29,6 +29,15 @@ const PROPELLERS = {
   'VR3A-120': { rpm: 100,  D: 1200, Kp: 4.2599e-22, Nq: 0.3390, type: 'TRIPALA'      },
   'VR3A-150': { rpm: 90,   D: 1500, Kp: 4.2579e-22, Nq: 0.3390, type: 'TRIPALA'      },
   'VR3A-180': { rpm: 57,   D: 1800, Kp: 4.2579e-22, Nq: 0.3390, type: 'TRIPALA'      },
+
+
+'VR3A-200': { rpm: 57,   D: 2000, Kp: 4.2579e-22, Nq: 0.3390, type: 'TRIPALA'      },
+'VR3A-250': { rpm: 57,   D: 2500, Kp: 4.2579e-22, Nq: 0.3390, type: 'TRIPALA'      },
+'VR3A-300': { rpm: 57,   D: 3000, Kp: 4.2579e-22, Nq: 0.3390, type: 'TRIPALA'      },
+
+
+
+
   'VR2A-020': { rpm: 103,  D: 200,  Kp: 8.5795e-21, Nq: 0.9304, type: 'TURBINA'      },
   'VR2A-035': { rpm: 126,  D: 350,  Kp: 4.7590e-21, Nq: 0.5368, type: 'TURBINA'      },
   'VR2A-050': { rpm: 100,  D: 500,  Kp: 3.2000e-21, Nq: 0.3747, type: 'TURBINA'      },

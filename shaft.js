@@ -417,11 +417,12 @@ function calculateShaft() {
 // =====================================================
 
 function switchTab(n) {
-  [1, 2].forEach(i => {
+  [1, 2, 3].forEach(i => {
     document.getElementById('page' + i).classList.toggle('hidden', i !== n);
     document.getElementById('tabBtn' + i).classList.toggle('active', i === n);
   });
   if (n === 2) calculateShaft();
+  if (n === 3 && typeof calculateOG === 'function') calculateOG();
 }
 
 // =====================================================
