@@ -1,0 +1,5321 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas" xmlns:cx="http://schemas.microsoft.com/office/drawing/2014/chartex" xmlns:cx1="http://schemas.microsoft.com/office/drawing/2015/9/8/chartex" xmlns:cx2="http://schemas.microsoft.com/office/drawing/2015/10/21/chartex" xmlns:cx3="http://schemas.microsoft.com/office/drawing/2016/5/9/chartex" xmlns:cx4="http://schemas.microsoft.com/office/drawing/2016/5/10/chartex" xmlns:cx5="http://schemas.microsoft.com/office/drawing/2016/5/11/chartex" xmlns:cx6="http://schemas.microsoft.com/office/drawing/2016/5/12/chartex" xmlns:cx7="http://schemas.microsoft.com/office/drawing/2016/5/13/chartex" xmlns:cx8="http://schemas.microsoft.com/office/drawing/2016/5/14/chartex" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:aink="http://schemas.microsoft.com/office/drawing/2016/ink" xmlns:am3d="http://schemas.microsoft.com/office/drawing/2017/model3d" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:oel="http://schemas.microsoft.com/office/2019/extlst" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml" xmlns:w16cex="http://schemas.microsoft.com/office/word/2018/wordml/cex" xmlns:w16cid="http://schemas.microsoft.com/office/word/2016/wordml/cid" xmlns:w16="http://schemas.microsoft.com/office/word/2018/wordml" xmlns:w16du="http://schemas.microsoft.com/office/word/2023/wordml/word16du" xmlns:w16sdtdh="http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash" xmlns:w16sdtfl="http://schemas.microsoft.com/office/word/2024/wordml/sdtformatlock" xmlns:w16se="http://schemas.microsoft.com/office/word/2015/wordml/symex" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:wpi="http://schemas.microsoft.com/office/word/2010/wordprocessingInk" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" mc:Ignorable="w14 w15 w16se w16cid w16 w16cex w16sdtdh w16sdtfl w16du wp14">
+<w:body>
+<w:p w14:paraId="3324B613" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:rPr>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:tbl>
+<w:tblPr>
+<w:tblpPr w:leftFromText="141" w:rightFromText="141" w:vertAnchor="text"/>
+<w:tblW w:w="10398" w:type="dxa"/>
+<w:tblLayout w:type="fixed"/>
+<w:tblLook w:val="0000" w:firstRow="0" w:lastRow="0" w:firstColumn="0" w:lastColumn="0" w:noHBand="0" w:noVBand="0"/>
+</w:tblPr>
+<w:tblGrid>
+<w:gridCol w:w="10398"/>
+</w:tblGrid>
+<w:tr w:rsidR="00577AD2" w14:paraId="3FB8E0D2" w14:textId="77777777" w:rsidTr="00E8131A">
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="10398" w:type="dxa"/>
+</w:tcPr>
+<w:p w14:paraId="2269BACA" w14:textId="2D7D87DA" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00E8131A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="6555"/>
+</w:tabs>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="2" w:hanging="2"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">                                                                                        </w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>COTIZACIÓN No</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial Narrow" w:eastAsia="Arial Narrow" w:hAnsi="Arial Narrow" w:cs="Arial Narrow"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">.            </w:t>
+</w:r>
+<w:r w:rsidR="00C55E32">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="28"/>
+<w:szCs w:val="28"/>
+</w:rPr>
+<w:t>${cotizacion}</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="4D2FA096" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00E8131A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="6555"/>
+</w:tabs>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="2" w:hanging="2"/>
+<w:jc w:val="right"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial Narrow" w:eastAsia="Arial Narrow" w:hAnsi="Arial Narrow" w:cs="Arial Narrow"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:tbl>
+<w:tblPr>
+<w:tblW w:w="9967" w:type="dxa"/>
+<w:jc w:val="center"/>
+<w:tblLayout w:type="fixed"/>
+<w:tblLook w:val="0000" w:firstRow="0" w:lastRow="0" w:firstColumn="0" w:lastColumn="0" w:noHBand="0" w:noVBand="0"/>
+</w:tblPr>
+<w:tblGrid>
+<w:gridCol w:w="1411"/>
+<w:gridCol w:w="4091"/>
+<w:gridCol w:w="330"/>
+<w:gridCol w:w="962"/>
+<w:gridCol w:w="3173"/>
+</w:tblGrid>
+<w:tr w:rsidR="00577AD2" w14:paraId="381AE465" w14:textId="77777777" w:rsidTr="00E8131A">
+<w:trPr>
+<w:trHeight w:val="222"/>
+<w:jc w:val="center"/>
+</w:trPr>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="1411" w:type="dxa"/>
+<w:tcBorders>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="37308617" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="992" w:hanging="992"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t>Empresa:</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="4091" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:left w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:bottom w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="5B94F3E6" w14:textId="5A3FC869" w:rsidR="001238EB" w:rsidRDefault="00C55E32" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="992" w:hanging="992"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t>${Cliente}</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="330" w:type="dxa"/>
+<w:tcBorders>
+<w:left w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="7C5DACB2" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="962" w:type="dxa"/>
+<w:tcBorders>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="30B72951" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t>Ciudad:</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="3173" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:left w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:bottom w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+<w:tcMar>
+<w:top w:w="0" w:type="dxa"/>
+<w:bottom w:w="0" w:type="dxa"/>
+</w:tcMar>
+</w:tcPr>
+<w:p w14:paraId="7DB8DD9E" w14:textId="5A7891C6" w:rsidR="00B521CB" w:rsidRDefault="00D24F7C" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t>Cali</w:t>
+</w:r>
+</w:p>
+</w:tc>
+</w:tr>
+<w:tr w:rsidR="00577AD2" w14:paraId="16BA7829" w14:textId="77777777" w:rsidTr="00E8131A">
+<w:trPr>
+<w:trHeight w:val="157"/>
+<w:jc w:val="center"/>
+</w:trPr>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="1411" w:type="dxa"/>
+<w:tcBorders>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="7AB8C30A" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="992" w:hanging="992"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t>Contacto:</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="4091" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:left w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:bottom w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="1D1F5A5C" w14:textId="78DB0000" w:rsidR="00E74E9B" w:rsidRPr="00E74E9B" w:rsidRDefault="00E74E9B" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:bCs/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="330" w:type="dxa"/>
+<w:tcBorders>
+<w:left w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="56DA3B7C" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="962" w:type="dxa"/>
+<w:tcBorders>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="0D28E981" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t>Fecha:</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="3173" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:left w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:bottom w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+<w:tcMar>
+<w:top w:w="0" w:type="dxa"/>
+<w:bottom w:w="0" w:type="dxa"/>
+</w:tcMar>
+</w:tcPr>
+<w:p w14:paraId="7592AB17" w14:textId="05498626" w:rsidR="00577AD2" w:rsidRDefault="007969AB" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t>${fecha}</w:t>
+</w:r>
+</w:p>
+</w:tc>
+</w:tr>
+<w:tr w:rsidR="00577AD2" w14:paraId="111FFADA" w14:textId="77777777" w:rsidTr="00E8131A">
+<w:trPr>
+<w:trHeight w:val="178"/>
+<w:jc w:val="center"/>
+</w:trPr>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="1411" w:type="dxa"/>
+<w:tcBorders>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="0AA07877" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="992" w:hanging="992"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t>Celular:</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="4091" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:left w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:bottom w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="493A3037" w14:textId="7075B490" w:rsidR="00E74E9B" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t xml:space="preserve">(+57) </w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="330" w:type="dxa"/>
+<w:tcBorders>
+<w:left w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="585896A7" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="962" w:type="dxa"/>
+<w:tcBorders>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="59987B5A" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t>Ref:</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="3173" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:left w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:bottom w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+<w:tcMar>
+<w:top w:w="0" w:type="dxa"/>
+<w:bottom w:w="0" w:type="dxa"/>
+</w:tcMar>
+</w:tcPr>
+<w:p w14:paraId="49C1211C" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t>Solicitud email</w:t>
+</w:r>
+</w:p>
+</w:tc>
+</w:tr>
+<w:tr w:rsidR="00577AD2" w14:paraId="13837C59" w14:textId="77777777" w:rsidTr="00E8131A">
+<w:trPr>
+<w:trHeight w:val="156"/>
+<w:jc w:val="center"/>
+</w:trPr>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="1411" w:type="dxa"/>
+<w:tcBorders>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="12E74235" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="992" w:hanging="992"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t>Email:</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="4091" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:left w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:bottom w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="4CE3A9E5" w14:textId="7A7B2381" w:rsidR="00577AD2" w:rsidRPr="00C76438" w:rsidRDefault="00240654" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Times New Roman" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:bCs/>
+<w:color w:val="0000FF"/>
+<w:sz w:val="26"/>
+<w:szCs w:val="26"/>
+<w:u w:val="single"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Times New Roman" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:bCs/>
+<w:color w:val="0000FF"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+<w:u w:val="single"/>
+</w:rPr>
+<w:t>${correo}</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="330" w:type="dxa"/>
+<w:tcBorders>
+<w:left w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:bottom w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="54F98A56" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Verdana" w:eastAsia="Verdana" w:hAnsi="Verdana" w:cs="Verdana"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="18"/>
+<w:szCs w:val="18"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="962" w:type="dxa"/>
+<w:tcBorders>
+<w:bottom w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="043CDE69" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Verdana" w:eastAsia="Verdana" w:hAnsi="Verdana" w:cs="Verdana"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="18"/>
+<w:szCs w:val="18"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="3173" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:bottom w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="2E2D1B77" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Verdana" w:eastAsia="Verdana" w:hAnsi="Verdana" w:cs="Verdana"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="18"/>
+<w:szCs w:val="18"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+</w:tc>
+</w:tr>
+<w:tr w:rsidR="00577AD2" w14:paraId="67378D49" w14:textId="77777777" w:rsidTr="00E8131A">
+<w:trPr>
+<w:trHeight w:val="119"/>
+<w:jc w:val="center"/>
+</w:trPr>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="1411" w:type="dxa"/>
+<w:tcBorders>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="36462D30" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="992" w:hanging="992"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t>Asunto:</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="8556" w:type="dxa"/>
+<w:gridSpan w:val="4"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="4" w:space="0" w:color="5B9BD5"/>
+<w:left w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:bottom w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+<w:right w:val="single" w:sz="4" w:space="0" w:color="004A99"/>
+</w:tcBorders>
+</w:tcPr>
+<w:p w14:paraId="3D404F86" w14:textId="058B5EAF" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00C55E32">
+<w:pPr>
+<w:framePr w:hSpace="141" w:wrap="around" w:vAnchor="text" w:hAnchor="text"/>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t>AGITADOR</w:t>
+</w:r>
+<w:r w:rsidR="00B521CB">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t>ES</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="20"/>
+<w:szCs w:val="20"/>
+</w:rPr>
+<w:t xml:space="preserve"> MECÁNICO. MARCA: NOVATEC MIXERS</w:t>
+</w:r>
+</w:p>
+</w:tc>
+</w:tr>
+</w:tbl>
+<w:p w14:paraId="59341FE8" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00E8131A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="6555"/>
+</w:tabs>
+<w:spacing w:before="100" w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="right"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial Narrow" w:eastAsia="Arial Narrow" w:hAnsi="Arial Narrow" w:cs="Arial Narrow"/>
+<w:color w:val="000000"/>
+<w:sz w:val="18"/>
+<w:szCs w:val="18"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+</w:tc>
+</w:tr>
+</w:tbl>
+<w:p w14:paraId="3295B474" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:tabs>
+<w:tab w:val="left" w:pos="6555"/>
+</w:tabs>
+<w:ind w:right="-57"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="343889A7" w14:textId="049C04ED" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:tabs>
+<w:tab w:val="left" w:pos="6555"/>
+</w:tabs>
+<w:ind w:right="-57"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>Estimad</w:t>
+</w:r>
+<w:r w:rsidR="006C4F34">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve">o </w:t>
+</w:r>
+<w:r w:rsidR="00D24F7C">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve">Ing. </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="78059864" w14:textId="7AA70652" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:tabs>
+<w:tab w:val="left" w:pos="6555"/>
+</w:tabs>
+<w:ind w:right="-57"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve">De acuerdo a su solicitud, presentamos </w:t>
+</w:r>
+<w:r w:rsidR="00507D4A">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve">a vuestra consideración </w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve">nuestra </w:t>
+</w:r>
+<w:r w:rsidR="009D675D">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>oferta,</w:t>
+</w:r>
+<w:r w:rsidR="00A474F9">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+<w:r w:rsidR="007969AB">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>${cotización}</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>, por el suministro de agitador</w:t>
+</w:r>
+<w:r w:rsidR="006C4F34">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>es</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve"> mecánico</w:t>
+</w:r>
+<w:r w:rsidR="006C4F34">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>s</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>, de acuerdo al requerimiento recibido.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="09B43489" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:tabs>
+<w:tab w:val="left" w:pos="6555"/>
+</w:tabs>
+<w:ind w:right="-57"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>Cualquier duda o aclaración con gusto será atendida.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="61501727" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:tabs>
+<w:tab w:val="left" w:pos="6555"/>
+</w:tabs>
+<w:ind w:right="-57"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="58951386" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="6"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:tabs>
+<w:tab w:val="left" w:pos="6555"/>
+</w:tabs>
+<w:ind w:right="-57"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>ESPECIFICACIONES CLIENTE</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="35362B7F" w14:textId="77777777" w:rsidR="00D24F7C" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:tabs>
+<w:tab w:val="left" w:pos="6555"/>
+</w:tabs>
+<w:spacing w:before="100" w:after="0" w:line="240" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">Documentos de referencia emitidos por el cliente: </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="25E239EF" w14:textId="6B5330BE" w:rsidR="00577AD2" w:rsidRPr="009F43B9" w:rsidRDefault="007969AB" w:rsidP="009F43B9">
+<w:pPr>
+<w:tabs>
+<w:tab w:val="left" w:pos="6555"/>
+</w:tabs>
+<w:spacing w:before="100" w:after="0" w:line="240" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:bCs/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:bCs/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Correo electrónico</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="4F115488" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="142"/>
+</w:tabs>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="66E4C563" w14:textId="0FF23E64" w:rsidR="00577AD2" w:rsidRPr="00A474F9" w:rsidRDefault="00A474F9" w:rsidP="00A474F9">
+<w:pPr>
+<w:pStyle w:val="Prrafodelista"/>
+<w:widowControl w:val="0"/>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="6"/>
+</w:numPr>
+<w:tabs>
+<w:tab w:val="left" w:pos="142"/>
+</w:tabs>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:bCs/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:bCs/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>ACLARACIONES TÉCNICAS PARTICULARES</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="2F946CDA" w14:textId="77777777" w:rsidR="00A474F9" w:rsidRDefault="00A474F9" w:rsidP="00A474F9">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="142"/>
+</w:tabs>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:bCs/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="415E45E0" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="142"/>
+</w:tabs>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="58AB855B" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="142"/>
+</w:tabs>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="4727CBE0" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00A474F9">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="6"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:tabs>
+<w:tab w:val="left" w:pos="142"/>
+</w:tabs>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>ACLARACIONES TÉCNICAS GENERALES</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="5CC525B8" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00A474F9">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:tabs>
+<w:tab w:val="left" w:pos="142"/>
+</w:tabs>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="720"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="1244D96A" w14:textId="60A8824C" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00A474F9">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="5"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">Los agitadores </w:t>
+</w:r>
+<w:r w:rsidR="00546DE4">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>que se presentan en esta propuesta son de la línea estándar de</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> Novatec Fluid System.</w:t>
+</w:r>
+<w:r w:rsidR="009F43B9">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="6ECF6784" w14:textId="77777777" w:rsidR="008B30D7" w:rsidRDefault="008B30D7" w:rsidP="008B30D7">
+<w:pPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="720"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="5EFF3B71" w14:textId="216E91EE" w:rsidR="008B30D7" w:rsidRDefault="008B30D7" w:rsidP="00A474F9">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="5"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>En cada aplicación se busc</w:t>
+</w:r>
+<w:r w:rsidR="006D2478">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>ó</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> estandarizar motores y reductores, en potencia y rpm, así como en tipo y diámetro de propelas.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="5B1930B5" w14:textId="77777777" w:rsidR="00546DE4" w:rsidRDefault="00546DE4" w:rsidP="008B30D7">
+<w:pPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="76557B9D" w14:textId="7C429A34" w:rsidR="00577AD2" w:rsidRDefault="009F43B9" w:rsidP="00A474F9">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="5"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="009F43B9">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">Los agitadores seleccionados por Novatec Fluid System, </w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">para esta solicitud </w:t>
+</w:r>
+<w:r w:rsidRPr="009F43B9">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>pueden ser operados por medio de variador de velocidad y así permitir flexibilidad de atención en las diferentes etapas del proceso. a) Mezcla, b) neutralización, c) homogeneización</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="5ACC703D" w14:textId="77777777" w:rsidR="00546DE4" w:rsidRPr="009F43B9" w:rsidRDefault="00546DE4" w:rsidP="00546DE4">
+<w:pPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="48743A82" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00A474F9">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="5"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Las propelas del equipo de agitación son desmontables, dando así la opción de desplazarse a lo largo del eje, si así se requiere para ajustes finales de proceso.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="2DF56C76" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00A474F9">
+<w:pPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="720"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="3B4EBF89" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00A474F9">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="5"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> El material de fabricación de las partes húmedas es acero inoxidable 304SS, según lo requerido. Corresponde al cliente verificar la compatibilidad química entre el material de fabricación ofrecido y los fluidos a mezclar.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="5716CE59" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00A474F9">
+<w:pPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="720"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="20F71589" w14:textId="7F598303" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00A474F9">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="5"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">El motorreductor seleccionado para esta aplicación es de </w:t>
+</w:r>
+<w:r w:rsidR="009F43B9">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>marca NORD</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>.</w:t>
+</w:r>
+<w:r w:rsidR="009F43B9">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> Se anexa información de sus principales características. Los motores son estándar de fabricante. </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="4201DD25" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00A474F9">
+<w:pPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="720"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="4232F407" w14:textId="191B6C78" w:rsidR="00577AD2" w:rsidRPr="00A474F9" w:rsidRDefault="009F43B9" w:rsidP="00A474F9">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="5"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Los</w:t>
+</w:r>
+<w:r w:rsidR="00577AD2" w:rsidRPr="00A474F9">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> motor</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>es</w:t>
+</w:r>
+<w:r w:rsidR="00577AD2" w:rsidRPr="00A474F9">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>son</w:t>
+</w:r>
+<w:r w:rsidR="00577AD2" w:rsidRPr="00A474F9">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> de eficiencia IE3 y clasificación térmica clase F según norma IEC 600034-1. Encerramiento IP55.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="4EBAFBBB" w14:textId="77777777" w:rsidR="00A474F9" w:rsidRDefault="00A474F9" w:rsidP="00A474F9">
+<w:pPr>
+<w:pStyle w:val="Prrafodelista"/>
+<w:spacing w:after="0"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="37C88344" w14:textId="56AEE0CE" w:rsidR="00577AD2" w:rsidRDefault="00507D4A" w:rsidP="00A474F9">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="4"/>
+</w:numPr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>Los</w:t>
+</w:r>
+<w:r w:rsidR="00577AD2">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve"> agitador</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>es</w:t>
+</w:r>
+<w:r w:rsidR="00577AD2">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve"> seleccionado</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>s</w:t>
+</w:r>
+<w:r w:rsidR="00577AD2">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve"> no requiere</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>n</w:t>
+</w:r>
+<w:r w:rsidR="00577AD2">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve"> de apoyo en el fondo del tanque (TRIPOD).</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="22608F90" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00A474F9">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="720"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="6D704234" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00A474F9">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="4"/>
+</w:numPr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>Los agitadores se suministran con placa de identificación en inox 304.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="06A8BC41" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00A474F9">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="720"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="5A50157D" w14:textId="6BD493B7" w:rsidR="00577AD2" w:rsidRPr="006D2478" w:rsidRDefault="00577AD2" w:rsidP="006D2478">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="4"/>
+</w:numPr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>Placa de identificación del motor y reductor según estándar del fabricante.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="4D554708" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00A474F9">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="4"/>
+</w:numPr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>Plan de control de calidad y pruebas, desarrollado bajo el estándar de Novatec Fluid System, los documentos son generados durante la fabricación de los agitadores.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="0C451FAF" w14:textId="77777777" w:rsidR="00C9352F" w:rsidRDefault="00C9352F" w:rsidP="009D675D">
+<w:pPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="04BF7846" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRPr="000A3C28" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="6"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:tabs>
+<w:tab w:val="left" w:pos="142"/>
+</w:tabs>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="000A3C28">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>MONTAJE</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="4075CB9A" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:tabs>
+<w:tab w:val="left" w:pos="142"/>
+</w:tabs>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="0210B94D" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:tabs>
+<w:tab w:val="left" w:pos="-284"/>
+<w:tab w:val="left" w:pos="8788"/>
+</w:tabs>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve">Los agitadores de la serie </w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+</w:rPr>
+<w:t>V</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve"> son diseñados para montaje vertical, sobre estructura de perfiles de acero, o bridado directamente al tanque de forma tal, que el equipo quede en posición vertical.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="56A17718" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:tabs>
+<w:tab w:val="left" w:pos="-284"/>
+<w:tab w:val="left" w:pos="8788"/>
+</w:tabs>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>El agitador incluye una pletina de apoyo metálica cuadrada dimensionada para ser instalada sobre la estructura portátil (provista por el cliente) o brida de conexión según AISI B16.5</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="317534B7" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:tabs>
+<w:tab w:val="left" w:pos="-284"/>
+<w:tab w:val="left" w:pos="8788"/>
+</w:tabs>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="2A3C7569" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="6"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:tabs>
+<w:tab w:val="left" w:pos="142"/>
+</w:tabs>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>ACCESORIOS Y TERMINADO DEL MOTOREDUCTOR</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="6C710B38" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:tabs>
+<w:tab w:val="left" w:pos="142"/>
+</w:tabs>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:left="720"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="47C84786" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:spacing w:after="0" w:line="276" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>Terminado de motorreductor: Pintura azul alquídica RAL 5002. Procedimiento según estándar de Novatec Fluid System.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="7F5D9CFC" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:spacing w:after="0" w:line="276" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="785EFA3A" w14:textId="1743A896" w:rsidR="00C9352F" w:rsidRDefault="00C9352F" w:rsidP="00C9352F">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:spacing w:after="0" w:line="276" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="00C9352F">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:noProof/>
+</w:rPr>
+<w:drawing>
+<wp:inline distT="0" distB="0" distL="0" distR="0" wp14:anchorId="1DCA63AF" wp14:editId="7944F327">
+<wp:extent cx="4840837" cy="3149811"/>
+<wp:effectExtent l="0" t="0" r="0" b="0"/>
+<wp:docPr id="510992451" name="Imagen 1"/>
+<wp:cNvGraphicFramePr>
+<a:graphicFrameLocks xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" noChangeAspect="1"/>
+</wp:cNvGraphicFramePr>
+<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+<a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+<pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+<pic:nvPicPr>
+<pic:cNvPr id="0" name="Picture 1"/>
+<pic:cNvPicPr>
+<a:picLocks noChangeAspect="1" noChangeArrowheads="1"/>
+</pic:cNvPicPr>
+</pic:nvPicPr>
+<pic:blipFill>
+<a:blip r:embed="rId9" cstate="print">
+<a:extLst>
+<a:ext uri="{28A0092B-C50C-407E-A947-70E740481C1C}">
+<a14:useLocalDpi xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main" val="0"/>
+</a:ext>
+</a:extLst>
+</a:blip>
+<a:srcRect/>
+<a:stretch>
+<a:fillRect/>
+</a:stretch>
+</pic:blipFill>
+<pic:spPr bwMode="auto">
+<a:xfrm>
+<a:off x="0" y="0"/>
+<a:ext cx="4910554" cy="3195174"/>
+</a:xfrm>
+<a:prstGeom prst="rect">
+<a:avLst/>
+</a:prstGeom>
+<a:noFill/>
+<a:ln>
+<a:noFill/>
+</a:ln>
+</pic:spPr>
+</pic:pic>
+</a:graphicData>
+</a:graphic>
+</wp:inline>
+</w:drawing>
+</w:r>
+</w:p>
+<w:p w14:paraId="28EF9467" w14:textId="7C577A0A" w:rsidR="00C9352F" w:rsidRPr="00C9352F" w:rsidRDefault="00C9352F" w:rsidP="00C9352F">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:spacing w:after="0" w:line="276" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve">PROPELA TIPO CT- Curva tripala- bajo efecto </w:t>
+</w:r>
+<w:r w:rsidR="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t>cortante. Imagen</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+<w:t xml:space="preserve"> de referencia.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="55F2B63C" w14:textId="77777777" w:rsidR="00546DE4" w:rsidRDefault="00546DE4" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:spacing w:after="0" w:line="276" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="260CDE77" w14:textId="77777777" w:rsidR="00546DE4" w:rsidRDefault="00546DE4" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:spacing w:after="0" w:line="276" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="74A62998" w14:textId="77777777" w:rsidR="00546DE4" w:rsidRDefault="00546DE4" w:rsidP="0055055B">
+<w:pPr>
+<w:pStyle w:val="Prrafodelista"/>
+<w:widowControl w:val="0"/>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="6"/>
+</w:numPr>
+<w:spacing w:after="0" w:line="276" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>OFERTA TECNICO COMERCIAL AGITADORES NOVATEC MIXER.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="3A98D009" w14:textId="3610A7B7" w:rsidR="00546DE4" w:rsidRPr="00546DE4" w:rsidRDefault="00546DE4" w:rsidP="0055055B">
+<w:pPr>
+<w:pStyle w:val="Textoindependiente"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="2914"/>
+</w:tabs>
+<w:spacing w:after="0"/>
+<w:ind w:left="221"/>
+<w:rPr>
+<w:b/>
+<w:bCs/>
+<w:w w:val="90"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="00546DE4">
+<w:rPr>
+<w:b/>
+<w:bCs/>
+<w:w w:val="90"/>
+</w:rPr>
+<w:t>Datos de tanque estimados según volúmenes considerados.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="46575473" w14:textId="2BB3AB7E" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="0055055B">
+<w:pPr>
+<w:pStyle w:val="Textoindependiente"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="2914"/>
+</w:tabs>
+<w:spacing w:after="0"/>
+<w:ind w:left="221"/>
+<w:rPr>
+<w:w w:val="85"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="0021024C">
+<w:rPr>
+<w:w w:val="90"/>
+</w:rPr>
+<w:t>Diámetro:</w:t>
+</w:r>
+<w:r w:rsidRPr="0021024C">
+<w:rPr>
+<w:w w:val="90"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidRPr="0021024C">
+<w:rPr>
+<w:w w:val="85"/>
+</w:rPr>
+<w:t>m</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="1F4F9652" w14:textId="26C6D598" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="0055055B">
+<w:pPr>
+<w:pStyle w:val="Textoindependiente"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="2914"/>
+</w:tabs>
+<w:spacing w:after="0"/>
+<w:ind w:left="221"/>
+<w:rPr>
+<w:w w:val="85"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:w w:val="85"/>
+</w:rPr>
+<w:t>Altura total:</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:w w:val="85"/>
+</w:rPr>
+<w:tab/>
+<w:t>m</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="4B4699C3" w14:textId="34FCF35F" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="0055055B">
+<w:pPr>
+<w:pStyle w:val="Textoindependiente"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="2914"/>
+</w:tabs>
+<w:spacing w:after="0"/>
+<w:ind w:left="221"/>
+<w:rPr>
+<w:w w:val="85"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:w w:val="85"/>
+</w:rPr>
+<w:t>Altura Plano:</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:w w:val="85"/>
+</w:rPr>
+<w:tab/>
+<w:t>.</w:t>
+</w:r>
+<w:r w:rsidR="001238EB">
+<w:rPr>
+<w:w w:val="85"/>
+</w:rPr>
+<w:t>0</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:w w:val="85"/>
+</w:rPr>
+<w:t xml:space="preserve"> m</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="6E859CBD" w14:textId="67116478" w:rsidR="0055055B" w:rsidRPr="0021024C" w:rsidRDefault="0055055B" w:rsidP="0055055B">
+<w:pPr>
+<w:pStyle w:val="Textoindependiente"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="2914"/>
+</w:tabs>
+<w:spacing w:after="0"/>
+<w:ind w:left="221"/>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:w w:val="85"/>
+</w:rPr>
+<w:t>Volumen útil estimado</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:w w:val="85"/>
+</w:rPr>
+<w:tab/>
+<w:t>m3</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="16DAE2C4" w14:textId="21482B15" w:rsidR="0055055B" w:rsidRPr="0021024C" w:rsidRDefault="0055055B" w:rsidP="0055055B">
+<w:pPr>
+<w:pStyle w:val="Textoindependiente"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="2914"/>
+</w:tabs>
+<w:spacing w:before="1" w:after="0"/>
+<w:ind w:left="221"/>
+</w:pPr>
+<w:r w:rsidRPr="0021024C">
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:t>Altura</w:t>
+</w:r>
+<w:r w:rsidRPr="0021024C">
+<w:rPr>
+<w:spacing w:val="6"/>
+<w:w w:val="80"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+<w:r w:rsidRPr="0021024C">
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:t>Útil</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:t xml:space="preserve"> estimada</w:t>
+</w:r>
+<w:r w:rsidRPr="0021024C">
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:t>:</w:t>
+</w:r>
+<w:r w:rsidRPr="0021024C">
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidRPr="0021024C">
+<w:rPr>
+<w:w w:val="85"/>
+</w:rPr>
+<w:t>m</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="663A4674" w14:textId="68A99626" w:rsidR="0055055B" w:rsidRPr="0021024C" w:rsidRDefault="0055055B" w:rsidP="0055055B">
+<w:pPr>
+<w:pStyle w:val="Textoindependiente"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="2914"/>
+</w:tabs>
+<w:spacing w:after="0"/>
+<w:ind w:left="221"/>
+</w:pPr>
+<w:r w:rsidRPr="0021024C">
+<w:rPr>
+<w:spacing w:val="-2"/>
+<w:w w:val="90"/>
+</w:rPr>
+<w:t>Viscosidad:</w:t>
+</w:r>
+<w:r w:rsidRPr="0021024C">
+<w:rPr>
+<w:spacing w:val="-2"/>
+<w:w w:val="90"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidRPr="0021024C">
+<w:rPr>
+<w:w w:val="85"/>
+</w:rPr>
+<w:t>cP</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="64ADB465" w14:textId="4CF2219F" w:rsidR="0055055B" w:rsidRPr="0022154D" w:rsidRDefault="0055055B" w:rsidP="0055055B">
+<w:pPr>
+<w:pStyle w:val="Textoindependiente"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="2914"/>
+</w:tabs>
+<w:spacing w:before="1" w:after="0"/>
+<w:ind w:left="221"/>
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="0022154D">
+<w:rPr>
+<w:spacing w:val="-1"/>
+<w:w w:val="90"/>
+</w:rPr>
+<w:t>Densidad:</w:t>
+</w:r>
+<w:r w:rsidRPr="0022154D">
+<w:rPr>
+<w:spacing w:val="-1"/>
+<w:w w:val="90"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidR="001238EB">
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:t>0</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:t>0</w:t>
+</w:r>
+<w:r w:rsidRPr="0022154D">
+<w:rPr>
+<w:spacing w:val="4"/>
+<w:w w:val="80"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+<w:r w:rsidRPr="0022154D">
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:t>kg/m3</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="76EE61E0" w14:textId="0000A73C" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="0055055B">
+<w:pPr>
+<w:pStyle w:val="Textoindependiente"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="2914"/>
+</w:tabs>
+<w:spacing w:before="1" w:after="0"/>
+<w:ind w:left="221"/>
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:t>Temperatura:</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidR="00906547">
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:t>0</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:t>°C</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="0FB501E9" w14:textId="1703C9D3" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="00C9352F">
+<w:pPr>
+<w:pStyle w:val="Textoindependiente"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="2914"/>
+</w:tabs>
+<w:spacing w:before="1" w:after="0"/>
+<w:ind w:left="221"/>
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:t>Material Tanque:</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidR="00906547">
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+<w:t>ACERO INOXIDABLE</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="076271BB" w14:textId="77777777" w:rsidR="00906547" w:rsidRPr="00C9352F" w:rsidRDefault="00906547" w:rsidP="00C9352F">
+<w:pPr>
+<w:pStyle w:val="Textoindependiente"/>
+<w:tabs>
+<w:tab w:val="left" w:pos="2914"/>
+</w:tabs>
+<w:spacing w:before="1" w:after="0"/>
+<w:ind w:left="221"/>
+<w:rPr>
+<w:w w:val="80"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="2E16FA5F" w14:textId="341C4D70" w:rsidR="0055055B" w:rsidRDefault="00546DE4" w:rsidP="00546DE4">
+<w:pPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:tabs>
+<w:tab w:val="left" w:pos="6555"/>
+</w:tabs>
+<w:spacing w:before="100" w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">     </w:t>
+</w:r>
+<w:r w:rsidR="0055055B">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>OFERTA TÉCNICO COMERCIAL</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">- </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="428FE73A" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="0055055B">
+<w:pPr>
+<w:spacing w:line="240" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:tbl>
+<w:tblPr>
+<w:tblW w:w="10418" w:type="dxa"/>
+<w:tblLayout w:type="fixed"/>
+<w:tblLook w:val="0000" w:firstRow="0" w:lastRow="0" w:firstColumn="0" w:lastColumn="0" w:noHBand="0" w:noVBand="0"/>
+</w:tblPr>
+<w:tblGrid>
+<w:gridCol w:w="679"/>
+<w:gridCol w:w="992"/>
+<w:gridCol w:w="4439"/>
+<w:gridCol w:w="1035"/>
+<w:gridCol w:w="858"/>
+<w:gridCol w:w="1139"/>
+<w:gridCol w:w="1276"/>
+</w:tblGrid>
+<w:tr w:rsidR="0055055B" w14:paraId="7D11356D" w14:textId="77777777" w:rsidTr="008D0F3A">
+<w:trPr>
+<w:trHeight w:val="662"/>
+</w:trPr>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="679" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="8" w:space="0" w:color="FFFFFF"/>
+<w:left w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:bottom w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:right w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+</w:tcBorders>
+<w:shd w:val="clear" w:color="auto" w:fill="004899"/>
+<w:vAlign w:val="center"/>
+</w:tcPr>
+<w:p w14:paraId="25A6784F" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Item</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="992" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="8" w:space="0" w:color="FFFFFF"/>
+<w:left w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:bottom w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:right w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+</w:tcBorders>
+<w:shd w:val="clear" w:color="auto" w:fill="004899"/>
+<w:vAlign w:val="center"/>
+</w:tcPr>
+<w:p w14:paraId="7E62392D" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Cantidad</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="4439" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="8" w:space="0" w:color="FFFFFF"/>
+<w:left w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:bottom w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:right w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+</w:tcBorders>
+<w:shd w:val="clear" w:color="auto" w:fill="004899"/>
+<w:vAlign w:val="center"/>
+</w:tcPr>
+<w:p w14:paraId="19386252" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Descripción</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="1035" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="8" w:space="0" w:color="FFFFFF"/>
+<w:left w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:bottom w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:right w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+</w:tcBorders>
+<w:shd w:val="clear" w:color="auto" w:fill="004899"/>
+<w:vAlign w:val="center"/>
+</w:tcPr>
+<w:p w14:paraId="232097B7" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Valor unitario</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="858" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="8" w:space="0" w:color="FFFFFF"/>
+<w:left w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:bottom w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:right w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+</w:tcBorders>
+<w:shd w:val="clear" w:color="auto" w:fill="004899"/>
+<w:vAlign w:val="center"/>
+</w:tcPr>
+<w:p w14:paraId="34691C9A" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Desc.%</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="1139" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="8" w:space="0" w:color="FFFFFF"/>
+<w:left w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:bottom w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:right w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+</w:tcBorders>
+<w:shd w:val="clear" w:color="auto" w:fill="004899"/>
+<w:vAlign w:val="center"/>
+</w:tcPr>
+<w:p w14:paraId="3F7B009C" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Valor unitario + descuento</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="1276" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="8" w:space="0" w:color="FFFFFF"/>
+<w:left w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:bottom w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:right w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+</w:tcBorders>
+<w:shd w:val="clear" w:color="auto" w:fill="004899"/>
+<w:vAlign w:val="center"/>
+</w:tcPr>
+<w:p w14:paraId="6CD33124" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Valor total</w:t>
+</w:r>
+</w:p>
+</w:tc>
+</w:tr>
+<w:tr w:rsidR="0055055B" w14:paraId="7B272061" w14:textId="77777777" w:rsidTr="00051484">
+<w:trPr>
+<w:trHeight w:val="5715"/>
+</w:trPr>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="679" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:left w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:bottom w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:right w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+</w:tcBorders>
+<w:shd w:val="clear" w:color="auto" w:fill="F2F2F2"/>
+</w:tcPr>
+<w:p w14:paraId="183B8079" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="1"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="992" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:left w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:bottom w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:right w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+</w:tcBorders>
+<w:shd w:val="clear" w:color="auto" w:fill="F2F2F2"/>
+</w:tcPr>
+<w:p w14:paraId="3DBC6EC2" w14:textId="3BC929E2" w:rsidR="0055055B" w:rsidRDefault="00356380" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>1</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="00F1E94A" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="4439" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:left w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:bottom w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:right w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+</w:tcBorders>
+<w:shd w:val="clear" w:color="auto" w:fill="F2F2F2"/>
+</w:tcPr>
+<w:p w14:paraId="5B8F6312" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>AGITADOR MECÁNICO VERTICAL</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="26D8834E" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve">MARCA: </w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>NOVATEC MIXERS</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="5B321D81" w14:textId="5E17F209" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve">Modelo:  </w:t>
+</w:r>
+<w:r w:rsidR="00C8204C">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>${codigo_agitador}</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="2CA2B35C" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="78C78D8F" w14:textId="5E60DBE8" w:rsidR="0055055B" w:rsidRDefault="00574546" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Cuatro</w:t>
+</w:r>
+<w:r w:rsidR="0055055B">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve"> (</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>4</w:t>
+</w:r>
+<w:r w:rsidR="0055055B">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>) Propela Curva tripala, Diámetro (D): 00 mm</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="1A8EAF8C" w14:textId="38A5C1BA" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve">Longitud del eje (H) aprox: </w:t>
+</w:r>
+<w:r w:rsidR="00574546">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>4</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>00 mm</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="6EF1466D" w14:textId="190A3BD3" w:rsidR="0055055B" w:rsidRDefault="00C9352F" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Tipo</w:t>
+</w:r>
+<w:r w:rsidR="0055055B">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve"> de eje (De):  </w:t>
+</w:r>
+<w:r w:rsidR="00574546">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Tubular</w:t>
+</w:r>
+<w:r w:rsidR="00961E1D">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve">, </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="3927C91F" w14:textId="4539F350" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve">Velocidad de salida: </w:t>
+</w:r>
+<w:r w:rsidR="00574546">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>8</w:t>
+</w:r>
+<w:r w:rsidR="00BE2608">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>0</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve"> RPM +- 10%  </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="465B781D" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Material de eje: Acero inoxidable 304SS</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="3E1BBFCF" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Material de propela: 304SS</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="499A48C8" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Acabado:  2B</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="3EE6FFAA" w14:textId="77777777" w:rsidR="0055055B" w:rsidRPr="00D86051" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="00D86051">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Tipo de motor: Eléctrico, 220/440(V), 60Hz, 3F</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="3EEB02E3" w14:textId="59283D34" w:rsidR="0055055B" w:rsidRPr="00D86051" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="00D86051">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Velocidad de motor: 1800 RPM</w:t>
+</w:r>
+<w:r w:rsidR="00C9352F" w:rsidRPr="00D86051">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve"> (max)</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="58DA880B" w14:textId="5143901E" w:rsidR="0055055B" w:rsidRPr="00D86051" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="00D86051">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve">Potencia de motor: </w:t>
+</w:r>
+<w:r w:rsidR="00574546">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>5.5</w:t>
+</w:r>
+<w:r w:rsidRPr="00D86051">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve"> kW</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="2A69F5D8" w14:textId="6A229E4D" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="00D86051">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Clase de protección: IP55</w:t>
+</w:r>
+<w:r w:rsidR="00C9352F" w:rsidRPr="00D86051">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve">; </w:t>
+</w:r>
+<w:r w:rsidRPr="00D86051">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>IE3-86.1 %</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="3E092920" w14:textId="2CBB98B8" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Recubrimiento: N/A</w:t>
+</w:r>
+<w:r w:rsidR="00640A4A">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>. Si se requiere por parte de IPR.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="2AAE0624" w14:textId="78465A82" w:rsidR="00C9352F" w:rsidRDefault="00C9352F" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Índice y Caudal</w:t>
+</w:r>
+<w:r w:rsidR="00CB79A3">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve"> de agitación</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve">: </w:t>
+</w:r>
+<w:r w:rsidR="00BE2608">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>7</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>,</w:t>
+</w:r>
+<w:r w:rsidR="00574546">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>4</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve"> / </w:t>
+</w:r>
+<w:r w:rsidR="00574546">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>4921</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve"> m3/h</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="1BE98685" w14:textId="1D5BD483" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve">Tipo de conexión de equipo de agitación: Se adapta a la conexión del tanque mediante </w:t>
+</w:r>
+<w:r w:rsidR="00D86051">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>la linterna de rodamientos</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="68DA6658" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="1D9534FF" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve">Incluye: </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="001ECF8A" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="3"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Documentación y pruebas FAT</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="67EB4F48" w14:textId="29E3DB9B" w:rsidR="00C9352F" w:rsidRDefault="00C9352F" w:rsidP="008D0F3A">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="3"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Manual de instrucciones (instalación, mantenimiento y listado materiales)</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="390C9DC0" w14:textId="5487B48C" w:rsidR="0055055B" w:rsidRDefault="008F5E21" w:rsidP="008D0F3A">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="3"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>Plano dimensiones generales.</w:t>
+</w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="1035" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:left w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:bottom w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:right w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+</w:tcBorders>
+<w:shd w:val="clear" w:color="auto" w:fill="F2F2F2" w:themeFill="background1" w:themeFillShade="F2"/>
+</w:tcPr>
+<w:p w14:paraId="340CA692" w14:textId="57AD3A2E" w:rsidR="0055055B" w:rsidRPr="005A6A36" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="005A6A36">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve">COP </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="645EEC67" w14:textId="77777777" w:rsidR="0055055B" w:rsidRPr="00614935" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:before="280" w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+<w:highlight w:val="yellow"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="858" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:left w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:bottom w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:right w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+</w:tcBorders>
+<w:shd w:val="clear" w:color="auto" w:fill="F2F2F2"/>
+</w:tcPr>
+<w:p w14:paraId="28A0228E" w14:textId="77777777" w:rsidR="0055055B" w:rsidRPr="005A6A36" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="005A6A36">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>0</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="225A7416" w14:textId="77777777" w:rsidR="0055055B" w:rsidRPr="005A6A36" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="1139" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:left w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:bottom w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:right w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+</w:tcBorders>
+<w:shd w:val="clear" w:color="auto" w:fill="F2F2F2"/>
+</w:tcPr>
+<w:p w14:paraId="236F3557" w14:textId="2B9DDAAB" w:rsidR="00DA4642" w:rsidRPr="005A6A36" w:rsidRDefault="00DA4642" w:rsidP="00DA4642">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="005A6A36">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve">COP </w:t>
+</w:r>
+<w:r w:rsidR="00574546" w:rsidRPr="00574546">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>15</w:t>
+</w:r>
+<w:r w:rsidR="00574546">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>.</w:t>
+</w:r>
+<w:r w:rsidR="00574546" w:rsidRPr="00574546">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>37</w:t>
+</w:r>
+<w:r w:rsidR="00574546">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>0.</w:t>
+</w:r>
+<w:r w:rsidR="00574546" w:rsidRPr="00574546">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>0</w:t>
+</w:r>
+<w:r w:rsidR="00574546">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>00</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="1C5D652C" w14:textId="77777777" w:rsidR="0055055B" w:rsidRPr="005A6A36" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr>
+<w:tcW w:w="1276" w:type="dxa"/>
+<w:tcBorders>
+<w:top w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:left w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:bottom w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+<w:right w:val="single" w:sz="24" w:space="0" w:color="FFFFFF"/>
+</w:tcBorders>
+<w:shd w:val="clear" w:color="auto" w:fill="F2F2F2"/>
+</w:tcPr>
+<w:p w14:paraId="7C5E1F59" w14:textId="61DA916F" w:rsidR="00DA4642" w:rsidRPr="005A6A36" w:rsidRDefault="00DA4642" w:rsidP="00DA4642">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="005A6A36">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t xml:space="preserve">COP </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="45FF18DC" w14:textId="76F57355" w:rsidR="0055055B" w:rsidRPr="005A6A36" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="005A6A36">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+<w:t>+ IVA</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="66699287" w14:textId="77777777" w:rsidR="0055055B" w:rsidRPr="005A6A36" w:rsidRDefault="0055055B" w:rsidP="008D0F3A">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:before="280" w:after="0" w:line="240" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:sz w:val="16"/>
+<w:szCs w:val="16"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+</w:tc>
+</w:tr>
+</w:tbl>
+<w:p w14:paraId="42D60776" w14:textId="77777777" w:rsidR="0055055B" w:rsidRDefault="0055055B" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:spacing w:after="0" w:line="276" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="660EAB35" w14:textId="77777777" w:rsidR="005A6A36" w:rsidRDefault="005A6A36" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:spacing w:after="0" w:line="276" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="24B878EF" w14:textId="117F26D6" w:rsidR="00501B1E" w:rsidRDefault="00501B1E" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:spacing w:after="0" w:line="276" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="22767A45" w14:textId="363D762B" w:rsidR="00470482" w:rsidRDefault="00470482" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:spacing w:after="0" w:line="276" w:lineRule="auto"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="2C7A9949" w14:textId="77777777" w:rsidR="00F455EB" w:rsidRDefault="00F455EB" w:rsidP="00F455EB">
+<w:pPr>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:sz w:val="24"/>
+<w:szCs w:val="24"/>
+<w:u w:val="single"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="54AE7D2B" w14:textId="4FA14044" w:rsidR="00577AD2" w:rsidRPr="00E81DDE" w:rsidRDefault="00577AD2" w:rsidP="00E81DDE">
+<w:pPr>
+<w:jc w:val="center"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:sz w:val="24"/>
+<w:szCs w:val="24"/>
+<w:u w:val="single"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:sz w:val="24"/>
+<w:szCs w:val="24"/>
+<w:u w:val="single"/>
+</w:rPr>
+<w:t>Términos y Condiciones</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="4504B609" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:spacing w:line="276" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Visítanos en nuestra página web: https://novatecfs.com/</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="60C841D2" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>CONDICIONES COMERCIALES:</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="7D920B39" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="66C58629" w14:textId="1CB01903" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:spacing w:after="0" w:line="360" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Validez oferta:</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidR="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>30</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> Días.</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:br/>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Plazo de entrega:</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+<w:t>D</w:t>
+</w:r>
+<w:r w:rsidR="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>iez</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> (1</w:t>
+</w:r>
+<w:r w:rsidR="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>0</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>) semanas después de la orden de compra</w:t>
+</w:r>
+<w:r w:rsidR="00BC7B17">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>,</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> anticipo</w:t>
+</w:r>
+<w:r w:rsidR="00BC7B17">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> y aprobación de planos. </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="047E878C" w14:textId="1BB06270" w:rsidR="00E81DDE" w:rsidRPr="00E81DDE" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:spacing w:after="0" w:line="360" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Forma de pago:</w:t>
+</w:r>
+<w:r w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+<w:r w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidR="00640A4A">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>5</w:t>
+</w:r>
+<w:r w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">0% con la orden de </w:t>
+</w:r>
+<w:r w:rsidR="00E81DDE" w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">compra; </w:t>
+</w:r>
+<w:r w:rsidR="00640A4A">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>5</w:t>
+</w:r>
+<w:r w:rsidR="00E81DDE" w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>0</w:t>
+</w:r>
+<w:r w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">% </w:t>
+</w:r>
+<w:r w:rsidR="00A474F9" w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>contra pruebas en planta de Novatec</w:t>
+</w:r>
+<w:r w:rsidR="00E81DDE" w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>FS y</w:t>
+</w:r>
+<w:r w:rsidR="00A474F9" w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="45D80B27" w14:textId="1BAF73F5" w:rsidR="00577AD2" w:rsidRDefault="00E81DDE" w:rsidP="00E81DDE">
+<w:pPr>
+<w:spacing w:after="0" w:line="360" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">                                   </w:t>
+</w:r>
+<w:r w:rsidR="00577AD2" w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">previo al </w:t>
+</w:r>
+<w:r w:rsidR="00A474F9" w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">despacho. </w:t>
+</w:r>
+<w:r w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>O</w:t>
+</w:r>
+<w:r w:rsidR="00577AD2" w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">tra: a </w:t>
+</w:r>
+<w:r w:rsidRPr="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>convenir.</w:t>
+</w:r>
+<w:r w:rsidR="00577AD2">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+<w:r w:rsidR="00577AD2">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:br/>
+</w:r>
+<w:r w:rsidR="002C5E5D">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Moneda</w:t>
+</w:r>
+<w:r w:rsidR="00577AD2">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>:</w:t>
+</w:r>
+<w:r w:rsidR="00577AD2">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+<w:r w:rsidR="002C5E5D">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidR="00577AD2">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidR="000C7EA2">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>COP (Pesos colombianos)</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>.</w:t>
+</w:r>
+<w:r w:rsidR="00577AD2">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:br/>
+</w:r>
+<w:r w:rsidR="00577AD2">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Sitio de entrega:</w:t>
+</w:r>
+<w:r w:rsidR="00577AD2">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+<w:r w:rsidR="00640A4A">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">      En sus instalaciones en territorio nacional</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="0C30B4E8" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:spacing w:after="0" w:line="360" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Empaque:</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+<w:t>Doméstico – madera.</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:br/>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Garantía:</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+<w:t xml:space="preserve">   </w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+<w:t xml:space="preserve">Doce (12) meses contra daños que puedan presentarse por defectos de </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="4398E4AC" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:spacing w:after="0" w:line="360" w:lineRule="auto"/>
+<w:ind w:left="1440" w:firstLine="720"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">fabricación tanto de materiales como de mano de obra. </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="29108222" w14:textId="77777777" w:rsidR="00614935" w:rsidRDefault="00614935" w:rsidP="00577AD2">
+<w:pPr>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:u w:val="single"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="795D12B6" w14:textId="11565A2A" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:u w:val="single"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:u w:val="single"/>
+</w:rPr>
+<w:t>EXCLUSIONES DE GARANTÍA</w:t>
+</w:r>
+<w:r w:rsidR="002C5E5D">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+<w:u w:val="single"/>
+</w:rPr>
+<w:t xml:space="preserve"> AGITADOR</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="02A3D173" w14:textId="23A6C35B" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="2"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">Deficiencia estructural en punto de instalación del equipo de </w:t>
+</w:r>
+<w:r w:rsidR="005010C7">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>agitación (Si Novatec</w:t>
+</w:r>
+<w:r w:rsidR="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>FS</w:t>
+</w:r>
+<w:r w:rsidR="005010C7">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve"> no suministra el tanque)</w:t>
+</w:r>
+<w:r w:rsidR="00E81DDE">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="61A6C9AB" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="2"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">Daños causados por uso incorrecto, mantenimiento deficiente o reparaciones no autorizadas. </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="56939B5C" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="2"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Daños causados por el no cumplimiento de los criterios de diseño, como cambio de proceso, cambio de condiciones, temperaturas máximas, presiones externas, compatibilidad química.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="77BBFB06" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="2"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Los ítems cotizados no incluyen accesorios adicionales o repuestos a los descritos en esta propuesta.</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="019A16E2" w14:textId="0DDFFB53" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="2"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0"/>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">La instalación del equipo de agitación y puesta en marcha no </w:t>
+</w:r>
+<w:r w:rsidR="002C5E5D">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">está en el alcance de esta propuesta </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="109350E2" w14:textId="1ED67081" w:rsidR="00577AD2" w:rsidRPr="00E81DDE" w:rsidRDefault="00577AD2" w:rsidP="00E81DDE">
+<w:pPr>
+<w:numPr>
+<w:ilvl w:val="0"/>
+<w:numId w:val="2"/>
+</w:numPr>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:jc w:val="both"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Desgaste normal por uso regular y prolongado</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="7E92BA4D" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:spacing w:line="360" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="5E0211C2" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:spacing w:line="360" w:lineRule="auto"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Cordialmente,</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="10702E00" w14:textId="77777777" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:right="-57"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:p w14:paraId="3AA16668" w14:textId="04221794" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:right="-57"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>OSCAR GOYES</w:t>
+</w:r>
+<w:r w:rsidR="00520264">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidR="00520264">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidR="0061627C">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">              </w:t>
+</w:r>
+<w:r w:rsidR="00520264">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidR="0061627C">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">                                  CAMILO PENAGOS</w:t>
+</w:r>
+<w:r w:rsidR="00520264">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidR="00520264">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:b/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+</w:p>
+<w:p w14:paraId="5CE2644B" w14:textId="4A1AB94C" w:rsidR="00577AD2" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:right="-57"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t>Ingeniero de aplicaciones</w:t>
+</w:r>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:tab/>
+</w:r>
+<w:r w:rsidR="0061627C">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">                                                          Líder de proyectos</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="742E7A25" w14:textId="727BF244" w:rsidR="00577AD2" w:rsidRPr="00C00B3F" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:right="-57"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="00C00B3F">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t>Tel: (57-2) 4184006 Ext 146</w:t>
+</w:r>
+<w:r w:rsidR="0061627C">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t xml:space="preserve">                                                            </w:t>
+</w:r>
+<w:r w:rsidR="0061627C" w:rsidRPr="00C00B3F">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t>Tel: (57-2) 4184006 Ext 1</w:t>
+</w:r>
+<w:r w:rsidR="0061627C">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t>05</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="3610C2AC" w14:textId="0ABC431D" w:rsidR="00577AD2" w:rsidRPr="00C00B3F" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:right="-57"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="00C00B3F">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t>Cel: (57) 317 436 0901</w:t>
+</w:r>
+<w:r w:rsidR="0061627C">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t xml:space="preserve">                                                                    </w:t>
+</w:r>
+<w:r w:rsidR="0061627C" w:rsidRPr="00C00B3F">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t xml:space="preserve">Cel: (57) </w:t>
+</w:r>
+<w:r w:rsidR="0061627C">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t>318 358 3951</w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="479F18B8" w14:textId="00AE3029" w:rsidR="00577AD2" w:rsidRPr="00C00B3F" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:widowControl w:val="0"/>
+<w:pBdr>
+<w:top w:val="nil"/>
+<w:left w:val="nil"/>
+<w:bottom w:val="nil"/>
+<w:right w:val="nil"/>
+<w:between w:val="nil"/>
+</w:pBdr>
+<w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+<w:ind w:right="-57"/>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+</w:pPr>
+<w:r w:rsidRPr="00C00B3F">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t xml:space="preserve">Email: </w:t>
+</w:r>
+<w:hyperlink r:id="rId10" w:history="1">
+<w:r w:rsidRPr="00C00B3F">
+<w:rPr>
+<w:rStyle w:val="Hipervnculo"/>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t>ogoyes@novatecfs.com</w:t>
+</w:r>
+</w:hyperlink>
+<w:r w:rsidRPr="00C00B3F">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+<w:r w:rsidR="0061627C">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t xml:space="preserve">                                                       </w:t>
+</w:r>
+<w:r w:rsidR="0061627C" w:rsidRPr="00C00B3F">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t xml:space="preserve">Email: </w:t>
+</w:r>
+<w:hyperlink r:id="rId11" w:history="1">
+<w:r w:rsidR="0061627C" w:rsidRPr="009A5A11">
+<w:rPr>
+<w:rStyle w:val="Hipervnculo"/>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t>proyectos8@novatecfs.com</w:t>
+</w:r>
+</w:hyperlink>
+<w:r w:rsidR="0061627C" w:rsidRPr="00C00B3F">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+<w:lang w:val="en-US"/>
+</w:rPr>
+<w:t xml:space="preserve"> </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="3EEA13AD" w14:textId="77777777" w:rsidR="00477735" w:rsidRDefault="00577AD2" w:rsidP="00577AD2">
+<w:pPr>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:lastRenderedPageBreak/>
+<w:t xml:space="preserve">Cali, Colombia                            </w:t>
+</w:r>
+<w:r w:rsidR="0061627C">
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+<w:t xml:space="preserve">                                                      Cali, Colombia          </w:t>
+</w:r>
+</w:p>
+<w:p w14:paraId="3D8418C5" w14:textId="4C97DB69" w:rsidR="00B027F7" w:rsidRPr="00477735" w:rsidRDefault="00B027F7" w:rsidP="00470482">
+<w:pPr>
+<w:rPr>
+<w:rFonts w:ascii="Arial" w:eastAsia="Arial" w:hAnsi="Arial" w:cs="Arial"/>
+<w:color w:val="000000"/>
+</w:rPr>
+</w:pPr>
+</w:p>
+<w:sectPr w:rsidR="00B027F7" w:rsidRPr="00477735">
+<w:headerReference w:type="default" r:id="rId12"/>
+<w:pgSz w:w="12240" w:h="15840"/>
+<w:pgMar w:top="1985" w:right="1134" w:bottom="1418" w:left="1134" w:header="709" w:footer="709" w:gutter="0"/>
+<w:pgNumType w:start="1"/>
+<w:cols w:space="720"/>
+</w:sectPr>
+</w:body>
+</w:document>

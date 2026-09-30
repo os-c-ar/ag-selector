@@ -81,6 +81,11 @@ function gatherSelectionData() {
     fecha:      v('fecha'),
     cotizacion: v('cotizacion'),
     cliente:    v('cliente'),
+    contactoCliente: v('contactoCliente'),
+    ciudadCliente:   v('ciudadCliente'),
+    telefonoCliente: v('telefonoCliente'),
+    celularCliente:  v('celularCliente'),
+    correoCliente:   v('correoCliente'),
     elaboro:    v('elaboro'),
 
     // Tank identifiers
@@ -175,6 +180,11 @@ function restoreSelectionData(rec) {
   sv('fecha',      rec.fecha);
   sv('cotizacion', rec.cotizacion);
   sv('cliente',    rec.cliente);
+  sv('contactoCliente', rec.contactoCliente);
+  sv('ciudadCliente',   rec.ciudadCliente);
+  sv('telefonoCliente', rec.telefonoCliente);
+  sv('celularCliente',  rec.celularCliente);
+  sv('correoCliente',   rec.correoCliente);
   sv('elaboro',    rec.elaboro);
 
   // Tank identifiers
@@ -295,6 +305,9 @@ function _buildExportRows(record) {
   section('INFORMACION GENERAL');
   lv('Fecha', r.fecha, 'Cotizacion / Pedido No.', r.cotizacion);
   lv('Cliente', r.cliente, 'Elaboro', r.elaboro);
+  lv('Nombre de contacto', r.contactoCliente, 'Ciudad', r.ciudadCliente);
+  lv('Telefono', r.telefonoCliente, 'Celular', r.celularCliente);
+  lv('Correo electronico', r.correoCliente);
   lv('Nombre del Tanque', r.nombreTanque, 'TAG Tanque', r.tagTanque);
   lv('TAG Agitador', r.tagAgitador);
   blank();

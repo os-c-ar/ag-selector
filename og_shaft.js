@@ -49,6 +49,34 @@ function ogFmtInch(v) {
   return (whole > 0 ? whole : '') + (frac[rem] || rem) + '"';
 }
 
+/** Parse numbers from UI fields (supports es-CO like 1.234,56). */
+function ogParseNum(raw) {
+  let s = String(raw ?? '').trim();
+  if (!s || s === '–' || s === '-') return 0;
+  s = s.replace(/\s+/g, '');
+
+  if (s.includes(',') && s.includes('.')) {
+    // 1.234,56 -> 1234.56
+    if (s.lastIndexOf(',') > s.lastIndexOf('.')) {
+      s = s.replace(/\./g, '').replace(',', '.');
+    } else {
+      // 1,234.56 -> 1234.56
+      s = s.replace(/,/g, '');
+    }
+  } else if (s.includes(',')) {
+    // 0,3456 -> 0.3456
+    s = s.replace(',', '.');
+  }
+
+  const n = Number(s);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function ogReadNum(id) {
+  const el = document.getElementById(id);
+  return ogParseNum(el ? el.value : '');
+}
+
 let OG_LAST_SIZES = [];
 
 /** Build the hollow-shaft validation blocks (1" to 8") for the selected schedule */
@@ -104,9 +132,8 @@ function calculateOG() {
   ogBuildHollowBlocks(schedule);
 
   // ── Datos base desde página 1 (Selección de Agitador) ──
-  const P_kW = parseFloat(document.getElementById('motorCercano').value) ||
-               parseFloat(document.getElementById('potAguaTotal').value) || 0;
-  const N_rpm = parseFloat(document.getElementById('rpm').value) || 0;
+  const P_kW = ogReadNum('motorCercano') || ogReadNum('potAguaTotal') || 0;
+  const N_rpm = ogReadNum('rpm') || 0;
 
   document.getElementById('og_P').value = fmt(P_kW, 2);
   document.getElementById('og_N').value = fmt(N_rpm, 0);
@@ -123,12 +150,12 @@ function calculateOG() {
   let sumPcalc = 0;
   const Pcalc = [], Dm = [], Li = [], fHi = [];
   for (let i = 1; i <= 4; i++) {
-    const potAgua = parseFloat(document.getElementById('potAgua' + i).value) || 0; // kW
-    const diam_mm = parseFloat(document.getElementById('diam' + i).value) || 0;    // mm
+    const potAgua = ogReadNum('potAgua' + i) || 0; // kW
+    const diam_mm = ogReadNum('diam' + i) || 0;    // mm
     Pcalc[i] = potAgua * 1000;   // W
     Dm[i]    = diam_mm / 1000;   // m
-    Li[i]    = parseFloat(document.getElementById('og_L' + i).value) || 0;
-    fHi[i]   = parseFloat(document.getElementById('og_fH' + i).value) || 0;
+    Li[i]    = ogReadNum('og_L' + i) || 0;
+    fHi[i]   = ogReadNum('og_fH' + i) || 0;
     sumPcalc += Pcalc[i];
 
     document.getElementById('og_Pcalc' + i).value = fmt(Pcalc[i], 1);
@@ -146,7 +173,7 @@ function calculateOG() {
   document.getElementById('og_Mmax').value = fmt(Mmax, 2);
 
   // ── Diámetro mínimo eje macizo – shear stress ──
-  const sigmaS = (parseFloat(document.getElementById('og_sigmaS').value) || 0) * 1e6; // N/m2
+  const sigmaS = (ogReadNum('og_sigmaS') || 0) * 1e6; // N/m2
   const dsShear_m = sigmaS > 0
     ? Math.pow(16 * Math.sqrt(TQmax * TQmax + Mmax * Mmax) / (Math.PI * sigmaS), 1 / 3)
     : 0;
@@ -155,7 +182,7 @@ function calculateOG() {
   document.getElementById('og_dsShear_in').value = fmt(dsShear_in, 3);
 
   // ── Diámetro mínimo eje macizo – tensile stress ──
-  const sigmaT = (parseFloat(document.getElementById('og_sigmaT').value) || 0) * 1e6; // N/m2
+  const sigmaT = (ogReadNum('og_sigmaT') || 0) * 1e6; // N/m2
   const dsTensile_m = sigmaT > 0
     ? Math.pow(16 * (Mmax + Math.sqrt(TQmax * TQmax + Mmax * Mmax)) / (Math.PI * sigmaT), 1 / 3)
     : 0;

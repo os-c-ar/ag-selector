@@ -465,6 +465,27 @@ function attachListeners() {
   [1, 2, 3, 4].forEach(n => {
     document.getElementById('modelo' + n).addEventListener('change', calculate);
   });
+
+  const actionsMenu = document.getElementById('actionsMenu');
+  if (actionsMenu) {
+    actionsMenu.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        actionsMenu.removeAttribute('open');
+      });
+    });
+
+    document.addEventListener('click', ev => {
+      if (!actionsMenu.contains(ev.target)) {
+        actionsMenu.removeAttribute('open');
+      }
+    });
+
+    document.addEventListener('keydown', ev => {
+      if (ev.key === 'Escape') {
+        actionsMenu.removeAttribute('open');
+      }
+    });
+  }
 }
 
 function setDefaultDate() {

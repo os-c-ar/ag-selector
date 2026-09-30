@@ -27,7 +27,32 @@
       </div>
       <div class="meta-row">
         <label>CLIENTE:</label>
-        <input type="text" id="cliente" placeholder="Nombre del cliente" />
+        <div class="meta-client-wrap">
+          <input type="text" id="cliente" list="clientesList" placeholder="Nombre del cliente" />
+          <button type="button" class="btn-mini-clientes" onclick="openClientsModal()" title="Administrar clientes">👥</button>
+        </div>
+        <datalist id="clientesList"></datalist>
+      </div>
+      <div class="meta-row">
+        <label>CONTACTO:</label>
+        <input type="text" id="contactoCliente" list="contactsList" placeholder="Nombre de contacto" />
+        <datalist id="contactsList"></datalist>
+      </div>
+      <div class="meta-row">
+        <label>CIUDAD:</label>
+        <input type="text" id="ciudadCliente" placeholder="Ciudad" />
+      </div>
+      <div class="meta-row">
+        <label>TELÉFONO:</label>
+        <input type="text" id="telefonoCliente" placeholder="Teléfono" />
+      </div>
+      <div class="meta-row">
+        <label>CELULAR:</label>
+        <input type="text" id="celularCliente" placeholder="Celular" />
+      </div>
+      <div class="meta-row">
+        <label>CORREO:</label>
+        <input type="text" id="correoCliente" placeholder="Correo electrónico" />
       </div>
       <div class="meta-row">
         <label>ELABORÓ:</label>
@@ -35,15 +60,21 @@
       </div>
     </div>
     <div class="header-actions">
-      <button id="btnSaveSelection" class="btn-save-sel" onclick="saveCurrentSelection()">💾 Guardar selección</button>
-      <button class="btn-history" onclick="openRecordsModal()">
-        📋 Historial
-        <span id="recBadge" class="rec-badge" style="display:none"></span>
-      </button>
-      <button class="btn-print" onclick="generateOfferDraft()">🧾 Borrador oferta</button>
-      <button class="btn-database" onclick="openDbModal()">🗄 Base de datos</button>
-      <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
-      <button class="btn-print" onclick="generarMemoriaEje()">📄 Memoria de cálculo (Eje)</button>
+      <details class="actions-menu" id="actionsMenu">
+        <summary class="actions-trigger">☰ Opciones</summary>
+        <div class="actions-menu-list">
+          <button id="btnSaveSelection" class="btn-save-sel" onclick="saveCurrentSelection()">💾 Guardar selección</button>
+          <button class="btn-history" onclick="openRecordsModal()">
+            📋 Historial
+            <span id="recBadge" class="rec-badge" style="display:none"></span>
+          </button>
+          <button class="btn-print" onclick="openClientsModal()">👥 Clientes</button>
+          <button class="btn-print" onclick="generateOfferDraft()">🧾 Borrador oferta</button>
+          <button class="btn-database" onclick="openDbModal()">🗄 Base de datos</button>
+          <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
+          <button class="btn-print" onclick="generarMemoriaEje()">📄 Memoria de cálculo (Eje)</button>
+        </div>
+      </details>
     </div>
   </header>
 
@@ -1369,7 +1400,64 @@
     </div>
   </div>
 
+  <!-- ===== CLIENTS MODAL ===== -->
+  <div id="clientsModal" class="modal-overlay hidden" onclick="_clientsModalOverlayClick(event)">
+    <div class="modal-container modal-wide">
+
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <span class="modal-icon">👥</span>
+          <h2>Base de Datos de Clientes y Contactos</h2>
+        </div>
+        <button class="modal-close" onclick="closeClientsModal()" title="Cerrar">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-hint">
+          Un cliente puede tener varios contactos. Registre cada contacto con estos datos mínimos:
+          <strong>Cliente, Ciudad, Teléfono, Celular, Correo Electrónico y Nombre de Contacto.</strong>
+        </div>
+
+        <div class="clients-toolbar">
+          <label for="clientFilter">Filtrar cliente:</label>
+          <select id="clientFilter" class="input-select" onchange="clientsRenderTable()">
+            <option value="">Todos</option>
+          </select>
+          <button class="btn-db-add" onclick="clientsAddRow()">＋ Agregar contacto</button>
+        </div>
+
+        <table class="db-table rec-table clients-table">
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Ciudad</th>
+              <th>Teléfono</th>
+              <th>Celular</th>
+              <th>Correo electrónico</th>
+              <th>Nombre de contacto</th>
+              <th class="rec-td-actions">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="clientsTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <div class="modal-footer-left">
+          <button class="btn-db-reset" onclick="clientsResetAll()">↺ Vaciar base de clientes</button>
+        </div>
+        <div class="modal-footer-right">
+          <button class="btn-modal-io" onclick="clientsImportJSON()" title="Cargar desde archivo JSON">⬆ Importar</button>
+          <button class="btn-modal-io" onclick="clientsExportJSON()" title="Descargar como archivo JSON">⬇ Exportar</button>
+          <button class="btn-modal-close" onclick="closeClientsModal()">Cerrar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <script src="database.js"></script>
+  <script src="clients.js"></script>
   <script src="diagram.js"></script>
   <script src="coding.js"></script>
   <script src="calculator.js"></script>
@@ -1383,6 +1471,9 @@
     }
     function _recModalOverlayClick(e) {
       if (e.target === document.getElementById('recModal')) closeRecordsModal();
+    }
+    function _clientsModalOverlayClick(e) {
+      if (e.target === document.getElementById('clientsModal')) closeClientsModal();
     }
   </script>
 </body>
