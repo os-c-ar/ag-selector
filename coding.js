@@ -118,6 +118,26 @@ const APP_TO_COD = {
   'N.A.':         'NO APLICA',
 };
 
+/* Parse numbers from UI values (supports es-CO format). */
+function codParseNum(raw) {
+  let s = String(raw ?? '').trim();
+  if (!s || s === '–' || s === '-') return 0;
+  s = s.replace(/\s+/g, '');
+
+  if (s.includes(',') && s.includes('.')) {
+    if (s.lastIndexOf(',') > s.lastIndexOf('.')) {
+      s = s.replace(/\./g, '').replace(',', '.');
+    } else {
+      s = s.replace(/,/g, '');
+    }
+  } else if (s.includes(',')) {
+    s = s.replace(',', '.');
+  }
+
+  const n = Number(s);
+  return Number.isFinite(n) ? n : 0;
+}
+
 /* ── Code generation ──────────────────────────────────── */
 
 function buildAgitatorCode() {
@@ -131,8 +151,8 @@ function buildAgitatorCode() {
   const tipo2  = g('cod_tipo2')?.value     || 'NO APLICA';
   const num2   = parseInt(g('cod_num2')?.value)    || 1;
   const diam2  = parseInt(g('cod_diam2')?.value)   || 0;
-  const ejeM   = parseFloat(g('cod_eje')?.value)   || 0;
-  const pot    = parseFloat(g('cod_potencia')?.value) || 0;
+  const ejeM   = codParseNum(g('cod_eje')?.value) || 0;
+  const pot    = codParseNum(g('cod_potencia')?.value) || 0;
   const rpm    = parseInt(g('cod_rpm')?.value)     || 0;
   const vel    = g('cod_velocidad')?.value || 'VELOCIDAD DIRECTA';
   const mot    = g('cod_motor')?.value     || 'TRIFASICO';
@@ -257,11 +277,11 @@ function updateCodingFromCalc() {
   _setSelect('cod_diam2', String(Math.round(tipo2K !== 'NO APLICA' ? (groups.get(tipo2K)?.firstDiam || 0) : 0)));
 
   /* Shaft length (m → keep as m, the generator converts to dm) */
-  const L = parseFloat(g('longitudEje')?.value) || 0;
-  if (g('cod_eje') && L > 0) g('cod_eje').value = L;
+  const L = codParseNum(g('longitudEje')?.value) || 0;
+  if (g('cod_eje') && L > 0) g('cod_eje').value = L.toFixed(1);
 
   /* Motor power */
-  const mot = parseFloat(g('motorCercano')?.value) || 0;
+  const mot = codParseNum(g('motorCercano')?.value) || 0;
   if (g('cod_potencia') && mot > 0) g('cod_potencia').value = mot;
 
   /* RPM */

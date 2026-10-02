@@ -1270,6 +1270,47 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
 }
 
 /* =====================================================
+   COSTEO TAB
+   ===================================================== */
+.cost-table-wrap {
+  overflow-x: auto;
+}
+
+.cost-table {
+  min-width: 980px;
+}
+
+.cost-table input,
+.cost-table select {
+  width: 100%;
+  min-width: 110px;
+}
+
+.cost-table td:first-child {
+  font-weight: 700;
+  color: var(--gray-600);
+  white-space: nowrap;
+}
+
+@media (max-width: 1200px) {
+  .cost-table {
+    min-width: 860px;
+  }
+}
+
+.cst-status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.cst-status-ok    { background: var(--green-lt); color: var(--green); }
+.cst-status-warn  { background: var(--orange-lt); color: var(--orange); }
+.cst-status-error { background: var(--red-lt);   color: var(--red); }
+
+/* =====================================================
    PRINT STYLES
    ===================================================== */
 @media print {

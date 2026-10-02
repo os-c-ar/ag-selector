@@ -71,6 +71,7 @@
           <button class="btn-print" onclick="openClientsModal()">👥 Clientes</button>
           <button class="btn-print" onclick="generateOfferDraft()">🧾 Borrador oferta</button>
           <button class="btn-database" onclick="openDbModal()">🗄 Base de datos</button>
+          <button class="btn-database" onclick="openCostPartsModal()">💲 Base partes costeo</button>
           <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
           <button class="btn-print" onclick="generarMemoriaEje()">📄 Memoria de cálculo (Eje)</button>
         </div>
@@ -83,6 +84,7 @@
     <button class="tab-btn active" onclick="switchTab(1)" id="tabBtn1">① Selección de Agitador</button>
     <button class="tab-btn" onclick="switchTab(2)" id="tabBtn2" >② Diseño del Eje</button>
     <button class="tab-btn" onclick="switchTab(3)" id="tabBtn3" >③ Eje  (OG)</button>
+    <button class="tab-btn" onclick="switchTab(4)" id="tabBtn4" >④ Costeo Agitador</button>
   </nav>
 
   <div id="page1" class="page-content">
@@ -1301,9 +1303,199 @@
   </div><!-- end main-content -->
   </div><!-- end page3 -->
 
+  <div id="page4" class="page-content hidden">
+  <div class="main-content">
+
+    <section class="card">
+      <h2 class="section-title">PLANTILLA DE COSTEO DE AGITADOR</h2>
+      <div class="section-body">
+        <p class="section-note">Interfaz basada en la hoja <strong>PLANTILLA DE P. (2)</strong> del archivo de referencia. Cada renglón permite elegir la categoría del material (igual que la columna A del origen) y el código se filtra dinámicamente contra la base de partes administrable, igual que el VLOOKUP contra "P. PARTES".</p>
+        <div class="form-grid">
+          <div class="form-row">
+            <label class="field-label">Modelo del agitador:</label>
+            <input type="text" id="cst_modelo" class="input-calc" readonly />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Código de equipo (costeo):</label>
+            <input type="text" id="cst_codigo_equipo" class="input-value" placeholder="Ej. V3AL-29H108S" />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Cotización No.:</label>
+            <input type="text" id="cst_cotizacion_no" class="input-value" />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Fecha:</label>
+            <input type="text" id="cst_fecha" class="input-calc" readonly />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Elaboró:</label>
+            <input type="text" id="cst_elaboro" class="input-calc" readonly />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Dólar:</label>
+            <input type="number" id="cst_dolar" class="input-value" step="1" min="1" />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Factor de protección (dólar, inflación) K7:</label>
+            <input type="number" id="cst_k7" class="input-value" step="0.01" min="0" />
+          </div>
+        </div>
+
+        <div class="subsection-title" style="margin-top:10px">Dimensiones de empaque</div>
+        <div class="form-grid">
+          <div class="form-row"><label class="field-label">Largo:</label><input type="number" id="cst_pack_l" class="input-value" step="0.01" min="0" /><span class="unit">m</span></div>
+          <div class="form-row"><label class="field-label">Ancho:</label><input type="number" id="cst_pack_w" class="input-value" step="0.01" min="0" /><span class="unit">m</span></div>
+          <div class="form-row"><label class="field-label">Alto:</label><input type="number" id="cst_pack_h" class="input-value" step="0.01" min="0" /><span class="unit">m</span></div>
+          <div class="form-row"><label class="field-label">Peso:</label><input type="number" id="cst_pack_peso" class="input-value" step="1" min="0" /><span class="unit">kg</span></div>
+          <div class="form-row full-width"><label class="field-label">Resumen empaque:</label><input type="text" id="cst_pack_resumen" class="input-calc wide" readonly /></div>
+        </div>
+
+        <div class="cost-table-wrap mt-20">
+          <table class="db-table cost-table">
+            <thead>
+              <tr>
+                <th>Categoría</th>
+                <th>Código</th>
+                <th>Descripción</th>
+                <th>Cant</th>
+                <th>Valor unitario</th>
+                <th>Factor</th>
+                <th>Valor parcial</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="cstRowsBody"></tbody>
+          </table>
+        </div>
+
+        <div class="subsection-title" style="margin-top:14px">Resumen materiales</div>
+        <div class="form-grid">
+          <div class="form-row">
+            <label class="field-label">Subtotal materiales:</label>
+            <input type="text" id="cst_subtotal_mat" class="input-calc" readonly />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Imprevistos (%):</label>
+            <input type="number" id="cst_imprevistos_pct" class="input-value" step="0.001" min="0" max="0.99" />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Valor imprevistos:</label>
+            <input type="text" id="cst_imprevistos_val" class="input-calc" readonly />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Total costo materiales:</label>
+            <input type="text" id="cst_total_mat" class="input-calc highlight-orange" readonly />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Margen materiales (%):</label>
+            <input type="number" id="cst_margen_materiales_pct" class="input-value" step="0.001" min="0" max="0.99" />
+          </div>
+          <div class="form-row">
+            <label class="field-label">Margen materiales (valor):</label>
+            <input type="text" id="cst_margen_materiales_val" class="input-calc" readonly />
+          </div>
+        </div>
+
+        <div class="subsection-title" style="margin-top:14px">Ingeniería y adicionales</div>
+        <div class="form-grid">
+          <div class="form-row"><label class="field-label">Cotización Dir. Proyectos (h):</label><input type="number" id="cst_ing_dir_h" class="input-value" step="0.1" min="0" /></div>
+          <div class="form-row"><label class="field-label">Tarifa Dir. Proyectos:</label><input type="number" id="cst_ing_dir_rate" class="input-value" step="1" min="0" /></div>
+          <div class="form-row"><label class="field-label">Cotización Ing. Proyectos (d):</label><input type="number" id="cst_ing_proj_d" class="input-value" step="0.1" min="0" /></div>
+          <div class="form-row"><label class="field-label">Tarifa Ing. Proyectos:</label><input type="number" id="cst_ing_proj_rate" class="input-value" step="1" min="0" /></div>
+          <div class="form-row"><label class="field-label">Manejo pedido Ing. Proyectos (d):</label><input type="number" id="cst_manejo_pedido_d" class="input-value" step="0.1" min="0" /></div>
+          <div class="form-row"><label class="field-label">Tarifa manejo pedido:</label><input type="number" id="cst_manejo_pedido_rate" class="input-value" step="1" min="0" /></div>
+          <div class="form-row"><label class="field-label">Manejo pedido Asis. Cont. (d):</label><input type="number" id="cst_asis_cont_d" class="input-value" step="0.1" min="0" /></div>
+          <div class="form-row"><label class="field-label">Tarifa Asis. Cont.:</label><input type="number" id="cst_asis_cont_rate" class="input-value" step="1" min="0" /></div>
+          <div class="form-row"><label class="field-label">Subtotal ingeniería:</label><input type="text" id="cst_ing_subtotal" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Margen ingeniería (%):</label><input type="number" id="cst_margen_ingenieria_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
+          <div class="form-row"><label class="field-label">Margen ingeniería (valor):</label><input type="text" id="cst_margen_ingenieria_val" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Costo financiero (%):</label><input type="number" id="cst_financiero_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
+          <div class="form-row"><label class="field-label">Costo financiero (valor):</label><input type="text" id="cst_financiero_val" class="input-calc" readonly /></div>
+        </div>
+
+        <div class="subsection-title" style="margin-top:14px">Resultados de venta</div>
+        <div class="form-grid">
+          <div class="form-row full-width">
+            <label class="field-label">¿Precio sugerido para distribuidor?</label>
+            <div class="radio-group">
+              <label class="radio-label"><input type="radio" name="cst_distribuidor" value="SI" /> SI</label>
+              <label class="radio-label"><input type="radio" name="cst_distribuidor" value="NO" checked /> NO</label>
+            </div>
+          </div>
+          <div class="form-row"><label class="field-label">Valor de venta OPTA NFS:</label><input type="text" id="cst_venta_nfs" class="input-calc highlight-result" readonly /></div>
+          <div class="form-row"><label class="field-label">Valor de venta OPTA NFS (USD):</label><input type="text" id="cst_venta_nfs_usd" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Margen sugerido (%):</label><input type="number" id="cst_margen_sugerido_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
+          <div class="form-row"><label class="field-label" id="cst_lbl_39">Margen sugerido (valor):</label><input type="text" id="cst_margen_sugerido_val" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label" id="cst_lbl_39b">Precio distribuidor:</label><input type="text" id="cst_precio_dist" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Precio distribuidor (USD):</label><input type="text" id="cst_precio_dist_usd" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Margen negociación (%):</label><input type="number" id="cst_margen_neg_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
+          <div class="form-row"><label class="field-label" id="cst_lbl_40">Margen de Negociación (valor):</label><input type="text" id="cst_margen_neg_val" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label" id="cst_lbl_41">Precio sugerido al cliente:</label><input type="text" id="cst_precio_cliente" class="input-calc highlight-result" readonly /></div>
+          <div class="form-row"><label class="field-label">Precio sugerido al cliente (USD):</label><input type="text" id="cst_precio_cliente_usd" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Margen global (base materiales):</label><input type="text" id="cst_rentabilidad" class="input-calc" readonly /></div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- end main-content -->
+  </div><!-- end page4 -->
+
   <footer class="page-footer">
     <p>NFS – Mezcladores &amp; Agitadores Industriales | Herramienta de Selección v1.0</p>
   </footer>
+
+  <!-- ===== COST PARTS MODAL ===== -->
+  <div id="costPartsModal" class="modal-overlay hidden" onclick="_costPartsModalOverlayClick(event)">
+    <div class="modal-container modal-wide">
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <span class="modal-icon">💲</span>
+          <h2>Base de Partes para Costeo (P. PARTES)</h2>
+        </div>
+        <button class="modal-close" onclick="closeCostPartsModal()" title="Cerrar">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-hint">Administre códigos, descripciones y precios por categoría (MOTOREDUCTOR, PROPELAS, ACOPLE_BRIDADO, ACOPLE_DIRECTO, EJE_TUBULAR, EJE_MACIZO, PLETINAS, PERNOS, PLACA). Estos alimentan el código/precio/descripción de cada renglón de la pestaña de costeo, igual que el VLOOKUP contra "P. PARTES" del archivo origen.</div>
+
+        <table class="db-table rec-table clients-table">
+          <thead>
+            <tr>
+              <th>Categoría</th>
+              <th>Código</th>
+              <th>Descripción</th>
+              <th>Precio</th>
+              <th class="rec-td-actions">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="costPartsTableBody"></tbody>
+        </table>
+
+        <div class="form-grid mt-20">
+          <div class="form-row">
+            <label class="field-label">Categoría:</label>
+            <select id="cp_new_categoria" class="input-select"></select>
+          </div>
+          <div class="form-row"><label class="field-label">Código:</label><input id="cp_new_codigo" class="input-value" placeholder="P3-NGCS" /></div>
+          <div class="form-row"><label class="field-label">Descripción:</label><input id="cp_new_desc" class="input-value" placeholder="Descripción de la parte" /></div>
+          <div class="form-row"><label class="field-label">Precio:</label><input id="cp_new_precio" type="number" min="0" step="1" class="input-value" placeholder="0" /></div>
+          <div class="form-row"><button class="btn-db-add" type="button" onclick="addCostPartRow()">＋ Agregar parte</button></div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="modal-footer-left">
+          <button class="btn-db-reset" onclick="resetCostParts()">↺ Restaurar predeterminados</button>
+        </div>
+        <div class="modal-footer-right">
+          <button class="btn-modal-io" onclick="importCostPartsFromExcel()" title="Importar hoja P. PARTES desde Excel">📊 Importar P. PARTES (Excel)</button>
+          <button class="btn-modal-io" onclick="importCostPartsJSON()">⬆ Importar</button>
+          <button class="btn-modal-io" onclick="exportCostPartsJSON()">⬇ Exportar</button>
+          <button class="btn-modal-close" onclick="closeCostPartsModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== DB MODAL ===== -->
   <div id="dbModal" class="modal-overlay hidden" onclick="_dbModalOverlayClick(event)">
@@ -1460,6 +1652,8 @@
   <script src="clients.js"></script>
   <script src="diagram.js"></script>
   <script src="coding.js"></script>
+  <script src="costeo_db.js"></script>
+  <script src="costeo.js"></script>
   <script src="calculator.js"></script>
   <script src="shaft.js"></script>
   <script src="og_shaft.js"></script>

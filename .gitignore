@@ -1,0 +1,6 @@
+desktop.ini
+Thumbs.db
+~$*
+*.tmp
+.tmp_docx_out/
+.tmp_docx_template/

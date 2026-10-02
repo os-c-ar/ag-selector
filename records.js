@@ -75,6 +75,13 @@ function gatherSelectionData() {
   const v  = id => { const el = document.getElementById(id); return el ? el.value : ''; };
   const rb = name => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; };
   const tx = id => { const el = document.getElementById(id); return el ? el.textContent.trim() : ''; };
+  const collectByPrefix = prefix => {
+    const out = {};
+    document.querySelectorAll(`[id^="${prefix}"]`).forEach(el => {
+      if ('value' in el) out[el.id] = el.value;
+    });
+    return out;
+  };
 
   return {
     // Header
@@ -135,6 +142,7 @@ function gatherSelectionData() {
     cod_material:  v('cod_material'),
     cod_adicional: v('cod_adicional'),
     codigoAgitador: tx('cod_resultado'),
+    costeoFields: { ...collectByPrefix('cst_'), cst_distribuidor: rb('cst_distribuidor') },
 
     // Computed results (display-only in records; not re-applied on restore)
     resultados: {
@@ -249,9 +257,14 @@ function restoreSelectionData(rec) {
   sv('cod_material',  rec.cod_material);
   sv('cod_adicional', rec.cod_adicional);
 
+  if (rec.costeoFields && typeof restoreCosteoFromRecord === 'function') {
+    restoreCosteoFromRecord(rec.costeoFields);
+  }
+
   // Trigger full recalculation
   if (typeof calculate        === 'function') calculate();
   if (typeof buildAgitatorCode === 'function') buildAgitatorCode();
+  if (typeof calculateCosteo === 'function') calculateCosteo();
 }
 
 // =====================================================

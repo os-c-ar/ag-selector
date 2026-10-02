@@ -234,6 +234,7 @@ function _buildOfferPlaceholderMap(data) {
     motoreductor_seleccionado: data.motoreductorSeleccionado,
     codigo_agitador: data.codigoAgitador,
     comentarios: data.comentarios,
+    observaciones: data.comentarios,
     cod_tipo1: data.cod_tipo1,
     cod_num1: data.cod_num1,
     cod_diam1: data.cod_diam1,

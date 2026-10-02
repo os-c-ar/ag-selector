@@ -388,6 +388,7 @@ function calculate() {
 
   /* ── Coding section ── */
   if (typeof updateCodingFromCalc === 'function') updateCodingFromCalc();
+  if (typeof updateCostingFromSelection === 'function') updateCostingFromSelection();
 }
 
 // =====================================================
