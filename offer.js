@@ -58,16 +58,21 @@ function _offerCurrentData() {
       pctFondo: fromGather.pctFondo || '',
       prop1Tipo: (props[0] && props[0].tipo) || '',
       prop1Modelo: (props[0] && props[0].modelo) || '',
+      prop1Diametro: (props[0] && props[0].diametro) || '',
       prop2Tipo: (props[1] && props[1].tipo) || '',
       prop2Modelo: (props[1] && props[1].modelo) || '',
+      prop2Diametro: (props[1] && props[1].diametro) || '',
       prop3Tipo: (props[2] && props[2].tipo) || '',
       prop3Modelo: (props[2] && props[2].modelo) || '',
+      prop3Diametro: (props[2] && props[2].diametro) || '',
       prop4Tipo: (props[3] && props[3].tipo) || '',
       prop4Modelo: (props[3] && props[3].modelo) || '',
+      prop4Diametro: (props[3] && props[3].diametro) || '',
       agitadorSeleccionado: fromGather.agitadorSeleccionado || '',
       motoreductorSeleccionado: fromGather.motoreductorSeleccionado || '',
       codigoAgitador: fromGather.codigoAgitador || '',
       comentarios: fromGather.comentarios || '',
+      consideraciones: [...document.querySelectorAll('.input-comentario-line')].map(i => i.value || ''),
       cod_tipo1: fromGather.cod_tipo1 || '',
       cod_num1: fromGather.cod_num1 || '',
       cod_diam1: fromGather.cod_diam1 || '',
@@ -136,16 +141,21 @@ function _offerCurrentData() {
     pctFondo: _offerField('pctFondo'),
     prop1Tipo: _offerField('tipo1'),
     prop1Modelo: _offerField('modelo1'),
+    prop1Diametro: _offerField('diam1'),
     prop2Tipo: _offerField('tipo2'),
     prop2Modelo: _offerField('modelo2'),
+    prop2Diametro: _offerField('diam2'),
     prop3Tipo: _offerField('tipo3'),
     prop3Modelo: _offerField('modelo3'),
+    prop3Diametro: _offerField('diam3'),
     prop4Tipo: _offerField('tipo4'),
     prop4Modelo: _offerField('modelo4'),
+    prop4Diametro: _offerField('diam4'),
     agitadorSeleccionado: _offerField('agitadorSeleccionado'),
     motoreductorSeleccionado: _offerField('motoreductorSeleccionado'),
     codigoAgitador: _offerText('cod_resultado'),
     comentarios: _offerField('comentarios'),
+    consideraciones: [...document.querySelectorAll('.input-comentario-line')].map(i => i.value || ''),
     potenciaRequerida: _offerField('potenciaRequerida'),
     numPropelas: _offerField('numPropelas'),
     nivelAgitacion: _offerField('nivelAgitacion'),
@@ -194,7 +204,7 @@ function _xmlEsc(v) {
 }
 
 function _buildOfferPlaceholderMap(data) {
-  return {
+  const map = {
     fecha: data.fecha,
     cliente: data.cliente,
     contacto_cliente: data.contactoCliente,
@@ -222,12 +232,16 @@ function _buildOfferPlaceholderMap(data) {
     pct_fondo: data.pctFondo,
     propela1_tipo: data.prop1Tipo,
     propela1_modelo: data.prop1Modelo,
+    propela1_diametro: data.prop1Diametro,
     propela2_tipo: data.prop2Tipo,
     propela2_modelo: data.prop2Modelo,
+    propela2_diametro: data.prop2Diametro,
     propela3_tipo: data.prop3Tipo,
     propela3_modelo: data.prop3Modelo,
+    propela3_diametro: data.prop3Diametro,
     propela4_tipo: data.prop4Tipo,
     propela4_modelo: data.prop4Modelo,
+    propela4_diametro: data.prop4Diametro,
     agitador: data.agitadorSeleccionado,
     agitador_seleccionado: data.agitadorSeleccionado,
     motoreductor: data.motoreductorSeleccionado,
@@ -273,6 +287,53 @@ function _buildOfferPlaceholderMap(data) {
     potencia_requerida: data.potenciaRequerida,
     motor_cercano: data.motorCercano,
   };
+
+  // One variable per line typed under "CONSIDERACIONES TÉCNICAS PARTICULARES":
+  // {{consideracion1}}, {{consideracion2}}, ... up to CONSIDERACIONES_MAX.
+  const CONSIDERACIONES_MAX = 10;
+  const consideraciones = Array.isArray(data.consideraciones) ? data.consideraciones : [];
+  for (let i = 1; i <= Math.max(CONSIDERACIONES_MAX, consideraciones.length); i++) {
+    map[`consideracion${i}`] = consideraciones[i - 1] || '';
+  }
+
+  return map;
+}
+
+// Word often splits one paragraph's text across several <w:t> nodes (autocorrect/spellcheck
+// as you type), so a placeholder like {{propela2_tipo}} can land half in one node and half
+// in the next, which the plain regex replace below would never match. A regex-based scan for
+// <w:p>...</w:p> is unsafe here because templates can contain nested <w:p> (e.g. text boxes
+// in a letterhead), which misaligns the match and corrupts the XML. Parse it as real XML
+// instead and only rewrite text content, leaving every tag exactly where it was.
+function _normalizePlaceholderRuns(xml) {
+  let doc;
+  try {
+    doc = new DOMParser().parseFromString(xml, 'application/xml');
+    if (doc.getElementsByTagName('parsererror').length) return xml;
+  } catch (e) {
+    return xml;
+  }
+
+  Array.from(doc.getElementsByTagName('w:p')).forEach(p => {
+    if (p.getElementsByTagName('w:p').length > 0) return; // nested paragraph (text box): skip, don't risk it
+    const tNodes = Array.from(p.getElementsByTagName('w:t'));
+    if (tNodes.length < 2) return;
+    const combined = tNodes.map(t => t.textContent).join('');
+    if (!/\{\{|\$\{|\[\[/.test(combined)) return;
+    tNodes.forEach((t, idx) => {
+      if (idx === 0) {
+        t.textContent = combined;
+        t.setAttribute('xml:space', 'preserve');
+      } else {
+        t.textContent = '';
+      }
+    });
+  });
+
+  let serialized = new XMLSerializer().serializeToString(doc);
+  const declMatch = xml.match(/^<\?xml[^>]*\?>/);
+  if (declMatch && !/^<\?xml/.test(serialized)) serialized = declMatch[0] + serialized;
+  return serialized;
 }
 
 function _replaceKnownPlaceholders(xml, data) {
@@ -400,7 +461,8 @@ async function generateOfferDraft() {
     }
 
     const originalXml = f.asText();
-    const replaced = _replaceKnownPlaceholders(originalXml, data);
+    const normalizedXml = _normalizePlaceholderRuns(originalXml);
+    const replaced = _replaceKnownPlaceholders(normalizedXml, data);
     const finalXml = replaced.replacements > 0
       ? replaced.xml
       : _appendOfferBlock(originalXml, data);

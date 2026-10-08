@@ -283,6 +283,7 @@ async function dbConnectFile() {
     }
 
     NFS_DB.setFileHandle(handle);
+    await NFS_HANDLES.save('database', handle);
     _dbUpdateFileStatus();
 
   } catch (e) {
@@ -372,3 +373,14 @@ function _esc(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 }
+
+async function _dbTryAutoReconnect() {
+  const handle = await NFS_HANDLES.load('database');
+  if (!handle) return;
+  const ok = await NFS_HANDLES.ensurePermission(handle);
+  if (!ok) return;
+  NFS_DB.setFileHandle(handle);
+  _dbUpdateFileStatus();
+}
+
+document.addEventListener('DOMContentLoaded', _dbTryAutoReconnect);

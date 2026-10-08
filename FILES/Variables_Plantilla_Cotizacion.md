@@ -64,10 +64,10 @@ por el valor actual del formulario.
 | `rpm_max` | RPM máxima permitida |
 | `num_propelas` | Número de propelas requeridas |
 | `pct_fondo` | % ubicación propela 1 desde el fondo |
-| `propela1_tipo` / `propela1_modelo` | Tipo y modelo propela 1 |
-| `propela2_tipo` / `propela2_modelo` | Tipo y modelo propela 2 |
-| `propela3_tipo` / `propela3_modelo` | Tipo y modelo propela 3 |
-| `propela4_tipo` / `propela4_modelo` | Tipo y modelo propela 4 |
+| `propela1_tipo` / `propela1_modelo` / `propela1_diametro` | Tipo, modelo y diámetro propela 1 |
+| `propela2_tipo` / `propela2_modelo` / `propela2_diametro` | Tipo, modelo y diámetro propela 2 |
+| `propela3_tipo` / `propela3_modelo` / `propela3_diametro` | Tipo, modelo y diámetro propela 3 |
+| `propela4_tipo` / `propela4_modelo` / `propela4_diametro` | Tipo, modelo y diámetro propela 4 |
 | `caudal1` ... `caudal4` | Caudal acumulado con 1 a 4 propelas |
 | `vueltas` | Renovaciones por hora |
 | `pot_agua1` ... `pot_agua4` | Potencia absorbida en agua por propela |
@@ -103,7 +103,8 @@ por el valor actual del formulario.
 
 | Variable | Descripción |
 |---|---|
-| `comentarios` / `observaciones` | Texto de la sección 14 (alias equivalentes) |
+| `comentarios` / `observaciones` | Texto completo de la sección 14 (todas las líneas unidas) |
+| `consideracion1`, `consideracion2`, ... `consideracion10` | Cada línea individual de "CONSIDERACIONES TÉCNICAS PARTICULARES", en el orden en que aparecen (vacía si no se usó esa línea) |
 | `moneda_oferta` | Moneda de la oferta |
 | `sitio_entrega` | Sitio de entrega |
 

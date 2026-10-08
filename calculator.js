@@ -495,6 +495,57 @@ function setDefaultDate() {
   document.getElementById('fecha').value = iso;
 }
 
+/* =====================================================
+   CONSIDERACIONES TÉCNICAS PARTICULARES (dynamic lines)
+   Each line is a single-text-input row; the hidden
+   #comentarios textarea stays in sync (joined by "\n")
+   so every other module (records, offer, exports) keeps
+   reading/writing a single "comentarios" string.
+   ===================================================== */
+function _comentariosSyncHidden() {
+  const hidden = document.getElementById('comentarios');
+  if (!hidden) return;
+  const lines = [...document.querySelectorAll('.input-comentario-line')].map(i => i.value);
+  hidden.value = lines.join('\n');
+}
+
+function addComentarioField(value) {
+  const list = document.getElementById('comentariosList');
+  if (!list) return;
+  const row = document.createElement('div');
+  row.className = 'comentario-row';
+  row.innerHTML =
+    '<input type="text" class="input-comentario-line" placeholder="Ingresar consideración técnica..." />' +
+    '<button type="button" class="btn-db btn-db-del" onclick="removeComentarioField(this)">🗑</button>';
+  const input = row.querySelector('.input-comentario-line');
+  input.value = value || '';
+  input.addEventListener('input', _comentariosSyncHidden);
+  list.appendChild(row);
+  _comentariosSyncHidden();
+  return input;
+}
+
+function removeComentarioField(btn) {
+  const list = document.getElementById('comentariosList');
+  btn.closest('.comentario-row').remove();
+  if (list && !list.children.length) addComentarioField('');
+  _comentariosSyncHidden();
+}
+
+/** Rebuilds the dynamic lines from a stored "comentarios" string (newline-separated). */
+function renderComentariosFromString(str) {
+  const list = document.getElementById('comentariosList');
+  if (!list) return;
+  list.innerHTML = '';
+  const lines = String(str || '').split('\n').filter(l => l.trim() !== '');
+  if (!lines.length) {
+    addComentarioField('');
+    addComentarioField('');
+    return;
+  }
+  lines.forEach(l => addComentarioField(l));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   NFS_DB.load();
   setDefaultDate();
@@ -502,5 +553,6 @@ document.addEventListener('DOMContentLoaded', () => {
   buildReferenceTable();
   initModelDropdowns();
   attachListeners();
+  renderComentariosFromString('');
   calculate();
 });

@@ -8,10 +8,34 @@
 
 const NFS_CLIENTS = (function () {
   const KEY = 'nfs_clients_v1';
+  const HANDLE_KEY = 'clients';
   let _data = null;
+  let _fileHandle = null; // FileSystemFileHandle (File System Access API)
 
   function _persist() {
     try { localStorage.setItem(KEY, JSON.stringify(_data)); } catch (e) {}
+  }
+
+  /* ── File System Access API write-through ── */
+  async function _writeFile() {
+    if (!_fileHandle) return;
+    try {
+      const ok = await NFS_HANDLES.ensurePermission(_fileHandle);
+      if (!ok) { _fileHandle = null; _clientsUpdateFileStatus(); return; }
+      const writable = await _fileHandle.createWritable();
+      await writable.write(JSON.stringify(_data, null, 2));
+      await writable.close();
+      _clientsFlashSaved();
+    } catch (e) {
+      _fileHandle = null;
+      _clientsUpdateFileStatus();
+    }
+  }
+
+  /* Called after every data mutation */
+  function _afterMutate() {
+    _persist();
+    _writeFile(); // async fire-and-forget
   }
 
   function _emptyData() {
@@ -61,7 +85,7 @@ const NFS_CLIENTS = (function () {
     addContact(contact) {
       const c = _normalizeContact(contact);
       _data.contacts.push(c);
-      _persist();
+      _afterMutate();
       return c;
     },
 
@@ -69,18 +93,18 @@ const NFS_CLIENTS = (function () {
       const i = _data.contacts.findIndex(c => c.id === id);
       if (i === -1) return false;
       _data.contacts[i] = _normalizeContact({ ..._data.contacts[i], ...values, id });
-      _persist();
+      _afterMutate();
       return true;
     },
 
     removeContact(id) {
       _data.contacts = _data.contacts.filter(c => c.id !== id);
-      _persist();
+      _afterMutate();
     },
 
     reset() {
       _data = _emptyData();
-      _persist();
+      _afterMutate();
     },
 
     exportJSON() {
@@ -93,15 +117,20 @@ const NFS_CLIENTS = (function () {
         version: obj.version || 1,
         contacts: obj.contacts.map(_normalizeContact),
       };
-      _persist();
+      _afterMutate();
       return true;
     },
+
+    setFileHandle(h) { _fileHandle = h; },
+    getFileHandle()  { return _fileHandle; },
+    handleKey: HANDLE_KEY,
   };
 })();
 
 function openClientsModal() {
   _clientsRefreshFilter();
   clientsRenderTable();
+  _clientsUpdateFileStatus();
   document.getElementById('clientsModal').classList.remove('hidden');
 }
 
@@ -431,6 +460,90 @@ function clientsResetAll() {
   clientsRenderTable();
 }
 
+/* =====================================================
+   File System Access API – connect clients file
+   ===================================================== */
+
+async function clientsConnectFile() {
+  if (!window.showOpenFilePicker) {
+    alert(
+      'Tu navegador no soporta escritura directa a archivos (File System Access API).\n\n' +
+      'Usa "Exportar" para descargar la base de clientes y "Importar" para cargarla.\n\n' +
+      'Chrome / Edge 86+ soportan esta función.'
+    );
+    return;
+  }
+  try {
+    const [handle] = await window.showOpenFilePicker({
+      id: 'nfs-clients',
+      types: [{
+        description: 'Base de clientes NFS (JSON)',
+        accept: { 'application/json': ['.json'] },
+      }],
+      multiple: false,
+    });
+
+    const ok = await NFS_HANDLES.ensurePermission(handle);
+    if (!ok) { alert('Se requiere permiso de escritura para vincular el archivo.'); return; }
+
+    const file = await handle.getFile();
+    const text = await file.text();
+    if (text.trim()) {
+      const parsed = JSON.parse(text);
+      if (parsed && Array.isArray(parsed.contacts)) {
+        NFS_CLIENTS.importObject(parsed);
+      }
+    }
+
+    NFS_CLIENTS.setFileHandle(handle);
+    await NFS_HANDLES.save(NFS_CLIENTS.handleKey, handle);
+    _clientsRefreshFilter();
+    _clientsRefreshHeaderList();
+    clientsRenderTable();
+    _clientsUpdateFileStatus();
+  } catch (e) {
+    if (e.name !== 'AbortError') alert('Error al conectar con el archivo:\n' + e.message);
+  }
+}
+
+async function _clientsTryAutoReconnect() {
+  const handle = await NFS_HANDLES.load(NFS_CLIENTS.handleKey);
+  if (!handle) return;
+  const ok = await NFS_HANDLES.ensurePermission(handle);
+  if (!ok) return;
+  NFS_CLIENTS.setFileHandle(handle);
+  _clientsUpdateFileStatus();
+}
+
+function _clientsUpdateFileStatus() {
+  const el = document.getElementById('clientsFileStatus');
+  if (!el) return;
+  const h = NFS_CLIENTS.getFileHandle();
+  if (h) {
+    el.className = 'db-file-status db-file-connected';
+    el.innerHTML =
+      '<span class="db-file-icon">🔗</span>' +
+      'Vinculado a <strong>' + _clientsEscape(h.name) + '</strong> – cambios guardados automáticamente en el archivo' +
+      '<span id="clientsSaveIndicator" class="db-save-indicator"></span>';
+  } else {
+    el.className = 'db-file-status db-file-disconnected';
+    el.innerHTML =
+      '<span class="db-file-icon">💾</span>' +
+      'Cambios guardados en el navegador. ' +
+      '<button class="btn-db-link" onclick="clientsConnectFile()">Vincular archivo JSON…</button>' +
+      ' para persistencia permanente.';
+  }
+}
+
+function _clientsFlashSaved() {
+  const el = document.getElementById('clientsSaveIndicator');
+  if (!el) return;
+  el.textContent = ' ✓ guardado';
+  el.style.opacity = '1';
+  clearTimeout(el._hideTimer);
+  el._hideTimer = setTimeout(() => { el.style.opacity = '0'; }, 2000);
+}
+
 function clientsExportJSON() {
   const blob = new Blob([NFS_CLIENTS.exportJSON()], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -473,6 +586,7 @@ function clientsImportJSON() {
 document.addEventListener('DOMContentLoaded', () => {
   NFS_CLIENTS.load();
   _clientsRefreshHeaderList();
+  _clientsTryAutoReconnect();
 
   const clientInput = document.getElementById('cliente');
   const contactInput = document.getElementById('contactoCliente');

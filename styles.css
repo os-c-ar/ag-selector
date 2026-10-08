@@ -639,6 +639,25 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
   font-weight: 600;
   color: var(--blue);
 }
+
+.formula-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px;
+  margin: 10px 0 16px;
+  background: var(--gray-100);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.formula-text {
+  font-family: "Cambria Math", "Segoe UI", serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--navy);
+  letter-spacing: 0.5px;
+}
+
 .intensity-badge {
   display: inline-block;
   background: var(--navy);
@@ -665,6 +684,28 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
   line-height: 1.5;
 }
 .textarea-comments:focus { outline: 2px solid var(--blue-mid); border-color: var(--blue-mid); }
+
+.comentarios-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.comentario-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.input-comentario-line {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  font-size: 12px;
+  font-family: var(--font);
+  color: var(--gray-800);
+}
+.input-comentario-line:focus { outline: 2px solid var(--blue-mid); border-color: var(--blue-mid); }
 
 /* =====================================================
    FOOTER

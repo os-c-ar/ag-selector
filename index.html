@@ -85,6 +85,7 @@
     <button class="tab-btn" onclick="switchTab(2)" id="tabBtn2" >② Diseño del Eje</button>
     <button class="tab-btn" onclick="switchTab(3)" id="tabBtn3" >③ Eje  (OG)</button>
     <button class="tab-btn" onclick="switchTab(4)" id="tabBtn4" >④ Costeo Agitador</button>
+    <button class="tab-btn" onclick="switchTab(5)" id="tabBtn5" >⑤ Gradiente de Floculación</button>
   </nav>
 
   <div id="page1" class="page-content">
@@ -746,9 +747,11 @@
 
     <!-- ===== COMMENTS ===== -->
     <section class="card">
-      <h2 class="section-title">14. COMENTARIOS U OBSERVACIONES</h2>
+      <h2 class="section-title">14. CONSIDERACIONES TÉCNICAS PARTICULARES</h2>
       <div class="section-body">
-        <textarea id="comentarios" rows="5" class="textarea-comments" placeholder="Ingresar comentarios u observaciones relevantes del proceso..."></textarea>
+        <div id="comentariosList" class="comentarios-list"></div>
+        <button type="button" class="btn-db-add" onclick="addComentarioField()">＋ Agregar consideración</button>
+        <textarea id="comentarios" class="textarea-comments" style="display:none" aria-hidden="true"></textarea>
       </div>
     </section>
 
@@ -1440,6 +1443,74 @@
   </div><!-- end main-content -->
   </div><!-- end page4 -->
 
+  <div id="page5" class="page-content hidden">
+  <div class="main-content">
+
+    <section class="card">
+      <h2 class="section-title">1. FÓRMULA DEL GRADIENTE DE VELOCIDAD (G)</h2>
+      <div class="section-body">
+        <p class="section-note">El gradiente de velocidad (G) en los procesos de floculación (tratamiento de agua)
+          mide la intensidad de la agitación y se expresa con la fórmula general de Camp y Stein:</p>
+        <div class="formula-box">
+          <span class="formula-text">G = √&thinsp;( P&thinsp;/&thinsp;(μ · V) )</span>
+        </div>
+        <table class="ref-table">
+          <thead>
+            <tr><th>Variable</th><th>Descripción</th><th>Unidad</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>G</td><td>Gradiente de velocidad</td><td>s⁻¹ (1/s)</td></tr>
+            <tr><td>P</td><td>Potencia disipada en el fluido</td><td>W (N·m/s)</td></tr>
+            <tr><td>μ</td><td>Viscosidad dinámica o absoluta del agua (≈0,001 Pa·s a 20°C)</td><td>N·s/m² (Pa·s)</td></tr>
+            <tr><td>V</td><td>Volumen del tanque o compartimento de floculación</td><td>m³</td></tr>
+          </tbody>
+        </table>
+        <table class="ref-table">
+          <thead>
+            <tr><th>Rango de G (s⁻¹)</th><th>Proceso típico</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>20 – 80</td><td>Floculación</td></tr>
+            <tr><td>100 – 300</td><td>Mezcla rápida / coagulación</td></tr>
+            <tr><td>700 – 1000</td><td>Mezcla rápida intensa (coagulantes en línea)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">2. CÁLCULO CON DATOS DE LA PESTAÑA ① SELECCIÓN DE AGITADOR</h2>
+      <div class="section-body">
+        <p class="section-note">P se toma de la "Potencia requerida" y V del "Volumen útil" calculados en la pestaña
+          ① Selección de Agitador. Ajuste μ si la temperatura del fluido no es 20°C.</p>
+        <div class="form-grid">
+          <div class="form-row"><label class="field-label">P – Potencia requerida:</label><input type="text" id="grad1_P" class="input-calc" readonly /><span class="unit">W</span></div>
+          <div class="form-row"><label class="field-label">μ – Viscosidad dinámica:</label><input type="number" id="grad1_mu" class="input-value" step="0.0001" min="0" /><span class="unit">Pa·s</span></div>
+          <div class="form-row"><label class="field-label">V – Volumen útil:</label><input type="text" id="grad1_V" class="input-calc" readonly /><span class="unit">m³</span></div>
+          <div class="form-row"><label class="field-label">G – Gradiente de velocidad:</label><input type="text" id="grad1_G" class="input-calc highlight-result" readonly /><span class="unit">s⁻¹</span></div>
+        </div>
+        <p class="section-note" id="grad1_clasif"></p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">3. CÁLCULO MANUAL (DATOS DE ENTRADA PROPIOS)</h2>
+      <div class="section-body">
+        <p class="section-note">Ingrese manualmente P, μ y V para calcular G de forma independiente, por ejemplo
+          para verificar un compartimento de floculación distinto al tanque seleccionado.</p>
+        <div class="form-grid">
+          <div class="form-row"><label class="field-label">P – Potencia disipada:</label><input type="number" id="grad2_P" class="input-value" step="0.1" min="0" /><span class="unit">W</span></div>
+          <div class="form-row"><label class="field-label">μ – Viscosidad dinámica:</label><input type="number" id="grad2_mu" class="input-value" step="0.0001" min="0" /><span class="unit">Pa·s</span></div>
+          <div class="form-row"><label class="field-label">V – Volumen del tanque:</label><input type="number" id="grad2_V" class="input-value" step="0.01" min="0" /><span class="unit">m³</span></div>
+          <div class="form-row"><label class="field-label">G – Gradiente de velocidad:</label><input type="text" id="grad2_G" class="input-calc highlight-result" readonly /><span class="unit">s⁻¹</span></div>
+        </div>
+        <p class="section-note" id="grad2_clasif"></p>
+      </div>
+    </section>
+
+  </div><!-- end main-content -->
+  </div><!-- end page5 -->
+
   <footer class="page-footer">
     <p>NFS – Mezcladores &amp; Agitadores Industriales | Herramienta de Selección v1.0</p>
   </footer>
@@ -1559,6 +1630,12 @@
       </div>
 
       <div class="modal-body">
+        <div id="recFileStatus" class="db-file-status db-file-disconnected">
+          <span class="db-file-icon">💾</span>
+          Cambios guardados en el navegador.
+          <button class="btn-db-link" onclick="recConnectFile()">Vincular archivo JSON…</button>
+          para persistencia permanente.
+        </div>
         <div class="modal-hint">
           Selecciones guardadas localmente en este navegador. Use <strong>📂 Cargar</strong> para
           restaurar todos los datos de una selección anterior, o <strong>📊 Excel</strong> para
@@ -1605,6 +1682,12 @@
       </div>
 
       <div class="modal-body">
+        <div id="clientsFileStatus" class="db-file-status db-file-disconnected">
+          <span class="db-file-icon">💾</span>
+          Cambios guardados en el navegador.
+          <button class="btn-db-link" onclick="clientsConnectFile()">Vincular archivo JSON…</button>
+          para persistencia permanente.
+        </div>
         <div class="modal-hint">
           Un cliente puede tener varios contactos. Registre cada contacto con estos datos mínimos:
           <strong>Cliente, Ciudad, Teléfono, Celular, Correo Electrónico y Nombre de Contacto.</strong>
@@ -1648,6 +1731,7 @@
     </div>
   </div>
 
+  <script src="persist.js"></script>
   <script src="database.js"></script>
   <script src="clients.js"></script>
   <script src="diagram.js"></script>
@@ -1659,6 +1743,7 @@
   <script src="og_shaft.js"></script>
   <script src="offer.js"></script>
   <script src="records.js"></script>
+  <script src="gradient.js"></script>
   <script>
     function _dbModalOverlayClick(e) {
       if (e.target === document.getElementById('dbModal')) closeDbModal();

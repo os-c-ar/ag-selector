@@ -12,10 +12,33 @@
 // =====================================================
 const NFS_RECORDS = (function () {
   const KEY = 'nfs_selections_v1';
+  const HANDLE_KEY = 'records';
   let _list = [];
+  let _fileHandle = null; // FileSystemFileHandle (File System Access API)
 
   function _persist() {
     try { localStorage.setItem(KEY, JSON.stringify(_list)); } catch (e) {}
+  }
+
+  /* ── File System Access API write-through ── */
+  async function _writeFile() {
+    if (!_fileHandle) return;
+    try {
+      const ok = await NFS_HANDLES.ensurePermission(_fileHandle);
+      if (!ok) { _fileHandle = null; _recUpdateFileStatus(); return; }
+      const writable = await _fileHandle.createWritable();
+      await writable.write(JSON.stringify(_list, null, 2));
+      await writable.close();
+      _recFlashSaved();
+    } catch (e) {
+      _fileHandle = null;
+      _recUpdateFileStatus();
+    }
+  }
+
+  function _afterMutate() {
+    _persist();
+    _writeFile(); // async fire-and-forget
   }
 
   function _load() {
@@ -35,7 +58,7 @@ const NFS_RECORDS = (function () {
     add(data) {
       const id = Date.now() + '-' + Math.random().toString(36).slice(2, 7);
       _list.push({ id, fechaRegistro: new Date().toLocaleString('es-CO'), ...data });
-      _persist();
+      _afterMutate();
       return id;
     },
 
@@ -43,14 +66,27 @@ const NFS_RECORDS = (function () {
       const i = _list.findIndex(r => r.id === id);
       if (i === -1) return false;
       _list[i] = { ..._list[i], ...data };
-      _persist();
+      _afterMutate();
       return true;
     },
 
     remove(id) {
       _list = _list.filter(r => r.id !== id);
-      _persist();
+      _afterMutate();
     },
+
+    exportJSON() { return JSON.stringify(_list, null, 2); },
+
+    importObject(arr) {
+      if (!Array.isArray(arr)) return false;
+      _list = arr;
+      _afterMutate();
+      return true;
+    },
+
+    setFileHandle(h) { _fileHandle = h; },
+    getFileHandle()  { return _fileHandle; },
+    handleKey: HANDLE_KEY,
   };
 })();
 
@@ -119,8 +155,9 @@ function gatherSelectionData() {
     rpm:      v('rpm'),
     pctFondo: v('pctFondo'),
     propelas: [1, 2, 3, 4].map(n => ({
-      tipo:   v('tipo' + n),
-      modelo: v('modelo' + n),
+      tipo:     v('tipo' + n),
+      modelo:   v('modelo' + n),
+      diametro: v('diam' + n),
     })),
 
     // 4. Final fields
@@ -242,6 +279,7 @@ function restoreSelectionData(rec) {
   sv('agitadorSeleccionado',     rec.agitadorSeleccionado);
   sv('motoreductorSeleccionado', rec.motoreductorSeleccionado);
   sv('comentarios',              rec.comentarios);
+  if (typeof renderComentariosFromString === 'function') renderComentariosFromString(rec.comentarios);
 
   // Coding
   sv('cod_tipo1',     rec.cod_tipo1);
@@ -712,6 +750,7 @@ function saveCurrentSelection() {
 // =====================================================
 function openRecordsModal() {
   _recRenderTable();
+  _recUpdateFileStatus();
   document.getElementById('recModal').classList.remove('hidden');
 }
 
@@ -794,6 +833,86 @@ function recImportExcel() {
   input.click();
 }
 
+/* =====================================================
+   File System Access API – connect records file
+   ===================================================== */
+
+async function recConnectFile() {
+  if (!window.showOpenFilePicker) {
+    alert(
+      'Tu navegador no soporta escritura directa a archivos (File System Access API).\n\n' +
+      'Chrome / Edge 86+ soportan esta función.'
+    );
+    return;
+  }
+  try {
+    const [handle] = await window.showOpenFilePicker({
+      id: 'nfs-records',
+      types: [{
+        description: 'Historial de selecciones NFS (JSON)',
+        accept: { 'application/json': ['.json'] },
+      }],
+      multiple: false,
+    });
+
+    const ok = await NFS_HANDLES.ensurePermission(handle);
+    if (!ok) { alert('Se requiere permiso de escritura para vincular el archivo.'); return; }
+
+    const file = await handle.getFile();
+    const text = await file.text();
+    if (text.trim()) {
+      const parsed = JSON.parse(text);
+      if (Array.isArray(parsed)) NFS_RECORDS.importObject(parsed);
+    }
+
+    NFS_RECORDS.setFileHandle(handle);
+    await NFS_HANDLES.save(NFS_RECORDS.handleKey, handle);
+    _recRenderTable();
+    _recRenderBadge();
+    _recUpdateFileStatus();
+  } catch (e) {
+    if (e.name !== 'AbortError') alert('Error al conectar con el archivo:\n' + e.message);
+  }
+}
+
+async function _recTryAutoReconnect() {
+  const handle = await NFS_HANDLES.load(NFS_RECORDS.handleKey);
+  if (!handle) return;
+  const ok = await NFS_HANDLES.ensurePermission(handle);
+  if (!ok) return;
+  NFS_RECORDS.setFileHandle(handle);
+  _recUpdateFileStatus();
+}
+
+function _recUpdateFileStatus() {
+  const el = document.getElementById('recFileStatus');
+  if (!el) return;
+  const h = NFS_RECORDS.getFileHandle();
+  if (h) {
+    el.className = 'db-file-status db-file-connected';
+    el.innerHTML =
+      '<span class="db-file-icon">🔗</span>' +
+      'Vinculado a <strong>' + _e(h.name) + '</strong> – cambios guardados automáticamente en el archivo' +
+      '<span id="recSaveIndicator" class="db-save-indicator"></span>';
+  } else {
+    el.className = 'db-file-status db-file-disconnected';
+    el.innerHTML =
+      '<span class="db-file-icon">💾</span>' +
+      'Cambios guardados en el navegador. ' +
+      '<button class="btn-db-link" onclick="recConnectFile()">Vincular archivo JSON…</button>' +
+      ' para persistencia permanente.';
+  }
+}
+
+function _recFlashSaved() {
+  const el = document.getElementById('recSaveIndicator');
+  if (!el) return;
+  el.textContent = ' ✓ guardado';
+  el.style.opacity = '1';
+  clearTimeout(el._hideTimer);
+  el._hideTimer = setTimeout(() => { el.style.opacity = '0'; }, 2000);
+}
+
 /* Badge showing number of saved records */
 function _recRenderBadge() {
   const badge = document.getElementById('recBadge');
@@ -834,4 +953,5 @@ document.addEventListener('DOMContentLoaded', () => {
   NFS_RECORDS.init();
   _setSaveButtonMode();
   _recRenderBadge();
+  _recTryAutoReconnect();
 });

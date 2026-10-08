@@ -256,25 +256,29 @@ function updateCodingFromCalc() {
     return { tipo, D_mm, active: tipo !== 'N.A.' && D_mm > 0 };
   });
 
-  /* Group by coding type (preserving insertion order = bottom to top) */
+  /* Group by (coding type + diameter) so that same-type propellers with
+     different diameters are registered as two separate groups */
   const groups = new Map();
   for (const p of props) {
     if (!p.active) continue;
     const codType = APP_TO_COD[p.tipo] || 'CURVA TRIPALA - CT';
-    if (!groups.has(codType)) groups.set(codType, { count: 0, firstDiam: p.D_mm });
-    groups.get(codType).count++;
+    const dKey = Math.round(p.D_mm);
+    const key = codType + '|' + dKey;
+    if (!groups.has(key)) groups.set(key, { codType, diam: dKey, count: 0 });
+    groups.get(key).count++;
   }
 
-  const keys   = [...groups.keys()];
-  const tipo1K = keys[0] || 'TURBINA';
-  const tipo2K = keys[1] || 'NO APLICA';
+  const groupList = [...groups.values()];
+  const g1 = groupList[0];
+  const g2 = groupList[1];
 
-  _setSelect('cod_tipo1', tipo1K);
-  _setSelect('cod_tipo2', tipo2K);
-  if (g('cod_num1')) g('cod_num1').value = groups.get(tipo1K)?.count || 1;
-  if (g('cod_num2')) g('cod_num2').value = tipo2K !== 'NO APLICA' ? (groups.get(tipo2K)?.count || 1) : 1;
-  _setSelect('cod_diam1', String(Math.round(groups.get(tipo1K)?.firstDiam || 0)));
-  _setSelect('cod_diam2', String(Math.round(tipo2K !== 'NO APLICA' ? (groups.get(tipo2K)?.firstDiam || 0) : 0)));
+  _setSelect('cod_tipo1', g1?.codType || 'TURBINA');
+  _setSelect('cod_tipo2', g2?.codType || 'NO APLICA');
+  if (g('cod_num1')) g('cod_num1').value = g1?.count || 1;
+  if (g('cod_num2')) g('cod_num2').value = g2 ? (g2.count || 1) : 1;
+  _setSelect('cod_diam1', String(g1?.diam || 0));
+  _setSelect('cod_diam2', String(g2 ? g2.diam : 0));
+
 
   /* Shaft length (m → keep as m, the generator converts to dm) */
   const L = codParseNum(g('longitudEje')?.value) || 0;
