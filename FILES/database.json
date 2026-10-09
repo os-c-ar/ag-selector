@@ -65,6 +65,16 @@
       "id": 13,
       "label": "Tanque de almacenamiento",
       "intensidad": "2 - 4"
+    },
+    {
+      "id": 14,
+      "label": "Preparación de Jabón Líquido",
+      "intensidad": "4-5"
+    },
+    {
+      "id": 15,
+      "label": "Otra",
+      "intensidad": "1-5"
     }
   ]
 }

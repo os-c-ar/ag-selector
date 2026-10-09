@@ -971,6 +971,26 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
 .btn-db-save   { background: var(--green-lt); color: var(--green);}
 .btn-db-cancel { background: var(--gray-200); color: var(--gray-600); }
 .btn-db-use    { background: #e6f4ec;         color: var(--green); }
+.btn-db-bom    { background: #fff3da;         color: #8a5a00; }
+
+.bom-tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  background: #fff3da;
+  color: #8a5a00;
+}
+
+.bom-total-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
 
 .btn-db-add {
   margin-top: 12px;

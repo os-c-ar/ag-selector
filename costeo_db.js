@@ -99,6 +99,7 @@ const NFS_COSTEO_DB = (function () {
         codigo: String(part.codigo || '').trim(),
         descripcion: String(part.descripcion || '').trim(),
         precio: Number(part.precio) || 0,
+        bom: Array.isArray(part.bom) ? part.bom.map(_normalizeBomItem) : [],
       };
       _parts.push(p);
       _persist();
@@ -111,8 +112,28 @@ const NFS_COSTEO_DB = (function () {
       p.codigo = String(patch.codigo ?? p.codigo).trim();
       p.descripcion = String(patch.descripcion ?? p.descripcion).trim();
       p.precio = Number(patch.precio ?? p.precio) || 0;
+      if (patch.bom !== undefined) p.bom = Array.isArray(patch.bom) ? patch.bom.map(_normalizeBomItem) : [];
       _persist();
       return true;
+    },
+    setBom(id, bomItems) {
+      const p = _parts.find(x => Number(x.id) === Number(id));
+      if (!p) return false;
+      p.bom = Array.isArray(bomItems) ? bomItems.map(_normalizeBomItem) : [];
+      p.precio = _computeBomTotal(p.bom) || p.precio;
+      _persist();
+      return true;
+    },
+    recalcFromMaterials() {
+      let changed = false;
+      _parts.forEach(p => {
+        if (Array.isArray(p.bom) && p.bom.length) {
+          const total = _computeBomTotal(p.bom);
+          if (total && total !== p.precio) { p.precio = total; changed = true; }
+        }
+      });
+      if (changed) _persist();
+      return changed;
     },
     remove(id) {
       _parts = _parts.filter(x => Number(x.id) !== Number(id));
@@ -134,11 +155,49 @@ const NFS_COSTEO_DB = (function () {
         codigo: String(x.codigo || '').trim(),
         descripcion: String(x.descripcion || '').trim(),
         precio: Number(x.precio) || 0,
+        bom: Array.isArray(x.bom) ? x.bom.map(_normalizeBomItem) : [],
       }));
       _persist();
     },
   };
 })();
+
+/* Un ítem de lista de materiales: referencia a NFS_MATERIALS (materialId) con
+   cantidad, o una línea manual (materialId null) con precioManual propio. */
+function _normalizeBomItem(raw, i) {
+  const x = raw || {};
+  return {
+    id: Number(x.id) || (i != null ? i + 1 : Date.now() + Math.random()),
+    materialId: x.materialId != null && x.materialId !== '' ? Number(x.materialId) : null,
+    descripcion: String(x.descripcion || '').trim(),
+    cantidad: Number(x.cantidad) || 0,
+    precioManual: Number(x.precioManual) || 0,
+  };
+}
+
+/* Resuelve el precio unitario vigente de un ítem BOM (desde NFS_MATERIALS si
+   aplica, o el precio manual para líneas de servicio sin material asociado). */
+function _resolveBomUnitPrice(item) {
+  if (item.materialId != null && typeof NFS_MATERIALS !== 'undefined') {
+    const m = NFS_MATERIALS.findById(item.materialId);
+    if (m) return Number(m.valorUnitario) || 0;
+  }
+  return Number(item.precioManual) || 0;
+}
+
+function _computeBomTotal(bom) {
+  if (!Array.isArray(bom) || !bom.length) return 0;
+  return bom.reduce((sum, it) => sum + _resolveBomUnitPrice(it) * (Number(it.cantidad) || 0), 0);
+}
+
+/* Called when the materials master list changes, so part prices with a BOM stay in sync. */
+function recalcCostPartsFromMaterials() {
+  const changed = NFS_COSTEO_DB.recalcFromMaterials();
+  if (changed) {
+    if (document.getElementById('costPartsTableBody')) _renderCostPartsTable();
+  }
+  return changed;
+}
 
 const CATALOG_CATEGORIES = NFS_COST_CATEGORIES.filter(c => c.code !== 'OTROS' && c.code !== 'NO_APLICA');
 
@@ -167,12 +226,14 @@ function _renderCostPartsTable() {
   tbody.innerHTML = '';
   rows.forEach(p => {
     const tr = document.createElement('tr');
+    const hasBom = Array.isArray(p.bom) && p.bom.length;
     tr.innerHTML =
       `<td>${_escCP(p.categoria)}</td>` +
       `<td>${_escCP(p.codigo)}</td>` +
       `<td>${_escCP(p.descripcion)}</td>` +
-      `<td>${_escCP(_fmtCOPCP(p.precio))}</td>` +
+      `<td>${_escCP(_fmtCOPCP(p.precio))}${hasBom ? ' <span class="bom-tag" title="Precio calculado desde su lista de materiales">⚙ BOM</span>' : ''}</td>` +
       `<td class="db-td-actions">` +
+      `<button class="btn-db btn-db-bom" onclick="openPartBomModal(${p.id})" title="Lista de materiales y servicios">📋 BOM</button>` +
       `<button class="btn-db btn-db-edit" onclick="_editCostPart(${p.id},this)">✏ Editar</button>` +
       `<button class="btn-db btn-db-del" onclick="_deleteCostPart(${p.id})">🗑</button>` +
       `</td>`;
@@ -496,6 +557,109 @@ function _fmtCOPCP(n) {
 
 function _costPartsModalOverlayClick(e) {
   if (e.target === document.getElementById('costPartsModal')) closeCostPartsModal();
+}
+
+/* =====================================================
+   BOM editor modal (lista de materiales/servicios por parte)
+   ===================================================== */
+
+let _bomCurrentPartId = null;
+let _bomDraftItems = [];
+
+function openPartBomModal(partId) {
+  const p = NFS_COSTEO_DB.getAll().find(x => Number(x.id) === Number(partId));
+  if (!p) return;
+  _bomCurrentPartId = p.id;
+  _bomDraftItems = (Array.isArray(p.bom) ? p.bom : []).map(it => ({ ...it }));
+  document.getElementById('bomPartTitle').textContent = p.codigo + ' — ' + p.descripcion;
+  _renderBomEditor();
+  document.getElementById('partBomModal').classList.remove('hidden');
+}
+
+function closePartBomModal() {
+  document.getElementById('partBomModal').classList.add('hidden');
+  _bomCurrentPartId = null;
+  _bomDraftItems = [];
+}
+
+function _partBomModalOverlayClick(e) {
+  if (e.target === document.getElementById('partBomModal')) closePartBomModal();
+}
+
+function _bomMaterialOptions(selectedId) {
+  const mats = (typeof NFS_MATERIALS !== 'undefined') ? NFS_MATERIALS.getAll() : [];
+  const opts = ['<option value="">— Línea manual (sin material) —</option>'];
+  mats.forEach(m => {
+    const label = (m.categoria ? m.categoria + ' – ' : '') + m.nombre + ' (' + _fmtCOPCP(m.valorUnitario) + '/' + m.unidad + ')';
+    opts.push(`<option value="${m.id}" ${Number(selectedId) === Number(m.id) ? 'selected' : ''}>${_escCP(label)}</option>`);
+  });
+  return opts.join('');
+}
+
+function _renderBomEditor() {
+  const tbody = document.getElementById('bomTableBody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  let total = 0;
+  _bomDraftItems.forEach((it, idx) => {
+    const unit = _resolveBomUnitPrice(it);
+    const parcial = unit * (Number(it.cantidad) || 0);
+    total += parcial;
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      `<td><select class="db-input" onchange="_bomSetMaterial(${idx}, this.value)">${_bomMaterialOptions(it.materialId)}</select></td>` +
+      `<td><input class="db-input" placeholder="Descripción (si es línea manual)" value="${_escCP(it.descripcion)}" onchange="_bomSetField(${idx}, 'descripcion', this.value)" /></td>` +
+      `<td><input class="db-input" type="number" step="any" min="0" value="${it.cantidad}" onchange="_bomSetField(${idx}, 'cantidad', this.value)" style="width:80px" /></td>` +
+      `<td>${it.materialId != null
+        ? _fmtCOPCP(unit)
+        : `<input class="db-input" type="number" step="1" min="0" value="${it.precioManual}" onchange="_bomSetField(${idx}, 'precioManual', this.value)" style="width:110px" />`
+      }</td>` +
+      `<td class="bom-parcial">${_fmtCOPCP(parcial)}</td>` +
+      `<td class="db-td-actions"><button class="btn-db btn-db-del" onclick="_bomRemoveRow(${idx})">🗑</button></td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('bomTotal').textContent = _fmtCOPCP(total);
+}
+
+function _bomSetMaterial(idx, value) {
+  const it = _bomDraftItems[idx];
+  if (!it) return;
+  it.materialId = value ? Number(value) : null;
+  _renderBomEditor();
+}
+
+function _bomSetField(idx, field, value) {
+  const it = _bomDraftItems[idx];
+  if (!it) return;
+  it[field] = (field === 'cantidad' || field === 'precioManual') ? Number(value) || 0 : value;
+  _renderBomEditor();
+}
+
+function _bomRemoveRow(idx) {
+  _bomDraftItems.splice(idx, 1);
+  _renderBomEditor();
+}
+
+function bomAddRow() {
+  _bomDraftItems.push({ id: Date.now() + Math.random(), materialId: null, descripcion: '', cantidad: 1, precioManual: 0 });
+  _renderBomEditor();
+}
+
+function saveBomAndClose() {
+  if (_bomCurrentPartId == null) return;
+  NFS_COSTEO_DB.setBom(_bomCurrentPartId, _bomDraftItems);
+  _renderCostPartsTable();
+  if (typeof calculateCosteo === 'function') calculateCosteo();
+  closePartBomModal();
+}
+
+function clearBomAndClose() {
+  if (_bomCurrentPartId == null) return;
+  if (!confirm('¿Quitar la lista de materiales de esta parte? El precio volverá a ser editable manualmente.')) return;
+  NFS_COSTEO_DB.setBom(_bomCurrentPartId, []);
+  _renderCostPartsTable();
+  if (typeof calculateCosteo === 'function') calculateCosteo();
+  closePartBomModal();
 }
 
 document.addEventListener('DOMContentLoaded', () => {

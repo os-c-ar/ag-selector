@@ -72,6 +72,7 @@
           <button class="btn-print" onclick="generateOfferDraft()">🧾 Borrador oferta</button>
           <button class="btn-database" onclick="openDbModal()">🗄 Base de datos</button>
           <button class="btn-database" onclick="openCostPartsModal()">💲 Base partes costeo</button>
+          <button class="btn-database" onclick="openMaterialsModal()">🧱 Materiales e insumos</button>
           <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
           <button class="btn-print" onclick="generarMemoriaEje()">📄 Memoria de cálculo (Eje)</button>
         </div>
@@ -1568,6 +1569,116 @@
     </div>
   </div>
 
+  <!-- ===== MATERIALS MODAL ===== -->
+  <div id="materialsModal" class="modal-overlay hidden" onclick="_materialsModalOverlayClick(event)">
+    <div class="modal-container modal-wide">
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <span class="modal-icon">🧱</span>
+          <h2>Base de Materiales e Insumos</h2>
+        </div>
+        <button class="modal-close" onclick="closeMaterialsModal()" title="Cerrar">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div id="materialsFileStatus" class="db-file-status db-file-disconnected">
+          <span class="db-file-icon">💾</span>
+          Cambios guardados en el navegador.
+          <button class="btn-db-link" onclick="materialsConnectFile()">Vincular archivo JSON…</button>
+          para persistencia permanente.
+        </div>
+        <div class="modal-hint">Administre el precio unitario de materias primas, insumos y servicios (equivalente a la hoja "INSUMOS" del archivo origen). Actualice aquí un valor y se reflejará automáticamente en todas las partes que lo usen en su lista de materiales (BOM).</div>
+
+        <div class="form-row mb-10">
+          <label class="field-label">Buscar:</label>
+          <input id="mat_filter" class="input-value" placeholder="Nombre, categoría o proveedor" oninput="_renderMaterialsTable()" />
+        </div>
+
+        <datalist id="mat_categorias"></datalist>
+
+        <table class="db-table rec-table clients-table">
+          <thead>
+            <tr>
+              <th>Categoría</th>
+              <th>Material / Servicio</th>
+              <th>Unidad</th>
+              <th>Valor unitario</th>
+              <th>Proveedor</th>
+              <th>Última cotización</th>
+              <th class="rec-td-actions">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="materialsTableBody"></tbody>
+        </table>
+
+        <div class="form-grid mt-20">
+          <div class="form-row"><label class="field-label">Categoría:</label><input id="mat_new_categoria" class="input-value" list="mat_categorias" placeholder="BARRAS MACIZAS 304SS" /></div>
+          <div class="form-row"><label class="field-label">Material/Servicio:</label><input id="mat_new_nombre" class="input-value" placeholder="Descripción" /></div>
+          <div class="form-row"><label class="field-label">Unidad:</label><input id="mat_new_unidad" class="input-value" placeholder="m, kg, und…" /></div>
+          <div class="form-row"><label class="field-label">Valor unitario:</label><input id="mat_new_valor" type="number" min="0" step="1" class="input-value" placeholder="0" /></div>
+          <div class="form-row"><label class="field-label">Proveedor:</label><input id="mat_new_proveedor" class="input-value" placeholder="Proveedor" /></div>
+          <div class="form-row"><button class="btn-db-add" type="button" onclick="addMaterialRow()">＋ Agregar material/servicio</button></div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="modal-footer-left">
+          <button class="btn-db-reset" onclick="resetMaterials()">↺ Restaurar predeterminados</button>
+        </div>
+        <div class="modal-footer-right">
+          <button class="btn-modal-io" onclick="importMaterialsJSON()">⬆ Importar</button>
+          <button class="btn-modal-io" onclick="exportMaterialsJSON()">⬇ Exportar</button>
+          <button class="btn-modal-close" onclick="closeMaterialsModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PART BOM MODAL ===== -->
+  <div id="partBomModal" class="modal-overlay hidden" onclick="_partBomModalOverlayClick(event)">
+    <div class="modal-container modal-wide">
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <span class="modal-icon">📋</span>
+          <h2>Lista de Materiales y Servicios — <span id="bomPartTitle"></span></h2>
+        </div>
+        <button class="modal-close" onclick="closePartBomModal()" title="Cerrar">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-hint">Arme el costo de esta parte a partir de materiales de la base (🧱 Materiales e insumos) y/o líneas manuales de servicio (maquinado, mecanizado, etc.). El precio de la parte se calculará automáticamente como la suma de (cantidad × valor unitario) de cada línea, igual que las hojas "P", "AB", "AD", "EJXA", "EJXC" del archivo origen.</div>
+
+        <table class="db-table rec-table clients-table">
+          <thead>
+            <tr>
+              <th>Material (base)</th>
+              <th>Descripción (línea manual)</th>
+              <th>Cantidad</th>
+              <th>Valor unitario</th>
+              <th>Parcial</th>
+              <th class="rec-td-actions"></th>
+            </tr>
+          </thead>
+          <tbody id="bomTableBody"></tbody>
+        </table>
+
+        <button class="btn-db-add" type="button" onclick="bomAddRow()">＋ Agregar línea</button>
+
+        <div class="bom-total-row">TOTAL: <span id="bomTotal">$0</span></div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="modal-footer-left">
+          <button class="btn-db-reset" onclick="clearBomAndClose()">↺ Quitar lista (precio manual)</button>
+        </div>
+        <div class="modal-footer-right">
+          <button class="btn-db-add" onclick="saveBomAndClose()">✔ Guardar</button>
+          <button class="btn-modal-close" onclick="closePartBomModal()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== DB MODAL ===== -->
   <div id="dbModal" class="modal-overlay hidden" onclick="_dbModalOverlayClick(event)">
     <div class="modal-container">
@@ -1736,6 +1847,7 @@
   <script src="clients.js"></script>
   <script src="diagram.js"></script>
   <script src="coding.js"></script>
+  <script src="materials.js"></script>
   <script src="costeo_db.js"></script>
   <script src="costeo.js"></script>
   <script src="calculator.js"></script>
