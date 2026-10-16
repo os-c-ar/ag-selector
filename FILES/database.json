@@ -75,6 +75,11 @@
       "id": 15,
       "label": "Otra",
       "intensidad": "1-5"
+    },
+    {
+      "id": 16,
+      "label": "Digestión de lodos",
+      "intensidad": "1-2"
     }
   ]
 }

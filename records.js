@@ -164,6 +164,7 @@ function gatherSelectionData() {
     agitadorSeleccionado:     v('agitadorSeleccionado'),
     motoreductorSeleccionado: v('motoreductorSeleccionado'),
     comentarios:              v('comentarios'),
+    comentariosInternas:      v('comentariosInternas'),
 
     // Coding section
     cod_tipo1:     v('cod_tipo1'),
@@ -279,7 +280,11 @@ function restoreSelectionData(rec) {
   sv('agitadorSeleccionado',     rec.agitadorSeleccionado);
   sv('motoreductorSeleccionado', rec.motoreductorSeleccionado);
   sv('comentarios',              rec.comentarios);
-  if (typeof renderComentariosFromString === 'function') renderComentariosFromString(rec.comentarios);
+  sv('comentariosInternas',      rec.comentariosInternas);
+  if (typeof renderComentariosFromString === 'function') {
+    renderComentariosFromString(rec.comentarios);
+    renderComentariosFromString(rec.comentariosInternas, 'comentariosInternasList', 'input-comentario-interna-line', 'comentariosInternas');
+  }
 
   // Coding
   sv('cod_tipo1',     rec.cod_tipo1);

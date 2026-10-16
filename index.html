@@ -13,8 +13,7 @@
       <img src="FILES/logo-nfs.png" alt="NFS Logo" class="logo-img" />
     </div>
     <div class="header-title">
-      <h1>SELECCIÓN DE AGITADOR</h1>
-      <p class="header-sub">Mezcladores &amp; Agitadores Industriales</p>
+      <h1>SELECCIÓN DE AGITADORES INDUSTRIALES</h1>
     </div>
     <div class="header-meta">
       <div class="meta-row">
@@ -83,10 +82,10 @@
   <!-- ===== TAB NAV ===== -->
   <nav class="tab-nav">
     <button class="tab-btn active" onclick="switchTab(1)" id="tabBtn1">① Selección de Agitador</button>
-    <button class="tab-btn" onclick="switchTab(2)" id="tabBtn2" >② Diseño del Eje</button>
-    <button class="tab-btn" onclick="switchTab(3)" id="tabBtn3" >③ Eje  (OG)</button>
-    <button class="tab-btn" onclick="switchTab(4)" id="tabBtn4" >④ Costeo Agitador</button>
-    <button class="tab-btn" onclick="switchTab(5)" id="tabBtn5" >⑤ Gradiente de Floculación</button>
+    <button class="tab-btn" onclick="switchTab(2)" id="tabBtn2" style="display:none">② Diseño del Eje</button>
+    <button class="tab-btn" onclick="switchTab(3)" id="tabBtn3" >② Eje  (OG)</button>
+    <button class="tab-btn" onclick="switchTab(4)" id="tabBtn4" >③ Costeo Agitador</button>
+    <button class="tab-btn" onclick="switchTab(5)" id="tabBtn5" style="display:none">④ Gradiente de Floculación</button>
   </nav>
 
   <div id="page1" class="page-content">
@@ -442,6 +441,14 @@
                 Ingrese dimensiones válidas para ver el diagrama
               </text>
             </svg>
+            <svg id="tankDiagramTop" class="tank-svg" viewBox="0 0 580 300"
+                 xmlns="http://www.w3.org/2000/svg"
+                 aria-label="Vista superior del tanque y el agitador">
+              <text x="290" y="150" text-anchor="middle" fill="#9ba3ae"
+                    font-size="13" font-family="Segoe UI,sans-serif">
+                Ingrese dimensiones válidas para ver el diagrama
+              </text>
+            </svg>
           </div>
         </section>
       </div><!-- end two-col-right -->
@@ -748,11 +755,22 @@
 
     <!-- ===== COMMENTS ===== -->
     <section class="card">
-      <h2 class="section-title">14. CONSIDERACIONES TÉCNICAS PARTICULARES</h2>
+      <h2 class="section-title">CONSIDERACIONES TÉCNICAS PARTICULARES - PARA EL CLIENTE EN OFERTA</h2>
       <div class="section-body">
         <div id="comentariosList" class="comentarios-list"></div>
         <button type="button" class="btn-db-add" onclick="addComentarioField()">＋ Agregar consideración</button>
         <textarea id="comentarios" class="textarea-comments" style="display:none" aria-hidden="true"></textarea>
+      </div>
+    </section>
+
+    <!-- ===== INTERNAL COMMENTS (not sent to the client) ===== -->
+    <section class="card">
+      <h2 class="section-title section-title-internal">CONSIDERACIONES TÉCNICAS PARTICULARES - INTERNAS</h2>
+      <div class="section-body">
+        <div id="comentariosInternasList" class="comentarios-list"></div>
+        <button type="button" class="btn-db-add"
+          onclick="addComentarioField('', 'comentariosInternasList', 'input-comentario-interna-line', 'comentariosInternas')">＋ Agregar consideración</button>
+        <textarea id="comentariosInternas" class="textarea-comments" style="display:none" aria-hidden="true"></textarea>
       </div>
     </section>
 

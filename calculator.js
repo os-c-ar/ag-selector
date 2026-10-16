@@ -385,6 +385,7 @@ function calculate() {
 
   /* ── Tank diagram ── */
   if (typeof drawTankDiagram === 'function') drawTankDiagram();
+  if (typeof drawTankTopView === 'function') drawTankTopView();
 
   /* ── Coding section ── */
   if (typeof updateCodingFromCalc === 'function') updateCodingFromCalc();
@@ -501,49 +502,66 @@ function setDefaultDate() {
    #comentarios textarea stays in sync (joined by "\n")
    so every other module (records, offer, exports) keeps
    reading/writing a single "comentarios" string.
+   Functions take optional (listId, lineClass, hiddenId)
+   so the same logic drives both the client-facing list
+   (#comentariosList) and the internal-only list
+   (#comentariosInternasList).
    ===================================================== */
-function _comentariosSyncHidden() {
-  const hidden = document.getElementById('comentarios');
+function _comentariosSyncHidden(lineClass, hiddenId) {
+  lineClass = lineClass || 'input-comentario-line';
+  hiddenId  = hiddenId  || 'comentarios';
+  const hidden = document.getElementById(hiddenId);
   if (!hidden) return;
-  const lines = [...document.querySelectorAll('.input-comentario-line')].map(i => i.value);
+  const lines = [...document.querySelectorAll('.' + lineClass)].map(i => i.value);
   hidden.value = lines.join('\n');
 }
 
-function addComentarioField(value) {
-  const list = document.getElementById('comentariosList');
+function addComentarioField(value, listId, lineClass, hiddenId) {
+  listId    = listId    || 'comentariosList';
+  lineClass = lineClass || 'input-comentario-line';
+  hiddenId  = hiddenId  || 'comentarios';
+  const list = document.getElementById(listId);
   if (!list) return;
+  list.dataset.lineClass = lineClass;
+  list.dataset.hiddenId  = hiddenId;
   const row = document.createElement('div');
   row.className = 'comentario-row';
   row.innerHTML =
-    '<input type="text" class="input-comentario-line" placeholder="Ingresar consideración técnica..." />' +
+    `<input type="text" class="${lineClass}" placeholder="Ingresar consideración técnica..." />` +
     '<button type="button" class="btn-db btn-db-del" onclick="removeComentarioField(this)">🗑</button>';
-  const input = row.querySelector('.input-comentario-line');
+  const input = row.querySelector('.' + lineClass);
   input.value = value || '';
-  input.addEventListener('input', _comentariosSyncHidden);
+  input.addEventListener('input', () => _comentariosSyncHidden(lineClass, hiddenId));
   list.appendChild(row);
-  _comentariosSyncHidden();
+  _comentariosSyncHidden(lineClass, hiddenId);
   return input;
 }
 
 function removeComentarioField(btn) {
-  const list = document.getElementById('comentariosList');
-  btn.closest('.comentario-row').remove();
-  if (list && !list.children.length) addComentarioField('');
-  _comentariosSyncHidden();
+  const row  = btn.closest('.comentario-row');
+  const list = row.closest('.comentarios-list');
+  const lineClass = (list && list.dataset.lineClass) || 'input-comentario-line';
+  const hiddenId  = (list && list.dataset.hiddenId)  || 'comentarios';
+  row.remove();
+  if (list && !list.children.length) addComentarioField('', list.id, lineClass, hiddenId);
+  _comentariosSyncHidden(lineClass, hiddenId);
 }
 
 /** Rebuilds the dynamic lines from a stored "comentarios" string (newline-separated). */
-function renderComentariosFromString(str) {
-  const list = document.getElementById('comentariosList');
+function renderComentariosFromString(str, listId, lineClass, hiddenId) {
+  listId    = listId    || 'comentariosList';
+  lineClass = lineClass || 'input-comentario-line';
+  hiddenId  = hiddenId  || 'comentarios';
+  const list = document.getElementById(listId);
   if (!list) return;
   list.innerHTML = '';
   const lines = String(str || '').split('\n').filter(l => l.trim() !== '');
   if (!lines.length) {
-    addComentarioField('');
-    addComentarioField('');
+    addComentarioField('', listId, lineClass, hiddenId);
+    addComentarioField('', listId, lineClass, hiddenId);
     return;
   }
-  lines.forEach(l => addComentarioField(l));
+  lines.forEach(l => addComentarioField(l, listId, lineClass, hiddenId));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -554,5 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModelDropdowns();
   attachListeners();
   renderComentariosFromString('');
+  renderComentariosFromString('', 'comentariosInternasList', 'input-comentario-interna-line', 'comentariosInternas');
   calculate();
 });
+

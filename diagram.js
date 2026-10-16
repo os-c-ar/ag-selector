@@ -441,3 +441,184 @@ function _drawRectangularDiagram(svg, p) {
 
   svg.innerHTML = E.join('\n');
 }
+
+/* =====================================================
+   TOP VIEW – plan diagram (looking down from above).
+   Drawn at the exact same px/m scale as the elevation
+   view, showing tank outline, baffles, shaft/motor at
+   the center, and every active propeller as a concentric
+   circle colour-matched to the elevation legend.
+   ===================================================== */
+
+/* Replicates the sc used by the matching elevation panel so both views align. */
+function _diagElevationScale(tipoTanque, alturaTotal, tankDiam, ancho, longitud) {
+  if (tipoTanque === 'CIRCULAR') {
+    const drawW = 580 - 90 - 150, drawH = 440 - 55 - 62;
+    return Math.min(drawH / alturaTotal, drawW / (tankDiam * 1.9));
+  }
+  if (Math.abs(ancho - longitud) < 0.005) {
+    const drawW = 580 - 90 - 150, drawH = 440 - 55 - 62;
+    return Math.min(drawH / alturaTotal, drawW / (ancho * 1.9));
+  }
+  const drawW = 900 - 60 - 150 - 60, drawH = 460 - 80 - 62;
+  const panelMaxW = drawW / 2;
+  return Math.min(drawH / alturaTotal, panelMaxW / Math.max(ancho, longitud));
+}
+
+const _DIAG_PROP_ANGLES = [315, 45, 135, 225]; // degrees, kept away from the 0/90/180/270 baffle slots
+
+function drawTankTopView() {
+  const svg = document.getElementById('tankDiagramTop');
+  if (!svg) return;
+
+  const tipoTanque  = document.querySelector('input[name="tipoTanque"]:checked')?.value || 'CIRCULAR';
+  const bafles      = document.querySelector('input[name="bafles"]:checked')?.value === 'SI';
+  const alturaTotal = parseFloat(document.getElementById('alturaTotal').value) || 0;
+
+  const props = [1, 2, 3, 4].map(n => {
+    const tipo = document.getElementById('tipo'  + n)?.value || 'N.A.';
+    const D_mm = parseFloat(document.getElementById('diam' + n)?.value) || 0;
+    return { active: tipo !== 'N.A.' && D_mm > 0, D_m: D_mm / 1000 };
+  });
+  const activePropNames = props.map((p, i) => p.active ? `P${i + 1}` : null).filter(Boolean);
+
+  if (tipoTanque === 'CIRCULAR') {
+    const tankDiam = parseFloat(document.getElementById('diametro').value) || 0;
+    if (tankDiam <= 0 || alturaTotal <= 0) { _diagEmpty(svg); return; }
+    const sc = _diagElevationScale('CIRCULAR', alturaTotal, tankDiam, 0, 0);
+    _drawCircularTopView(svg, { tankDiam, bafles, props, activePropNames, sc });
+    return;
+  }
+
+  const ancho    = parseFloat(document.getElementById('ancho').value)    || 0;
+  const longitud = parseFloat(document.getElementById('longitud').value) || 0;
+  if (ancho <= 0 || longitud <= 0 || alturaTotal <= 0) { _diagEmpty(svg); return; }
+  const sc = _diagElevationScale('RECTANGULAR', alturaTotal, 0, ancho, longitud);
+  _drawRectangularTopView(svg, { ancho, longitud, bafles, props, activePropNames, sc });
+}
+
+function _diagPropCirclesTop(E, cx, cy, props, sc) {
+  props.forEach((pp, i) => {
+    if (!pp.active) return;
+    const col = _DIAG_PROPCOLS[i];
+    const pr  = (pp.D_m / 2) * sc;
+    const Dmm = Math.round(pp.D_m * 1000);
+    E.push(`<circle cx="${cx}" cy="${cy}" r="${pr}" fill="none"
+      stroke="${col}" stroke-width="2" stroke-dasharray="6,4"/>`);
+    const rad = _DIAG_PROP_ANGLES[i] * Math.PI / 180;
+    const lx  = cx + pr * Math.cos(rad), ly = cy + pr * Math.sin(rad);
+    E.push(`<text x="${lx}" y="${ly}" font-size="11.5" font-weight="700" fill="${col}"
+      font-family="Segoe UI,sans-serif" text-anchor="middle">P${i + 1} Ø${Dmm}</text>`);
+  });
+}
+
+function _drawCircularTopView(svg, { tankDiam, bafles, props, activePropNames, sc }) {
+  /* Fixed canvas matching the circular/square elevation box, so both SVGs render at the same CSS scale. */
+  const W = 580, H = 440, ML = 90, MR = 150, MT = 55, MB = 62;
+  const drawW = W - ML - MR, drawH = H - MT - MB;
+  const r  = (tankDiam * sc) / 2;
+  const cx = ML + drawW / 2;
+  const cy = MT + drawH / 2;
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const E = [_diagDefs()];
+
+  /* Tank wall */
+  E.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#liqGr)"
+    stroke="${_DIAG_NAVY}" stroke-width="2.5"/>`);
+
+  /* Baffles – 4 equally spaced radial plates */
+  if (bafles) {
+    const bafW = Math.max(r * 0.05, 3);
+    [0, 90, 180, 270].forEach(deg => {
+      const rad = deg * Math.PI / 180;
+      const x1 = cx + (r - 1) * Math.cos(rad), y1 = cy + (r - 1) * Math.sin(rad);
+      const x2 = cx + (r * 0.78) * Math.cos(rad), y2 = cy + (r * 0.78) * Math.sin(rad);
+      E.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"
+        stroke="#94a3b8" stroke-width="${bafW}" stroke-linecap="square"/>`);
+    });
+  }
+
+  /* Active propellers – concentric circles colour-matched to the elevation legend */
+  _diagPropCirclesTop(E, cx, cy, props, sc);
+
+  /* Shaft/motor at center */
+  E.push(`<circle cx="${cx}" cy="${cy}" r="5.5" fill="${_DIAG_NAVY}"/>`);
+
+  /* Diameter dimension */
+  const dimY = cy + r + 20;
+  E.push(`<line x1="${cx - r}" y1="${dimY}" x2="${cx + r}" y2="${dimY}"
+    stroke="${_DIAG_DIM}" stroke-width="1" marker-start="url(#daR)" marker-end="url(#da)"/>`);
+  E.push(`<text x="${cx}" y="${dimY + 14}" text-anchor="middle" font-size="13"
+    fill="${_DIAG_DIM}" font-family="Segoe UI,sans-serif">Ø ${tankDiam.toFixed(2)} m</text>`);
+
+  E.push(`<text x="${cx}" y="${MT - 12}" text-anchor="middle" font-size="12.5"
+    font-weight="700" fill="${_DIAG_NAVY}" font-family="Segoe UI,sans-serif">VISTA SUPERIOR</text>`);
+
+  _diagLegend(E, W - MR + 12, MT, props, activePropNames);
+
+  E.push(`<text x="${W / 2}" y="${H - 8}" text-anchor="middle" font-size="11"
+    fill="#94a3b8" font-family="Segoe UI,sans-serif" font-style="italic">
+    Vista en planta – misma escala que la vista frontal</text>`);
+
+  svg.innerHTML = E.join('\n');
+}
+
+function _drawRectangularTopView(svg, { ancho, longitud, bafles, props, activePropNames, sc }) {
+  /* Fixed canvas matching the rectangular elevation box, so both SVGs render at the same CSS scale. */
+  const W = 900, H = 460, ML = 60, MR = 150, MT = 80, MB = 62;
+  const drawW = W - ML - MR, drawH = H - MT - MB;
+  const tW = longitud * sc, tH = ancho * sc;
+  const tX = ML + (drawW - tW) / 2;
+  const tY = MT + (drawH - tH) / 2;
+  const cx = tX + tW / 2, cy = tY + tH / 2;
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const E = [_diagDefs()];
+
+  /* Tank outline */
+  E.push(`<rect x="${tX}" y="${tY}" width="${tW}" height="${tH}" fill="url(#liqGr)"
+    stroke="${_DIAG_NAVY}" stroke-width="2.5"/>`);
+
+  /* Baffles – one centered on each wall */
+  if (bafles) {
+    const bafThk = Math.max(Math.min(tW, tH) * 0.03, 3);
+    const bafLen = Math.min(tW, tH) * 0.18;
+    E.push(`<rect x="${cx - bafThk / 2}" y="${tY}" width="${bafThk}" height="${bafLen}" fill="#94a3b8"/>`);
+    E.push(`<rect x="${cx - bafThk / 2}" y="${tY + tH - bafLen}" width="${bafThk}" height="${bafLen}" fill="#94a3b8"/>`);
+    E.push(`<rect x="${tX}" y="${cy - bafThk / 2}" width="${bafLen}" height="${bafThk}" fill="#94a3b8"/>`);
+    E.push(`<rect x="${tX + tW - bafLen}" y="${cy - bafThk / 2}" width="${bafLen}" height="${bafThk}" fill="#94a3b8"/>`);
+  }
+
+  /* Active propellers – concentric circles colour-matched to the elevation legend */
+  _diagPropCirclesTop(E, cx, cy, props, sc);
+
+  /* Shaft/motor at center */
+  E.push(`<circle cx="${cx}" cy="${cy}" r="5.5" fill="${_DIAG_NAVY}"/>`);
+
+  /* Dimensions */
+  const dimYBot = tY + tH + 20;
+  E.push(`<line x1="${tX}" y1="${dimYBot}" x2="${tX + tW}" y2="${dimYBot}"
+    stroke="${_DIAG_DIM}" stroke-width="1" marker-start="url(#daR)" marker-end="url(#da)"/>`);
+  E.push(`<text x="${cx}" y="${dimYBot + 14}" text-anchor="middle" font-size="13"
+    fill="${_DIAG_DIM}" font-family="Segoe UI,sans-serif">Longitud = ${longitud.toFixed(2)} m</text>`);
+
+  const dimXLeft = tX - 20;
+  E.push(`<line x1="${dimXLeft}" y1="${tY}" x2="${dimXLeft}" y2="${tY + tH}"
+    stroke="${_DIAG_DIM}" stroke-width="1" marker-start="url(#daR)" marker-end="url(#da)"/>`);
+  E.push(`<text x="${dimXLeft - 8}" y="${cy}" text-anchor="end" font-size="13"
+    fill="${_DIAG_DIM}" font-family="Segoe UI,sans-serif"
+    transform="rotate(-90 ${dimXLeft - 8} ${cy})">Ancho = ${ancho.toFixed(2)} m</text>`);
+
+  E.push(`<text x="${cx}" y="${MT - 12}" text-anchor="middle" font-size="12.5"
+    font-weight="700" fill="${_DIAG_NAVY}" font-family="Segoe UI,sans-serif">VISTA SUPERIOR</text>`);
+
+  _diagLegend(E, W - MR + 12, MT, props, activePropNames);
+
+  E.push(`<text x="${W / 2}" y="${H - 8}" text-anchor="middle" font-size="11"
+    fill="#94a3b8" font-family="Segoe UI,sans-serif" font-style="italic">
+    Vista en planta – misma escala que la vista frontal</text>`);
+
+  svg.innerHTML = E.join('\n');
+}
+
