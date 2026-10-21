@@ -86,6 +86,7 @@
     <button class="tab-btn" onclick="switchTab(3)" id="tabBtn3" >② Eje  (OG)</button>
     <button class="tab-btn" onclick="switchTab(4)" id="tabBtn4" >③ Costeo Agitador</button>
     <button class="tab-btn" onclick="switchTab(5)" id="tabBtn5" style="display:none">④ Gradiente de Floculación</button>
+    <button class="tab-btn" onclick="switchTab(6)" id="tabBtn6">④ Decodificador</button>
   </nav>
 
   <div id="page1" class="page-content">
@@ -1530,6 +1531,51 @@
   </div><!-- end main-content -->
   </div><!-- end page5 -->
 
+  <!-- ===== PAGE 6: AGITATOR CODE DECODER ===== -->
+  <div id="page6" class="page-content hidden">
+  <div class="main-content">
+
+    <section class="card">
+      <h2 class="section-title">DECODIFICADOR DE CÓDIGO DE AGITADOR</h2>
+      <div class="section-body">
+        <p class="section-note">Ingrese el código de modelo de un agitador (por ejemplo, el generado en la pestaña
+          ① Selección de Agitador → Codificación) y obtenga su descripción técnica y un diagrama esquemático.</p>
+
+        <div class="dec-input-row">
+          <input type="text" id="dec_input" class="input-value wide dec-code-input"
+                 placeholder="Ej. V2C F0220J056D S" autocomplete="off" spellcheck="false" />
+          <button type="button" class="btn-print" onclick="runDecoder()">🔎 Decodificar</button>
+          <button type="button" class="btn-print" onclick="useGeneratedCode()" title="Copia el código generado en la pestaña ① Selección de Agitador">↻ Usar código de pestaña ①</button>
+        </div>
+
+        <div id="dec_error" class="dec-error hidden"></div>
+        <ul id="dec_warnings" class="dec-warnings hidden"></ul>
+
+        <div id="dec_results" class="dec-results hidden">
+          <div class="two-col-layout">
+            <div class="two-col-left">
+              <div class="dec-description-box" id="dec_description"></div>
+              <div class="subsection-title cod-full" style="margin-top:4px">Desglose del código</div>
+              <div id="dec_breakdown" class="cod-breakdown-grid"></div>
+            </div>
+            <div class="two-col-right">
+              <section class="card card-diagram">
+                <h2 class="section-title">DIAGRAMA ESQUEMÁTICO</h2>
+                <div class="section-body diagram-body">
+                  <svg id="dec_svg" class="tank-svg" viewBox="0 0 320 460"
+                       xmlns="http://www.w3.org/2000/svg"
+                       aria-label="Diagrama esquemático del agitador decodificado"></svg>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- end main-content -->
+  </div><!-- end page6 -->
+
   <footer class="page-footer">
     <p>NFS – Mezcladores &amp; Agitadores Industriales | Herramienta de Selección v1.0</p>
   </footer>
@@ -1865,6 +1911,7 @@
   <script src="clients.js"></script>
   <script src="diagram.js"></script>
   <script src="coding.js"></script>
+  <script src="decoder.js"></script>
   <script src="materials.js"></script>
   <script src="costeo_db.js"></script>
   <script src="costeo.js"></script>

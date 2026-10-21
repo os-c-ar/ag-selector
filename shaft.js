@@ -417,7 +417,7 @@ function calculateShaft() {
 // =====================================================
 
 function switchTab(n) {
-  [1, 2, 3, 4, 5].forEach(i => {
+  [1, 2, 3, 4, 5, 6].forEach(i => {
     document.getElementById('page' + i).classList.toggle('hidden', i !== n);
     document.getElementById('tabBtn' + i).classList.toggle('active', i === n);
   });
