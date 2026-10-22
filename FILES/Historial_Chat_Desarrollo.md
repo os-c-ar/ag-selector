@@ -189,6 +189,19 @@ verificable vía `git log` independiente de la conversación.
 
 ---
 
+## 2026-10-22 13:42 — Se incluye el archivo de referencia y se publica a origin/main
+
+**Solicitud:** incluir `FILES/CA_NNN_26_PRESUPUESTO.xlsx` en el repositorio y hacer `git push`.
+
+**Cambios implementados:**
+- Commit `d292ddf` — agrega `FILES/CA_NNN_26_PRESUPUESTO.xlsx` (plantilla original de presupuesto
+  usada como base para el rediseño de la pestaña Costeo Agitador).
+- `git push`: los commits locales (incluidos los de esta conversación) quedaron publicados en
+  `origin/main` (`https://github.com/os-c-ar/ag-selector`). La rama local queda sincronizada con el
+  remoto ("up to date with 'origin/main'").
+
+---
+
 ## Cómo se mantiene actualizado
 
 Este archivo **no se regenera automáticamente** (es un documento narrativo, no un reporte generado
