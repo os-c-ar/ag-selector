@@ -166,6 +166,29 @@ cómo mantenerlo actualizado a medida que avance el proceso.
 
 ---
 
+## 2026-10-22 12:34 — Trazabilidad técnica vía git commit
+
+**Solicitud:** proceder con la alternativa complementaria propuesta anteriormente: confirmar
+(`git commit`) los cambios de este chat con mensajes descriptivos, para tener un historial técnico
+verificable vía `git log` independiente de la conversación.
+
+**Cambios implementados:**
+- Se dividieron los cambios acumulados en 3 commits lógicos (separando hunks por tema, no solo por
+  archivo, incluso dentro de `index.html` y `styles.css` que mezclaban ambos temas):
+  1. `8652635` — Costeo Agitador: rediseño basado en hoja Presupuesto, catálogo de partes y
+     exportación a Excel (`costeo.js`, `records.js`, y los fragmentos de `index.html`/`styles.css`
+     correspondientes a la pestaña de costeo).
+  2. `fbd38e7` — Consideraciones técnicas: reordena secciones y destaca la de cliente en oferta
+     (fragmentos de `index.html`/`styles.css` correspondientes a esas dos secciones).
+  3. `c7dc084` — docs: agrega este historial narrativo.
+- `FILES/CA_NNN_26_PRESUPUESTO.xlsx` (el archivo de referencia que ya existía en la carpeta antes de
+  este chat) quedó **sin confirmar** (untracked); no es un cambio hecho en esta conversación, así que
+  no se incluyó en los commits salvo que se pida explícitamente.
+- Los 3 commits quedaron en la rama `main` local, **adelante de `origin/main`** (no se hizo `git
+  push`); si se desea publicarlos al remoto, debe solicitarse explícitamente.
+
+---
+
 ## Cómo se mantiene actualizado
 
 Este archivo **no se regenera automáticamente** (es un documento narrativo, no un reporte generado
@@ -179,9 +202,8 @@ por un script ni por un hook de git). La forma en que se mantiene al día es:
    conversación a menos que se le indique continuarla o se le pida leer este archivo como contexto;
    en ese caso conviene pedir explícitamente "actualiza `FILES/Historial_Chat_Desarrollo.md` con lo
    avanzado en este chat".
-3. **Alternativa complementaria (opcional)**: dado que este proyecto es un repositorio git
-   (`os-c-ar/ag-selector`), se podría llevar un historial más "automático" y verificable haciendo
-   `git commit` con mensajes descriptivos después de cada cambio aceptado; `git log` quedaría como
-   fuente de verdad técnica, y este Markdown seguiría sirviendo como resumen legible en español para
-   quien no quiera revisar el log de git. Actualmente los cambios de este chat **no se han
-   confirmado (commit) en git** — si se desea esa trazabilidad adicional, debe solicitarse.
+3. **Trazabilidad técnica vía git (activa desde 2026-10-22 12:34)**: los cambios de este chat se
+   van confirmando con `git commit` y mensajes descriptivos tras cada tanda aceptada; `git log`
+   queda como fuente de verdad técnica (diffs exactos, autoría, fecha), y este Markdown sigue
+   sirviendo como resumen narrativo legible en español. Los commits quedan en `main` local; **no se
+   publican al remoto (`git push`) a menos que se solicite explícitamente**.
