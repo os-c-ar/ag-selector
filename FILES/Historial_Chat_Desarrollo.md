@@ -202,6 +202,61 @@ verificable vía `git log` independiente de la conversación.
 
 ---
 
+## 2026-10-22 14:01 — Nota sobre el flujo de trabajo para cambios pequeños
+
+El usuario comentó que las respuestas, aunque muy completas, consumen muchos créditos, y preguntó
+cómo proceder con cambios pequeños de HTML/CSS sin ese costo. Se acordó: agrupar varios cambios
+pequeños en un solo mensaje, aligerar la validación (sin el ciclo completo de Playwright/screenshots
+para tweaks puramente visuales) y agrupar tanto los commits de git como las entradas de este
+historial por tanda en vez de una por cada micro-cambio.
+
+---
+
+## 2026-10-22 14:31 — Tanda de ajustes pequeños (A-F)
+
+**Solicitud (6 puntos en un solo mensaje, aplicando el flujo acordado arriba):**
+
+- **A.** En "3. SELECCIÓN AGITADOR", renombrar "Número de propelas requeridas (máx.)" a "Número de
+  propelas recomendado" y mostrar el valor como entero (redondeado al más cercano).
+- **B.** Revisar que no queden labels superpuestos sobre los campos de texto en Costeo Agitador tras
+  el punto C.
+- **C.** Eliminar los campos Nota 1, Nota 2 y Nota 3 (y sus labels) del encabezado de Costeo Agitador.
+- **D.** Crear en Costeo Agitador dos secciones equivalentes a "Consideraciones técnicas
+  particulares" (internas / para el cliente), cambiando "TÉCNICAS" por "COMERCIALES".
+- **E.** En la tabla "Descripción de materiales": Código tan angosto como Categoría (el desplegable
+  nativo sigue mostrando el texto completo al abrir), Descripción amplia, QTY angosta (máx. 2
+  cifras), y Unitario con formato de miles igual al de "Valor parcial".
+- **F.** Agrupar Cliente, Contacto, Ciudad, Teléfono y Celular del header en un desplegable para no
+  ocupar espacio visual permanente.
+
+**Cambios implementados:**
+- `calculator.js`: etiqueta y formato (entero) de "Número de propelas recomendado"; cierre por
+  clic-afuera/Escape del nuevo desplegable de datos del cliente.
+- `index.html`: se quitaron Nota 1/2/3 de Costeo Agitador; nuevas secciones "CONSIDERACIONES
+  COMERCIALES PARTICULARES - INTERNAS / PARA EL CLIENTE EN OFERTA" (mismo patrón visual, iconos y
+  texto explicativo que las técnicas); encabezado reorganizado con un desplegable
+  "👤 Datos del cliente" (reutilizando el mismo componente `<details>` del menú "☰ Opciones") para
+  Cliente, Contacto, Ciudad, Teléfono y Celular — Correo y Elaboró siguen visibles.
+- `costeo.js`: limpieza de referencias a `cst_nota1/2/3` (listeners, restauración de registros,
+  exportación a Excel); inicialización/restauración de las nuevas listas de consideraciones
+  comerciales (reutilizando `addComentarioField`/`renderComentariosFromString` de `calculator.js`,
+  con ids `cst_comerciales`/`cst_comerciales_internas` para que el guardado genérico por prefijo
+  `cst_` las capture automáticamente); columna Unitario de materiales ahora es un campo de texto con
+  formato de miles igual a "Valor parcial" en reposo (muestra el número sin formato mientras tiene el
+  foco, para edición fácil).
+- `styles.css`: anchos de columna de la tabla de materiales (Categoría/Código angostos e iguales,
+  Descripción amplia, QTY angosta con spinner nativo oculto para que no tape el dígito); estilos del
+  nuevo desplegable "Datos del cliente" reutilizando la apariencia del menú "☰ Opciones".
+- Revisión del punto B: se midieron las posiciones de todas las etiquetas/campos del formulario de
+  Costeo Agitador en varios anchos de ventana (1260px, 1024px) sin encontrar superposición alguna;
+  el ajuste del punto C (menos campos en el encabezado) ya deja el formulario sin ese problema.
+
+**Validación:** sin errores de consola; cálculos (total por defecto 14.992.137, recalculo tras elegir
+código de catálogo), alta/baja de filas, consideraciones comerciales (alta de fila + persistencia
+vía `gatherSelectionData`), y el nuevo desplegable del header, verificados en navegador.
+
+---
+
 ## Cómo se mantiene actualizado
 
 Este archivo **no se regenera automáticamente** (es un documento narrativo, no un reporte generado

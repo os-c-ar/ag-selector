@@ -24,31 +24,36 @@
         <label>COTIZACIÓN / PEDIDO No.:</label>
         <input type="text" id="cotizacion" placeholder="Ej. OT-2024-001" />
       </div>
-      <div class="meta-row">
-        <label>CLIENTE:</label>
-        <div class="meta-client-wrap">
-          <input type="text" id="cliente" list="clientesList" placeholder="Nombre del cliente" />
-          <button type="button" class="btn-mini-clientes" onclick="openClientsModal()" title="Administrar clientes">👥</button>
+      <details class="actions-menu meta-client-details" id="clientMetaMenu">
+        <summary class="actions-trigger">👤 Datos del cliente</summary>
+        <div class="actions-menu-list meta-client-dropdown">
+          <div class="meta-row">
+            <label>CLIENTE:</label>
+            <div class="meta-client-wrap">
+              <input type="text" id="cliente" list="clientesList" placeholder="Nombre del cliente" />
+              <button type="button" class="btn-mini-clientes" onclick="openClientsModal()" title="Administrar clientes">👥</button>
+            </div>
+            <datalist id="clientesList"></datalist>
+          </div>
+          <div class="meta-row">
+            <label>CONTACTO:</label>
+            <input type="text" id="contactoCliente" list="contactsList" placeholder="Nombre de contacto" />
+            <datalist id="contactsList"></datalist>
+          </div>
+          <div class="meta-row">
+            <label>CIUDAD:</label>
+            <input type="text" id="ciudadCliente" placeholder="Ciudad" />
+          </div>
+          <div class="meta-row">
+            <label>TELÉFONO:</label>
+            <input type="text" id="telefonoCliente" placeholder="Teléfono" />
+          </div>
+          <div class="meta-row">
+            <label>CELULAR:</label>
+            <input type="text" id="celularCliente" placeholder="Celular" />
+          </div>
         </div>
-        <datalist id="clientesList"></datalist>
-      </div>
-      <div class="meta-row">
-        <label>CONTACTO:</label>
-        <input type="text" id="contactoCliente" list="contactsList" placeholder="Nombre de contacto" />
-        <datalist id="contactsList"></datalist>
-      </div>
-      <div class="meta-row">
-        <label>CIUDAD:</label>
-        <input type="text" id="ciudadCliente" placeholder="Ciudad" />
-      </div>
-      <div class="meta-row">
-        <label>TELÉFONO:</label>
-        <input type="text" id="telefonoCliente" placeholder="Teléfono" />
-      </div>
-      <div class="meta-row">
-        <label>CELULAR:</label>
-        <input type="text" id="celularCliente" placeholder="Celular" />
-      </div>
+      </details>
       <div class="meta-row">
         <label>CORREO:</label>
         <input type="text" id="correoCliente" placeholder="Correo electrónico" />
@@ -254,7 +259,7 @@
       <div class="section-body">
 
         <div class="form-row">
-          <label class="field-label">Número de propelas requeridas (máx.):</label>
+          <label class="field-label">Número de propelas recomendado:</label>
           <input type="text" id="numPropelas" class="input-calc highlight-orange" readonly />
         </div>
 
@@ -1341,11 +1346,8 @@
           <div class="form-row"><label class="field-label">Diligenció:</label><input type="text" id="cst_elaboro" class="input-calc" readonly /></div>
           <div class="form-row"><label class="field-label">Modelo:</label><input type="text" id="cst_modelo" class="input-calc" readonly /></div>
           <div class="form-row"><label class="field-label">Fecha:</label><input type="text" id="cst_fecha" class="input-calc" readonly /></div>
-          <div class="form-row"><label class="field-label">Nota 1:</label><input type="text" id="cst_nota1" class="input-value wide" /></div>
           <div class="form-row"><label class="field-label">Cotización/Pedido:</label><input type="text" id="cst_cotizacion_no" class="input-value" /></div>
-          <div class="form-row"><label class="field-label">Nota 2:</label><input type="text" id="cst_nota2" class="input-value wide" /></div>
           <div class="form-row"><label class="field-label">Cantidad:</label><input type="number" id="cst_cantidad" class="input-value" step="1" min="1" /></div>
-          <div class="form-row"><label class="field-label">Nota 3:</label><input type="text" id="cst_nota3" class="input-value wide" /></div>
           <div class="form-row"><label class="field-label">TAG:</label><input type="text" id="cst_tag" class="input-value" /></div>
           <div class="form-row"><label class="field-label">Código de equipo (costeo):</label><input type="text" id="cst_codigo_equipo" class="input-value" placeholder="Ej. V3AL-29H108S" /></div>
           <div class="form-row"><label class="field-label">Dólar hoy:</label><input type="number" id="cst_dolar" class="input-value" step="1" min="1" /></div>
@@ -1433,6 +1435,30 @@
         <div class="form-row full-width mt-20">
           <button type="button" class="btn-db-add" id="btnExportCosteo" onclick="exportCosteoToExcel()">⬇ Descargar presupuesto en Excel</button>
         </div>
+      </div>
+    </section>
+
+    <!-- ===== INTERNAL COMMERCIAL CONSIDERATIONS (not sent to the client) ===== -->
+    <section class="card">
+      <h2 class="section-title">🔒 CONSIDERACIONES COMERCIALES PARTICULARES - INTERNAS</h2>
+      <div class="section-body">
+        <p class="section-note">Uso interno: estas consideraciones <strong>no</strong> se envían al cliente ni aparecen en el borrador de oferta.</p>
+        <div id="cstComercialesInternasList" class="comentarios-list"></div>
+        <button type="button" class="btn-db-add"
+          onclick="addComentarioField('', 'cstComercialesInternasList', 'input-cst-comercial-interna-line', 'cst_comerciales_internas')">＋ Agregar consideración</button>
+        <textarea id="cst_comerciales_internas" class="textarea-comments" style="display:none" aria-hidden="true"></textarea>
+      </div>
+    </section>
+
+    <!-- ===== COMMERCIAL CONSIDERATIONS (for the client offer) ===== -->
+    <section class="card">
+      <h2 class="section-title section-title-highlight">📤 CONSIDERACIONES COMERCIALES PARTICULARES - <span class="section-title-highlight-text">PARA EL CLIENTE EN OFERTA</span></h2>
+      <div class="section-body">
+        <p class="section-note">Estas consideraciones se incluyen tal cual en el documento de oferta enviado al cliente.</p>
+        <div id="cstComercialesList" class="comentarios-list"></div>
+        <button type="button" class="btn-db-add"
+          onclick="addComentarioField('', 'cstComercialesList', 'input-cst-comercial-line', 'cst_comerciales')">＋ Agregar consideración</button>
+        <textarea id="cst_comerciales" class="textarea-comments" style="display:none" aria-hidden="true"></textarea>
       </div>
     </section>
 

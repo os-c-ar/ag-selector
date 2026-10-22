@@ -163,6 +163,24 @@ body {
   gap: 6px;
 }
 
+/* Collapsible "Datos del cliente" group in the header (Cliente, Contacto,
+   Ciudad, Teléfono, Celular): reuses the same disclosure look as the
+   "☰ Opciones" menu so those 5 fields stop taking permanent grid space. */
+.meta-client-details {
+  align-self: center;
+}
+.meta-client-details .actions-trigger {
+  font-size: 10px;
+  text-transform: uppercase;
+  padding: 5px 10px;
+}
+.meta-client-dropdown {
+  min-width: 260px;
+}
+.meta-client-dropdown .meta-row + .meta-row {
+  margin-top: 2px;
+}
+
 .btn-mini-clientes {
   border: 1px solid rgba(255,255,255,0.35);
   background: rgba(255,255,255,0.15);
@@ -1449,6 +1467,47 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
   font-weight: 600;
 }
 .cst-input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; }
+
+/* Materiales table column widths: Categoría/Código stay narrow (the
+   native <select> dropdown still shows the full option text when open,
+   only the closed box is constrained), Descripción gets the extra room,
+   QTY is narrow (values are at most 2 digits) and Unitario keeps the
+   form's default width but displays grouped thousands like Valor parcial. */
+#cstMatTable th:nth-child(1), #cstMatTable td:nth-child(1),
+#cstMatTable th:nth-child(2), #cstMatTable td:nth-child(2) {
+  width: 110px;
+}
+#cstMatTable td:nth-child(1) .cst-input,
+#cstMatTable td:nth-child(2) .cst-input {
+  min-width: 0;
+  width: 100%;
+}
+#cstMatTable th:nth-child(3), #cstMatTable td:nth-child(3) {
+  width: auto;
+}
+#cstMatTable td:nth-child(3) .cst-input {
+  min-width: 220px;
+}
+#cstMatTable th:nth-child(4), #cstMatTable td:nth-child(4) {
+  width: 55px;
+}
+.cst-input-qty {
+  min-width: 0 !important;
+  width: 100% !important;
+  text-align: center;
+  /* Only 1-2 digits are expected here; hiding the native up/down spinner
+     frees up the narrow column for the digits themselves. */
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.cst-input-qty::-webkit-outer-spin-button,
+.cst-input-qty::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.cst-input-money {
+  text-align: right;
+}
 
 /* Section banners mirroring the fill colors of the reference workbook
    (blue = materiales, green = servicios/ingeniería, navy = totales). */

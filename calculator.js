@@ -261,7 +261,7 @@ function calculate() {
   const D1_m  = D1_mm / 1000;
   let numPropelasReq = '–';
   if (D1_mm > 0 && alturaUtil > 0) {
-    numPropelasReq = fmt((alturaUtil - 1.5 * D1_m) / D1_m, 2);
+    numPropelasReq = fmt((alturaUtil - 1.5 * D1_m) / D1_m, 0);
   }
   document.getElementById('numPropelas').value = numPropelasReq;
 
@@ -486,6 +486,16 @@ function attachListeners() {
       if (ev.key === 'Escape') {
         actionsMenu.removeAttribute('open');
       }
+    });
+  }
+
+  const clientMetaMenu = document.getElementById('clientMetaMenu');
+  if (clientMetaMenu) {
+    document.addEventListener('click', ev => {
+      if (!clientMetaMenu.contains(ev.target)) clientMetaMenu.removeAttribute('open');
+    });
+    document.addEventListener('keydown', ev => {
+      if (ev.key === 'Escape') clientMetaMenu.removeAttribute('open');
     });
   }
 }

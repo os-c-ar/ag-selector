@@ -104,6 +104,13 @@ function _cstFieldNum(row, field) {
   return Number.isFinite(n) ? n : 0;
 }
 
+/* Same grouped-thousands look as the "Valor parcial" column, used for the
+   Unitario field so it reads like a currency value while at rest; the raw
+   number is shown instead while the field has focus, for easy editing. */
+function _cstMoneyFmt(n) {
+  return (Number(n) || 0).toLocaleString('es-CO');
+}
+
 /* ── Catalog-driven category/code helpers (mirrors the previous
    onCostCategoryChange/onCostCatalogChange behaviour, now scoped to a
    single dynamic row instead of a fixed row number). ── */
@@ -172,8 +179,8 @@ function _matRowHtml(r) {
       <input class="cst-input${showManualTxt ? '' : ' hidden'}" data-field="codigoManual" placeholder="Código / referencia" value="${_escCost(r.codigoManual)}" />
     </td>
     <td><input class="cst-input" data-field="desc" value="${_escCost(r.desc)}"${isNoAplica ? ' readonly' : ''} /></td>
-    <td><input class="cst-input" type="number" min="0" step="1" data-field="qty" value="${r.qty}" /></td>
-    <td><input class="cst-input" type="number" min="0" step="1" data-field="unit" value="${r.unit}"${isNoAplica ? ' readonly' : ''} /></td>
+    <td><input class="cst-input cst-input-qty" type="number" min="0" max="99" step="1" data-field="qty" value="${r.qty}" /></td>
+    <td><input class="cst-input cst-input-money" type="text" inputmode="decimal" data-field="unit" value="${_cstMoneyFmt(r.unit)}"${isNoAplica ? ' readonly' : ''} /></td>
     <td><input class="cst-input input-calc" data-out="parcial" readonly value="${parcial.toLocaleString('es-CO')}" /></td>
     <td><input class="cst-input" data-field="comentarios" value="${_escCost(r.comentarios)}" /></td>
     <td><span class="cst-status cst-status-${status.kind}">${status.text}</span></td>
@@ -270,6 +277,18 @@ function _attachRowTableListeners() {
 
   if (matBody) {
     matBody.addEventListener('input', onMatInput);
+    matBody.addEventListener('focusin', e => {
+      if (e.target.dataset.field !== 'unit') return;
+      const tr = e.target.closest('tr');
+      const row = _cstState.materiales.find(r => r.id === tr?.dataset.rowId);
+      if (row) e.target.value = row.unit ? String(row.unit) : '';
+    });
+    matBody.addEventListener('focusout', e => {
+      if (e.target.dataset.field !== 'unit') return;
+      const tr = e.target.closest('tr');
+      const row = _cstState.materiales.find(r => r.id === tr?.dataset.rowId);
+      if (row) e.target.value = _cstMoneyFmt(row.unit);
+    });
     matBody.addEventListener('click', e => {
       if (e.target.dataset.action === 'del-mat') {
         const id = e.target.closest('tr')?.dataset.rowId;
@@ -350,7 +369,7 @@ function attachCosteoListeners() {
     'cst_imprevistos_pct', 'cst_margen_materiales_pct', 'cst_margen_ingenieria_pct',
     'cst_financiero_cuotas', 'cst_financiero_pct', 'cst_administrativos_pct',
     'cst_comision_pct', 'cst_polizas_pct', 'cst_empaque_val', 'cst_transporte_val',
-    'cst_codigo_equipo', 'cst_cotizacion_no', 'cst_aplicacion', 'cst_nota1', 'cst_nota2', 'cst_nota3', 'cst_tag',
+    'cst_codigo_equipo', 'cst_cotizacion_no', 'cst_aplicacion', 'cst_tag',
   ];
 
   ids.forEach(id => {
@@ -455,7 +474,7 @@ function restoreCosteoFromRecord(fields) {
 
   [
     'cst_dolar', 'cst_cantidad', 'cst_codigo_equipo', 'cst_cotizacion_no',
-    'cst_aplicacion', 'cst_nota1', 'cst_nota2', 'cst_nota3', 'cst_tag',
+    'cst_aplicacion', 'cst_tag',
     'cst_imprevistos_pct', 'cst_margen_materiales_pct', 'cst_margen_ingenieria_pct',
     'cst_financiero_cuotas', 'cst_financiero_pct', 'cst_administrativos_pct',
     'cst_comision_pct', 'cst_polizas_pct', 'cst_empaque_val', 'cst_transporte_val',
@@ -487,6 +506,10 @@ function restoreCosteoFromRecord(fields) {
 
   renderMatRows();
   renderSrvRows();
+
+  renderComentariosFromString(fields.cst_comerciales || '', 'cstComercialesList', 'input-cst-comercial-line', 'cst_comerciales');
+  renderComentariosFromString(fields.cst_comerciales_internas || '', 'cstComercialesInternasList', 'input-cst-comercial-interna-line', 'cst_comerciales_internas');
+
   calculateCosteo();
 }
 
@@ -513,6 +536,8 @@ function updateCostingFromSelection() {
 document.addEventListener('DOMContentLoaded', () => {
   buildCosteoRows();
   updateCostingFromSelection();
+  renderComentariosFromString('', 'cstComercialesList', 'input-cst-comercial-line', 'cst_comerciales');
+  renderComentariosFromString('', 'cstComercialesInternasList', 'input-cst-comercial-interna-line', 'cst_comerciales_internas');
   calculateCosteo();
 });
 
@@ -577,13 +602,10 @@ async function exportCosteoToExcel() {
     _xlLabelRow(ws, 3, 'Modelo:', v('cst_modelo'));
     ws.getCell('D3').value = 'Fecha:'; ws.getCell('D3').font = { size: 10 };
     ws.getCell('F3').value = v('cst_fecha');
-    _xlLabelRow(ws, 4, 'Nota 1:', v('cst_nota1'));
     ws.getCell('D4').value = 'Cotización/Pedido:'; ws.getCell('D4').font = { size: 10 };
     ws.getCell('F4').value = v('cst_cotizacion_no');
-    _xlLabelRow(ws, 5, 'Nota 2:', v('cst_nota2'));
     ws.getCell('D5').value = 'Cantidad:'; ws.getCell('D5').font = { size: 10, bold: true };
     ws.getCell('F5').value = Number(v('cst_cantidad')) || 1;
-    _xlLabelRow(ws, 6, 'Nota 3:', v('cst_nota3'));
     ws.getCell('D6').value = 'TAG:'; ws.getCell('D6').font = { size: 10 };
     ws.getCell('F6').value = v('cst_tag');
 
