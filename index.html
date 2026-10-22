@@ -1330,132 +1330,106 @@
   <div class="main-content">
 
     <section class="card">
-      <h2 class="section-title">PLANTILLA DE COSTEO DE AGITADOR</h2>
+      <h2 class="section-title">PRESUPUESTO DE AGITADOR</h2>
       <div class="section-body">
-        <p class="section-note">Interfaz basada en la hoja <strong>PLANTILLA DE P. (2)</strong> del archivo de referencia. Cada renglón permite elegir la categoría del material (igual que la columna A del origen) y el código se filtra dinámicamente contra la base de partes administrable, igual que el VLOOKUP contra "P. PARTES".</p>
+        <p class="section-note">Interfaz basada en la hoja <strong>Presupuesto</strong> del archivo de referencia <strong>CA_NNN_26_PRESUPUESTO.xlsx</strong>. Las filas de materiales toman descripción y precio de la <strong>Base de Partes de costeo</strong> (categoría → código), igual que antes; también se pueden editar manualmente o usar "Otros"/"No aplica". Las filas de materiales y de servicios/ingeniería se pueden agregar o eliminar libremente; el botón "Descargar presupuesto en Excel" genera un archivo .xlsx con la misma estructura y fórmulas de la hoja de origen.</p>
+
         <div class="form-grid">
-          <div class="form-row">
-            <label class="field-label">Modelo del agitador:</label>
-            <input type="text" id="cst_modelo" class="input-calc" readonly />
-          </div>
-          <div class="form-row">
-            <label class="field-label">Código de equipo (costeo):</label>
-            <input type="text" id="cst_codigo_equipo" class="input-value" placeholder="Ej. V3AL-29H108S" />
-          </div>
-          <div class="form-row">
-            <label class="field-label">Cotización No.:</label>
-            <input type="text" id="cst_cotizacion_no" class="input-value" />
-          </div>
-          <div class="form-row">
-            <label class="field-label">Fecha:</label>
-            <input type="text" id="cst_fecha" class="input-calc" readonly />
-          </div>
-          <div class="form-row">
-            <label class="field-label">Elaboró:</label>
-            <input type="text" id="cst_elaboro" class="input-calc" readonly />
-          </div>
-          <div class="form-row">
-            <label class="field-label">Dólar:</label>
-            <input type="number" id="cst_dolar" class="input-value" step="1" min="1" />
-          </div>
-          <div class="form-row">
-            <label class="field-label">Factor de protección (dólar, inflación) K7:</label>
-            <input type="number" id="cst_k7" class="input-value" step="0.01" min="0" />
-          </div>
+          <div class="form-row"><label class="field-label">Aplicación:</label><input type="text" id="cst_aplicacion" class="input-value wide" /></div>
+          <div class="form-row"><label class="field-label">Diligenció:</label><input type="text" id="cst_elaboro" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Modelo:</label><input type="text" id="cst_modelo" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Fecha:</label><input type="text" id="cst_fecha" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Nota 1:</label><input type="text" id="cst_nota1" class="input-value wide" /></div>
+          <div class="form-row"><label class="field-label">Cotización/Pedido:</label><input type="text" id="cst_cotizacion_no" class="input-value" /></div>
+          <div class="form-row"><label class="field-label">Nota 2:</label><input type="text" id="cst_nota2" class="input-value wide" /></div>
+          <div class="form-row"><label class="field-label">Cantidad:</label><input type="number" id="cst_cantidad" class="input-value" step="1" min="1" /></div>
+          <div class="form-row"><label class="field-label">Nota 3:</label><input type="text" id="cst_nota3" class="input-value wide" /></div>
+          <div class="form-row"><label class="field-label">TAG:</label><input type="text" id="cst_tag" class="input-value" /></div>
+          <div class="form-row"><label class="field-label">Código de equipo (costeo):</label><input type="text" id="cst_codigo_equipo" class="input-value" placeholder="Ej. V3AL-29H108S" /></div>
+          <div class="form-row"><label class="field-label">Dólar hoy:</label><input type="number" id="cst_dolar" class="input-value" step="1" min="1" /></div>
         </div>
 
-        <div class="subsection-title" style="margin-top:10px">Dimensiones de empaque</div>
-        <div class="form-grid">
-          <div class="form-row"><label class="field-label">Largo:</label><input type="number" id="cst_pack_l" class="input-value" step="0.01" min="0" /><span class="unit">m</span></div>
-          <div class="form-row"><label class="field-label">Ancho:</label><input type="number" id="cst_pack_w" class="input-value" step="0.01" min="0" /><span class="unit">m</span></div>
-          <div class="form-row"><label class="field-label">Alto:</label><input type="number" id="cst_pack_h" class="input-value" step="0.01" min="0" /><span class="unit">m</span></div>
-          <div class="form-row"><label class="field-label">Peso:</label><input type="number" id="cst_pack_peso" class="input-value" step="1" min="0" /><span class="unit">kg</span></div>
-          <div class="form-row full-width"><label class="field-label">Resumen empaque:</label><input type="text" id="cst_pack_resumen" class="input-calc wide" readonly /></div>
-        </div>
-
-        <div class="cost-table-wrap mt-20">
-          <table class="db-table cost-table">
+        <div class="subsection-title cst-section-materiales" style="margin-top:16px">Descripción materiales</div>
+        <div class="cost-table-wrap">
+          <table class="db-table cost-table" id="cstMatTable">
             <thead>
               <tr>
                 <th>Categoría</th>
                 <th>Código</th>
-                <th>Descripción</th>
-                <th>Cant</th>
-                <th>Valor unitario</th>
-                <th>Factor</th>
+                <th>Descripción materiales</th>
+                <th>QTY</th>
+                <th>Unitario</th>
                 <th>Valor parcial</th>
+                <th>Comentarios</th>
                 <th>Estado</th>
+                <th></th>
               </tr>
             </thead>
-            <tbody id="cstRowsBody"></tbody>
+            <tbody id="cstMatBody"></tbody>
           </table>
         </div>
+        <button type="button" class="btn-db-add" onclick="addCostRow('materiales')">+ Agregar material</button>
+        <input type="hidden" id="cst_mat_rows_json" />
 
-        <div class="subsection-title" style="margin-top:14px">Resumen materiales</div>
-        <div class="form-grid">
-          <div class="form-row">
-            <label class="field-label">Subtotal materiales:</label>
-            <input type="text" id="cst_subtotal_mat" class="input-calc" readonly />
-          </div>
-          <div class="form-row">
-            <label class="field-label">Imprevistos (%):</label>
-            <input type="number" id="cst_imprevistos_pct" class="input-value" step="0.001" min="0" max="0.99" />
-          </div>
-          <div class="form-row">
-            <label class="field-label">Valor imprevistos:</label>
-            <input type="text" id="cst_imprevistos_val" class="input-calc" readonly />
-          </div>
-          <div class="form-row">
-            <label class="field-label">Total costo materiales:</label>
-            <input type="text" id="cst_total_mat" class="input-calc highlight-orange" readonly />
-          </div>
-          <div class="form-row">
-            <label class="field-label">Margen materiales (%):</label>
-            <input type="number" id="cst_margen_materiales_pct" class="input-value" step="0.001" min="0" max="0.99" />
-          </div>
-          <div class="form-row">
-            <label class="field-label">Margen materiales (valor):</label>
-            <input type="text" id="cst_margen_materiales_val" class="input-calc" readonly />
-          </div>
+        <div class="form-grid mt-20">
+          <div class="form-row"><label class="field-label">Subtotal materiales:</label><input type="text" id="cst_subtotal_mat" class="input-calc highlight-blue" readonly /></div>
+          <div class="form-row"><label class="field-label">Margen materiales (%):</label><input type="number" id="cst_margen_materiales_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
+          <div class="form-row"><label class="field-label">Margen materiales (valor):</label><input type="text" id="cst_margen_materiales_val" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Subtotal materiales con margen:</label><input type="text" id="cst_subtotal_mat_margen" class="input-calc highlight-blue" readonly /></div>
         </div>
 
-        <div class="subsection-title" style="margin-top:14px">Ingeniería y adicionales</div>
-        <div class="form-grid">
-          <div class="form-row"><label class="field-label">Cotización Dir. Proyectos (h):</label><input type="number" id="cst_ing_dir_h" class="input-value" step="0.1" min="0" /></div>
-          <div class="form-row"><label class="field-label">Tarifa Dir. Proyectos:</label><input type="number" id="cst_ing_dir_rate" class="input-value" step="1" min="0" /></div>
-          <div class="form-row"><label class="field-label">Cotización Ing. Proyectos (d):</label><input type="number" id="cst_ing_proj_d" class="input-value" step="0.1" min="0" /></div>
-          <div class="form-row"><label class="field-label">Tarifa Ing. Proyectos:</label><input type="number" id="cst_ing_proj_rate" class="input-value" step="1" min="0" /></div>
-          <div class="form-row"><label class="field-label">Manejo pedido Ing. Proyectos (d):</label><input type="number" id="cst_manejo_pedido_d" class="input-value" step="0.1" min="0" /></div>
-          <div class="form-row"><label class="field-label">Tarifa manejo pedido:</label><input type="number" id="cst_manejo_pedido_rate" class="input-value" step="1" min="0" /></div>
-          <div class="form-row"><label class="field-label">Manejo pedido Asis. Cont. (d):</label><input type="number" id="cst_asis_cont_d" class="input-value" step="0.1" min="0" /></div>
-          <div class="form-row"><label class="field-label">Tarifa Asis. Cont.:</label><input type="number" id="cst_asis_cont_rate" class="input-value" step="1" min="0" /></div>
-          <div class="form-row"><label class="field-label">Subtotal ingeniería:</label><input type="text" id="cst_ing_subtotal" class="input-calc" readonly /></div>
+        <div class="subsection-title cst-section-ingenieria" style="margin-top:16px">Servicios e ingeniería</div>
+        <div class="cost-table-wrap">
+          <table class="db-table cost-table" id="cstSrvTable">
+            <thead>
+              <tr>
+                <th>Descripción servicio</th>
+                <th>CANT</th>
+                <th>Unitario</th>
+                <th>Valor parcial</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="cstSrvBody"></tbody>
+          </table>
+        </div>
+        <button type="button" class="btn-db-add" onclick="addCostRow('servicios')">+ Agregar servicio</button>
+        <input type="hidden" id="cst_srv_rows_json" />
+
+        <div class="form-grid mt-20">
+          <div class="form-row"><label class="field-label">Subtotal ingeniería:</label><input type="text" id="cst_ing_subtotal" class="input-calc highlight-green" readonly /></div>
           <div class="form-row"><label class="field-label">Margen ingeniería (%):</label><input type="number" id="cst_margen_ingenieria_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
           <div class="form-row"><label class="field-label">Margen ingeniería (valor):</label><input type="text" id="cst_margen_ingenieria_val" class="input-calc" readonly /></div>
-          <div class="form-row"><label class="field-label">Costo financiero (%):</label><input type="number" id="cst_financiero_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
-          <div class="form-row"><label class="field-label">Costo financiero (valor):</label><input type="text" id="cst_financiero_val" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Subtotal ingeniería con margen:</label><input type="text" id="cst_ing_subtotal_margen" class="input-calc highlight-green" readonly /></div>
         </div>
 
-        <div class="subsection-title" style="margin-top:14px">Resultados de venta</div>
+        <div class="subsection-title cst-section-totales" style="margin-top:16px">Resultados y totales</div>
         <div class="form-grid">
-          <div class="form-row full-width">
-            <label class="field-label">¿Precio sugerido para distribuidor?</label>
-            <div class="radio-group">
-              <label class="radio-label"><input type="radio" name="cst_distribuidor" value="SI" /> SI</label>
-              <label class="radio-label"><input type="radio" name="cst_distribuidor" value="NO" checked /> NO</label>
-            </div>
-          </div>
-          <div class="form-row"><label class="field-label">Valor de venta OPTA NFS:</label><input type="text" id="cst_venta_nfs" class="input-calc highlight-result" readonly /></div>
-          <div class="form-row"><label class="field-label">Valor de venta OPTA NFS (USD):</label><input type="text" id="cst_venta_nfs_usd" class="input-calc" readonly /></div>
-          <div class="form-row"><label class="field-label">Margen sugerido (%):</label><input type="number" id="cst_margen_sugerido_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
-          <div class="form-row"><label class="field-label" id="cst_lbl_39">Margen sugerido (valor):</label><input type="text" id="cst_margen_sugerido_val" class="input-calc" readonly /></div>
-          <div class="form-row"><label class="field-label" id="cst_lbl_39b">Precio distribuidor:</label><input type="text" id="cst_precio_dist" class="input-calc" readonly /></div>
-          <div class="form-row"><label class="field-label">Precio distribuidor (USD):</label><input type="text" id="cst_precio_dist_usd" class="input-calc" readonly /></div>
-          <div class="form-row"><label class="field-label">Margen negociación (%):</label><input type="number" id="cst_margen_neg_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
-          <div class="form-row"><label class="field-label" id="cst_lbl_40">Margen de Negociación (valor):</label><input type="text" id="cst_margen_neg_val" class="input-calc" readonly /></div>
-          <div class="form-row"><label class="field-label" id="cst_lbl_41">Precio sugerido al cliente:</label><input type="text" id="cst_precio_cliente" class="input-calc highlight-result" readonly /></div>
-          <div class="form-row"><label class="field-label">Precio sugerido al cliente (USD):</label><input type="text" id="cst_precio_cliente_usd" class="input-calc" readonly /></div>
-          <div class="form-row"><label class="field-label">Margen global (base materiales):</label><input type="text" id="cst_rentabilidad" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Subtotal materiales + ingeniería:</label><input type="text" id="cst_subtotal_mat_ing" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Imprevistos (%):</label><input type="number" id="cst_imprevistos_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
+          <div class="form-row"><label class="field-label">Valor imprevistos:</label><input type="text" id="cst_imprevistos_val" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Gastos financieros – N° cuotas:</label><input type="number" id="cst_financiero_cuotas" class="input-value" step="1" min="0" /></div>
+          <div class="form-row"><label class="field-label">Gastos financieros – tasa (%):</label><input type="number" id="cst_financiero_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
+          <div class="form-row"><label class="field-label">Valor gastos financieros:</label><input type="text" id="cst_financiero_val" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Gastos administrativos (%):</label><input type="number" id="cst_administrativos_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
+          <div class="form-row"><label class="field-label">Valor gastos administrativos:</label><input type="text" id="cst_administrativos_val" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Comisión grupo (%):</label><input type="number" id="cst_comision_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
+          <div class="form-row"><label class="field-label">Valor comisión grupo:</label><input type="text" id="cst_comision_val" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Pólizas (%):</label><input type="number" id="cst_polizas_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
+          <div class="form-row"><label class="field-label">Valor pólizas:</label><input type="text" id="cst_polizas_val" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Empaque de madera (valor):</label><input type="number" id="cst_empaque_val" class="input-value" step="1" min="0" /></div>
+          <div class="form-row"><label class="field-label">Transporte (valor):</label><input type="number" id="cst_transporte_val" class="input-value" step="1" min="0" /></div>
+        </div>
+
+        <div class="form-grid mt-20">
+          <div class="form-row"><label class="field-label">TOTAL COP:</label><input type="text" id="cst_total_cop" class="input-calc highlight-result cst-total-big" readonly /></div>
+          <div class="form-row"><label class="field-label">TOTAL USD:</label><input type="text" id="cst_total_usd" class="input-calc highlight-result cst-total-big" readonly /></div>
+          <div class="form-row"><label class="field-label">Unitario COP:</label><input type="text" id="cst_unitario_cop" class="input-calc" readonly /></div>
+          <div class="form-row"><label class="field-label">Unitario USD:</label><input type="text" id="cst_unitario_usd" class="input-calc" readonly /></div>
+        </div>
+
+        <div class="form-row full-width mt-20">
+          <button type="button" class="btn-db-add" id="btnExportCosteo" onclick="exportCosteoToExcel()">⬇ Descargar presupuesto en Excel</button>
         </div>
       </div>
     </section>

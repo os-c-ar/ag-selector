@@ -1400,7 +1400,7 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
 }
 
 .cost-table {
-  min-width: 980px;
+  min-width: 1050px;
 }
 
 .cost-table input,
@@ -1409,16 +1409,50 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
   min-width: 110px;
 }
 
-.cost-table td:first-child {
-  font-weight: 700;
-  color: var(--gray-600);
-  white-space: nowrap;
-}
-
 @media (max-width: 1200px) {
   .cost-table {
-    min-width: 860px;
+    min-width: 900px;
   }
+}
+
+/* Row-level inputs inside the editable Materiales / Servicios tables:
+   deliberately narrower than the form's default input so a 10-column
+   table still fits, same visual language (blue border = editable,
+   grey/bold = computed). */
+.cst-input {
+  width: 100%;
+  min-width: 90px;
+  padding: 5px 7px;
+  border: 1px solid var(--blue-mid);
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: var(--font);
+  color: var(--gray-800);
+  background: #fff;
+}
+.cst-input.input-calc {
+  border-color: var(--border);
+  background: var(--gray-100);
+  color: var(--blue);
+  font-weight: 600;
+}
+.cst-input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; }
+
+/* Section banners mirroring the fill colors of the reference workbook
+   (blue = materiales, green = servicios/ingeniería, navy = totales). */
+.cst-section-materiales { color: var(--blue);  border-bottom-color: var(--blue-lt); }
+.cst-section-ingenieria { color: var(--green); border-bottom-color: var(--green-lt); }
+.cst-section-totales    { color: var(--navy);  border-bottom-color: var(--blue-lt); }
+
+.input-calc.highlight-green {
+  background: var(--green-lt);
+  color: var(--green);
+  border-color: #86c9a1;
+}
+
+.input-calc.cst-total-big {
+  font-size: 15px;
+  width: 130px;
 }
 
 .cst-status {

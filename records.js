@@ -180,7 +180,7 @@ function gatherSelectionData() {
     cod_material:  v('cod_material'),
     cod_adicional: v('cod_adicional'),
     codigoAgitador: tx('cod_resultado'),
-    costeoFields: { ...collectByPrefix('cst_'), cst_distribuidor: rb('cst_distribuidor') },
+    costeoFields: collectByPrefix('cst_'),
 
     // Computed results (display-only in records; not re-applied on restore)
     resultados: {
