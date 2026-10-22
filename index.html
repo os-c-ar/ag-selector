@@ -754,24 +754,26 @@
       </div>
     </section>
 
-    <!-- ===== COMMENTS ===== -->
-    <section class="card">
-      <h2 class="section-title">CONSIDERACIONES TÉCNICAS PARTICULARES - PARA EL CLIENTE EN OFERTA</h2>
-      <div class="section-body">
-        <div id="comentariosList" class="comentarios-list"></div>
-        <button type="button" class="btn-db-add" onclick="addComentarioField()">＋ Agregar consideración</button>
-        <textarea id="comentarios" class="textarea-comments" style="display:none" aria-hidden="true"></textarea>
-      </div>
-    </section>
-
     <!-- ===== INTERNAL COMMENTS (not sent to the client) ===== -->
     <section class="card">
-      <h2 class="section-title section-title-internal">CONSIDERACIONES TÉCNICAS PARTICULARES - INTERNAS</h2>
+      <h2 class="section-title">🔒 CONSIDERACIONES TÉCNICAS PARTICULARES - INTERNAS</h2>
       <div class="section-body">
+        <p class="section-note">Uso interno: estas consideraciones <strong>no</strong> se envían al cliente ni aparecen en el borrador de oferta.</p>
         <div id="comentariosInternasList" class="comentarios-list"></div>
         <button type="button" class="btn-db-add"
           onclick="addComentarioField('', 'comentariosInternasList', 'input-comentario-interna-line', 'comentariosInternas')">＋ Agregar consideración</button>
         <textarea id="comentariosInternas" class="textarea-comments" style="display:none" aria-hidden="true"></textarea>
+      </div>
+    </section>
+
+    <!-- ===== COMMENTS ===== -->
+    <section class="card">
+      <h2 class="section-title section-title-highlight">📤 CONSIDERACIONES TÉCNICAS PARTICULARES - <span class="section-title-highlight-text">PARA EL CLIENTE EN OFERTA</span></h2>
+      <div class="section-body">
+        <p class="section-note">Estas consideraciones se incluyen tal cual en el documento de oferta enviado al cliente.</p>
+        <div id="comentariosList" class="comentarios-list"></div>
+        <button type="button" class="btn-db-add" onclick="addComentarioField()">＋ Agregar consideración</button>
+        <textarea id="comentarios" class="textarea-comments" style="display:none" aria-hidden="true"></textarea>
       </div>
     </section>
 
