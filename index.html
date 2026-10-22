@@ -15,72 +15,101 @@
     <div class="header-title">
       <h1>SELECCIÓN DE AGITADORES INDUSTRIALES</h1>
     </div>
-    <div class="header-meta">
-      <div class="meta-row">
-        <label>FECHA:</label>
-        <input type="date" id="fecha" />
+    <div class="header-controls">
+      <div class="header-meta">
+        <div class="meta-row">
+          <label>FECHA:</label>
+          <input type="date" id="fecha" />
+        </div>
+        <div class="meta-row">
+          <label>COTIZACIÓN / PEDIDO No.:</label>
+          <input type="text" id="cotizacion" placeholder="Ej. OT-2024-001" />
+        </div>
       </div>
-      <div class="meta-row">
-        <label>COTIZACIÓN / PEDIDO No.:</label>
-        <input type="text" id="cotizacion" placeholder="Ej. OT-2024-001" />
-      </div>
-      <details class="actions-menu meta-client-details" id="clientMetaMenu">
-        <summary class="actions-trigger">👤 Datos del cliente</summary>
-        <div class="actions-menu-list meta-client-dropdown">
-          <div class="meta-row">
-            <label>CLIENTE:</label>
-            <div class="meta-client-wrap">
-              <input type="text" id="cliente" list="clientesList" placeholder="Nombre del cliente" />
-              <button type="button" class="btn-mini-clientes" onclick="openClientsModal()" title="Administrar clientes">👥</button>
+      <div class="header-menu-column">
+        <div class="header-actions">
+          <details class="actions-menu" id="actionsMenu">
+            <summary class="actions-trigger">☰ Opciones</summary>
+            <div class="actions-menu-list">
+              <button id="btnSaveSelection" class="btn-save-sel" onclick="saveCurrentSelection()">💾 Guardar selección</button>
+              <button class="btn-history" onclick="openRecordsModal()">
+                📋 Historial
+                <span id="recBadge" class="rec-badge" style="display:none"></span>
+              </button>
+              <button class="btn-print" onclick="openClientsModal()">👥 Clientes</button>
+              <button class="btn-print" onclick="generateOfferDraft()">🧾 Borrador oferta</button>
+              <button class="btn-database" onclick="openDbModal()">🗄 Base de datos</button>
+              <button class="btn-database" onclick="openCostPartsModal()">💲 Base partes costeo</button>
+              <button class="btn-database" onclick="openMaterialsModal()">🧱 Materiales e insumos</button>
+              <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
+              <button class="btn-print" onclick="generarMemoriaEje()">📄 Memoria de cálculo (Eje)</button>
             </div>
-            <datalist id="clientesList"></datalist>
-          </div>
-          <div class="meta-row">
-            <label>CONTACTO:</label>
-            <input type="text" id="contactoCliente" list="contactsList" placeholder="Nombre de contacto" />
-            <datalist id="contactsList"></datalist>
-          </div>
-          <div class="meta-row">
-            <label>CIUDAD:</label>
-            <input type="text" id="ciudadCliente" placeholder="Ciudad" />
-          </div>
-          <div class="meta-row">
-            <label>TELÉFONO:</label>
-            <input type="text" id="telefonoCliente" placeholder="Teléfono" />
-          </div>
-          <div class="meta-row">
-            <label>CELULAR:</label>
-            <input type="text" id="celularCliente" placeholder="Celular" />
-          </div>
+          </details>
         </div>
-      </details>
-      <div class="meta-row">
-        <label>CORREO:</label>
-        <input type="text" id="correoCliente" placeholder="Correo electrónico" />
+        <details class="actions-menu meta-client-details meta-header-details" id="clientMetaMenu">
+          <summary class="actions-trigger">👤 Datos del cliente</summary>
+          <div class="actions-menu-list meta-client-dropdown">
+            <div class="meta-row">
+              <label>CLIENTE:</label>
+              <div class="meta-client-wrap">
+                <input type="text" id="cliente" list="clientesList" placeholder="Nombre del cliente" />
+                <button type="button" class="btn-mini-clientes" onclick="openClientsModal()" title="Administrar clientes">👥</button>
+              </div>
+              <datalist id="clientesList"></datalist>
+            </div>
+            <div class="meta-row">
+              <label>CONTACTO:</label>
+              <input type="text" id="contactoCliente" list="contactsList" placeholder="Nombre de contacto" />
+              <datalist id="contactsList"></datalist>
+            </div>
+            <div class="meta-row">
+              <label>CIUDAD:</label>
+              <input type="text" id="ciudadCliente" placeholder="Ciudad" />
+            </div>
+            <div class="meta-row">
+              <label>TELÉFONO:</label>
+              <input type="text" id="telefonoCliente" placeholder="Teléfono" />
+            </div>
+            <div class="meta-row">
+              <label>CELULAR:</label>
+              <input type="text" id="celularCliente" placeholder="Celular" />
+            </div>
+            <div class="meta-row">
+              <label>CORREO:</label>
+              <input type="text" id="correoCliente" placeholder="Correo electrónico" />
+            </div>
+          </div>
+        </details>
+        <details class="actions-menu meta-client-details meta-header-details" id="elaboroMetaMenu">
+          <summary class="actions-trigger">👤 Elaboró</summary>
+          <div class="actions-menu-list meta-client-dropdown meta-elaboro-dropdown">
+            <div class="meta-row">
+              <label>NOMBRE:</label>
+              <div class="meta-client-wrap">
+                <input type="text" id="elaboro" list="elaboradoresList" placeholder="Nombre" />
+                <button type="button" class="btn-mini-clientes" onclick="openStaffModal()" title="Administrar elaboradores">👥</button>
+              </div>
+              <datalist id="elaboradoresList"></datalist>
+            </div>
+            <div class="meta-row">
+              <label>CARGO:</label>
+              <input type="text" id="cargoElaboro" placeholder="Cargo" />
+            </div>
+            <div class="meta-row">
+              <label>EXTENSIÓN:</label>
+              <input type="text" id="extensionElaboro" placeholder="Extensión" />
+            </div>
+            <div class="meta-row">
+              <label>CELULAR:</label>
+              <input type="text" id="celularElaboro" placeholder="Celular" />
+            </div>
+            <div class="meta-row">
+              <label>CORREO:</label>
+              <input type="email" id="correoElaboro" placeholder="Correo electrónico" />
+            </div>
+          </div>
+        </details>
       </div>
-      <div class="meta-row">
-        <label>ELABORÓ:</label>
-        <input type="text" id="elaboro" placeholder="Nombre del ingeniero" />
-      </div>
-    </div>
-    <div class="header-actions">
-      <details class="actions-menu" id="actionsMenu">
-        <summary class="actions-trigger">☰ Opciones</summary>
-        <div class="actions-menu-list">
-          <button id="btnSaveSelection" class="btn-save-sel" onclick="saveCurrentSelection()">💾 Guardar selección</button>
-          <button class="btn-history" onclick="openRecordsModal()">
-            📋 Historial
-            <span id="recBadge" class="rec-badge" style="display:none"></span>
-          </button>
-          <button class="btn-print" onclick="openClientsModal()">👥 Clientes</button>
-          <button class="btn-print" onclick="generateOfferDraft()">🧾 Borrador oferta</button>
-          <button class="btn-database" onclick="openDbModal()">🗄 Base de datos</button>
-          <button class="btn-database" onclick="openCostPartsModal()">💲 Base partes costeo</button>
-          <button class="btn-database" onclick="openMaterialsModal()">🧱 Materiales e insumos</button>
-          <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
-          <button class="btn-print" onclick="generarMemoriaEje()">📄 Memoria de cálculo (Eje)</button>
-        </div>
-      </details>
     </div>
   </header>
 
@@ -1908,9 +1937,65 @@
     </div>
   </div>
 
+  <!-- ===== STAFF MODAL ===== -->
+  <div id="staffModal" class="modal-overlay hidden" onclick="_staffModalOverlayClick(event)">
+    <div class="modal-container modal-wide">
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <span class="modal-icon">👤</span>
+          <h2>Base de Datos de Elaboradores</h2>
+        </div>
+        <button class="modal-close" onclick="closeStaffModal()" title="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="staffFileStatus" class="db-file-status db-file-disconnected">
+          <span class="db-file-icon">💾</span>
+          Cambios guardados en el navegador.
+          <button class="btn-db-link" onclick="staffConnectFile()">Vincular archivo JSON…</button>
+          para persistencia permanente.
+        </div>
+        <div class="modal-hint">
+          Administre los datos de contacto de quienes elaboran las selecciones.
+          Incluya <strong>Nombre, Cargo, Extensión, Celular y Correo.</strong>
+        </div>
+        <div class="clients-toolbar">
+          <label for="staffFilter">Filtrar nombre:</label>
+          <select id="staffFilter" class="input-select" onchange="staffRenderTable()">
+            <option value="">Todos</option>
+          </select>
+          <button class="btn-db-add" onclick="staffAddRow()">＋ Agregar elaborador</button>
+        </div>
+        <table class="db-table rec-table clients-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Cargo</th>
+              <th>Extensión</th>
+              <th>Celular</th>
+              <th>Correo electrónico</th>
+              <th class="rec-td-actions">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="staffTableBody"></tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <div class="modal-footer-left">
+          <button class="btn-db-reset" onclick="staffResetAll()">↺ Vaciar base de elaboradores</button>
+        </div>
+        <div class="modal-footer-right">
+          <button class="btn-modal-io" onclick="staffImportJSON()" title="Cargar desde archivo JSON">⬆ Importar</button>
+          <button class="btn-modal-io" onclick="staffExportJSON()" title="Descargar como archivo JSON">⬇ Exportar</button>
+          <button class="btn-modal-close" onclick="closeStaffModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="persist.js"></script>
   <script src="database.js"></script>
   <script src="clients.js"></script>
+  <script src="staff.js"></script>
   <script src="diagram.js"></script>
   <script src="coding.js"></script>
   <script src="decoder.js"></script>
@@ -1932,6 +2017,9 @@
     }
     function _clientsModalOverlayClick(e) {
       if (e.target === document.getElementById('clientsModal')) closeClientsModal();
+    }
+    function _staffModalOverlayClick(e) {
+      if (e.target === document.getElementById('staffModal')) closeStaffModal();
     }
   </script>
 </body>

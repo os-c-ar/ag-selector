@@ -130,6 +130,10 @@ function gatherSelectionData() {
     celularCliente:  v('celularCliente'),
     correoCliente:   v('correoCliente'),
     elaboro:    v('elaboro'),
+    cargoElaboro: v('cargoElaboro'),
+    extensionElaboro: v('extensionElaboro'),
+    celularElaboro: v('celularElaboro'),
+    correoElaboro: v('correoElaboro'),
 
     // Tank identifiers
     nombreTanque: v('nombreTanque'),
@@ -232,6 +236,10 @@ function restoreSelectionData(rec) {
   sv('celularCliente',  rec.celularCliente);
   sv('correoCliente',   rec.correoCliente);
   sv('elaboro',    rec.elaboro);
+  sv('cargoElaboro', rec.cargoElaboro);
+  sv('extensionElaboro', rec.extensionElaboro);
+  sv('celularElaboro', rec.celularElaboro);
+  sv('correoElaboro', rec.correoElaboro);
 
   // Tank identifiers
   sv('nombreTanque', rec.nombreTanque);
@@ -364,6 +372,8 @@ function _buildExportRows(record) {
   lv('Nombre de contacto', r.contactoCliente, 'Ciudad', r.ciudadCliente);
   lv('Telefono', r.telefonoCliente, 'Celular', r.celularCliente);
   lv('Correo electronico', r.correoCliente);
+  lv('Cargo', r.cargoElaboro, 'Extension', r.extensionElaboro);
+  lv('Celular de quien elaboro', r.celularElaboro, 'Correo de quien elaboro', r.correoElaboro);
   lv('Nombre del Tanque', r.nombreTanque, 'TAG Tanque', r.tagTanque);
   lv('TAG Agitador', r.tagAgitador);
   blank();
@@ -492,6 +502,8 @@ async function exportRecordToExcel(record) {
     section('INFORMACIÓN GENERAL'),
     lv('Fecha', r.fecha,         'Cotización / Pedido No.', r.cotizacion),
     lv('Cliente', r.cliente,     'Elaboró', r.elaboro),
+    lv('Cargo de quien elaboró', r.cargoElaboro, 'Extensión', r.extensionElaboro),
+    lv('Celular de quien elaboró', r.celularElaboro, 'Correo de quien elaboró', r.correoElaboro),
     lv('Nombre del Tanque', r.nombreTanque, 'TAG Tanque', r.tagTanque),
     lv('TAG Agitador', r.tagAgitador),
     blankRow(),

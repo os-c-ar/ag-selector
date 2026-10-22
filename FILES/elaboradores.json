@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "staff": [
+    {
+      "id": "1792703888901-oza96",
+      "nombre": "Oscar Goyes R.",
+      "cargo": "Ingeniero de Aplicaciones",
+      "extension": "133",
+      "celular": "3174360901",
+      "correo": "ogoyes@novatecfs.com"
+    },
+    {
+      "id": "1792704051632-p4st7",
+      "nombre": "Andrea Patiño",
+      "cargo": "Ingeniero de Aplicaciones",
+      "extension": "130",
+      "celular": "3188305186",
+      "correo": "proyectos15@novatecfs.com"
+    }
+  ]
+}

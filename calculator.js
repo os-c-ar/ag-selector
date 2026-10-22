@@ -489,15 +489,14 @@ function attachListeners() {
     });
   }
 
-  const clientMetaMenu = document.getElementById('clientMetaMenu');
-  if (clientMetaMenu) {
+  document.querySelectorAll('.meta-header-details').forEach(metaMenu => {
     document.addEventListener('click', ev => {
-      if (!clientMetaMenu.contains(ev.target)) clientMetaMenu.removeAttribute('open');
+      if (!metaMenu.contains(ev.target)) metaMenu.removeAttribute('open');
     });
     document.addEventListener('keydown', ev => {
-      if (ev.key === 'Escape') clientMetaMenu.removeAttribute('open');
+      if (ev.key === 'Escape') metaMenu.removeAttribute('open');
     });
-  }
+  });
 }
 
 function setDefaultDate() {
@@ -585,4 +584,3 @@ document.addEventListener('DOMContentLoaded', () => {
   renderComentariosFromString('', 'comentariosInternasList', 'input-comentario-interna-line', 'comentariosInternas');
   calculate();
 });
-

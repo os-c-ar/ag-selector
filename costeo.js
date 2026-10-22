@@ -161,6 +161,9 @@ function _matRowStatus(row) {
   if (row.codigo === '__manual__') return { kind: 'warn', text: 'Manual' };
   if (!row.codigo) return { kind: 'warn', text: 'Sin código' };
   const part = NFS_COSTEO_DB.findInCategory(row.categoria, row.codigo);
+  if (part && Number(row.unit) !== Number(part.precio)) {
+    return { kind: 'warn', text: '⚠ Precio modificado' };
+  }
   if (part || row.categoria === 'PLACA') return { kind: 'ok', text: '✔ Válido' };
   return { kind: 'error', text: '⚠ No encontrado' };
 }
@@ -320,6 +323,12 @@ function _refreshMatRowOutputs(row) {
   const parcial = _cstFieldNum(row, 'qty') * _cstFieldNum(row, 'unit');
   const el = tr.querySelector('[data-out="parcial"]');
   if (el) el.value = parcial.toLocaleString('es-CO');
+  const status = _matRowStatus(row);
+  const statusEl = tr.querySelector('.cst-status');
+  if (statusEl) {
+    statusEl.className = `cst-status cst-status-${status.kind}`;
+    statusEl.textContent = status.text;
+  }
   return parcial;
 }
 
