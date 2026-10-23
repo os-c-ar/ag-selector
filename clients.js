@@ -533,6 +533,7 @@ function _clientsUpdateFileStatus() {
       '<button class="btn-db-link" onclick="clientsConnectFile()">Vincular archivo JSON…</button>' +
       ' para persistencia permanente.';
   }
+  if (typeof _dbLinkRefreshGlobalBadge === 'function') _dbLinkRefreshGlobalBadge();
 }
 
 function _clientsFlashSaved() {

@@ -27,10 +27,12 @@
         </div>
       </div>
       <div class="header-menu-column">
+        <button id="dbLinkGlobalBadge" class="db-link-global-badge" type="button" onclick="openDbLinkModal()" title="Ver estado de vinculación de bases de datos">🔗 Vinculando…</button>
         <div class="header-actions">
           <details class="actions-menu" id="actionsMenu">
             <summary class="actions-trigger">☰ Opciones</summary>
             <div class="actions-menu-list">
+              <button class="btn-database" onclick="openDbLinkModal()">🔗 Vinculación de bases de datos</button>
               <button id="btnSaveSelection" class="btn-save-sel" onclick="saveCurrentSelection()">💾 Guardar selección</button>
               <button class="btn-history" onclick="openRecordsModal()">
                 📋 Historial
@@ -1623,6 +1625,12 @@
       </div>
 
       <div class="modal-body">
+        <div id="costPartsFileStatus" class="db-file-status db-file-disconnected">
+          <span class="db-file-icon">💾</span>
+          Cambios guardados en el navegador.
+          <button class="btn-db-link" onclick="costPartsConnectFile()">Vincular archivo JSON…</button>
+          para persistencia permanente.
+        </div>
         <div class="modal-hint">Administre códigos, descripciones y precios por categoría (MOTOREDUCTOR, PROPELAS, ACOPLE_BRIDADO, ACOPLE_DIRECTO, EJE_TUBULAR, EJE_MACIZO, PLETINAS, PERNOS, PLACA). Estos alimentan el código/precio/descripción de cada renglón de la pestaña de costeo, igual que el VLOOKUP contra "P. PARTES" del archivo origen.</div>
 
         <table class="db-table rec-table clients-table">
@@ -1769,6 +1777,46 @@
         <div class="modal-footer-right">
           <button class="btn-db-add" onclick="saveBomAndClose()">✔ Guardar</button>
           <button class="btn-modal-close" onclick="closePartBomModal()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DB LINK (CENTRALIZED) MODAL ===== -->
+  <div id="dbLinkModal" class="modal-overlay hidden" onclick="_dbLinkModalOverlayClick(event)">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <span class="modal-icon">🔗</span>
+          <h2>Vinculación de bases de datos</h2>
+        </div>
+        <button class="modal-close" onclick="closeDbLinkModal()" title="Cerrar">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-hint">Vincule cada base de datos a su archivo JSON en la carpeta <code>FILES/DATABASE</code> para que los cambios se guarden automáticamente en disco y estén disponibles en la próxima sesión. Use "Vincular carpeta DATABASE…" para detectar y vincular todas de una sola vez, o vincule cada una individualmente desde esta lista (o desde su propio módulo).</div>
+
+        <div class="form-row mb-10">
+          <button class="btn-db-add" type="button" onclick="linkAllDatabasesFromFolder()">📂 Vincular carpeta DATABASE…</button>
+        </div>
+
+        <table class="db-table rec-table clients-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Base de datos</th>
+              <th>Estado</th>
+              <th class="rec-td-actions">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="dbLinkTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <div class="modal-footer-left"></div>
+        <div class="modal-footer-right">
+          <button class="btn-modal-close" onclick="closeDbLinkModal()">Cerrar</button>
         </div>
       </div>
     </div>
@@ -2007,6 +2055,7 @@
   <script src="og_shaft.js"></script>
   <script src="offer.js"></script>
   <script src="records.js"></script>
+  <script src="dblink.js"></script>
   <script src="gradient.js"></script>
   <script>
     function _dbModalOverlayClick(e) {

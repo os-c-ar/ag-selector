@@ -311,6 +311,30 @@ body {
 }
 .btn-database:hover { background: rgba(255,255,255,0.25); }
 
+/* Global "all databases linked" badge, centralized link panel trigger */
+.db-link-global-badge {
+  width: 100%;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 11px;
+  font-family: var(--font);
+  font-weight: 700;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.35);
+  transition: background 0.15s;
+}
+.db-link-all-ok     { background: rgba(26,122,60,0.4); }
+.db-link-all-ok:hover     { background: rgba(26,122,60,0.6); }
+.db-link-partial    { background: rgba(245,158,11,0.4); }
+.db-link-partial:hover    { background: rgba(245,158,11,0.6); }
+.db-link-all-off    { background: rgba(192,57,43,0.4); }
+.db-link-all-off:hover    { background: rgba(192,57,43,0.6); }
+
+.db-link-row-ok  { color: var(--green); }
+.db-link-row-off { color: #b45309; }
+
 /* =====================================================
    MAIN CONTENT
    ===================================================== */

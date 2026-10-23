@@ -4,3 +4,7 @@ Thumbs.db
 *.tmp
 .tmp_docx_out/
 .tmp_docx_template/
+
+# Live application databases (mutable runtime data, not versioned).
+# Still present on disk for the app to link to; just excluded from git history.
+FILES/DATABASE/

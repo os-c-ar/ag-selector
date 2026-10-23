@@ -1,7 +1,7 @@
 /* =====================================================
    NFS – Persisted File Handles (IndexedDB)
    Keeps FileSystemFileHandle references across page reloads
-   so the user doesn't have to re-link FILES/*.json every
+   so the user doesn't have to re-link FILES/DATABASE/*.json every
    session. Permission is still re-requested per session
    (browser security requirement), but the handle itself
    (and therefore "which file") is remembered.

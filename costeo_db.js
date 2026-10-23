@@ -22,6 +22,7 @@ const NFS_COST_CATEGORIES = [
 
 const NFS_COSTEO_DB = (function () {
   const KEY = 'nfs_costeo_parts_v1';
+  const HANDLE_KEY = 'costparts';
 
   // Base completa extraída de 'P. PARTES' + hojas de despiece (P, EJXA, EJXC, AB, AD) del archivo
   // PP-03 PLANTILLA DE PRECIOS (554 partes; 424 con lista de materiales/servicios asociada).
@@ -583,9 +584,32 @@ const NFS_COSTEO_DB = (function () {
   ];
 
   let _parts = [];
+  let _fileHandle = null; // FileSystemFileHandle (File System Access API)
 
   function _persist() {
     try { localStorage.setItem(KEY, JSON.stringify(_parts)); } catch (_) {}
+  }
+
+  /* ── File System Access API write ── */
+  async function _writeFile() {
+    if (!_fileHandle) return;
+    try {
+      const ok = await NFS_HANDLES.ensurePermission(_fileHandle);
+      if (!ok) { _fileHandle = null; if (typeof _costPartsUpdateFileStatus === 'function') _costPartsUpdateFileStatus(); return; }
+      const writable = await _fileHandle.createWritable();
+      await writable.write(JSON.stringify(_parts, null, 2));
+      await writable.close();
+      if (typeof _costPartsFlashSaved === 'function') _costPartsFlashSaved();
+    } catch (_) {
+      _fileHandle = null;
+      if (typeof _costPartsUpdateFileStatus === 'function') _costPartsUpdateFileStatus();
+    }
+  }
+
+  /* Called after every data mutation */
+  function _afterMutate() {
+    _persist();
+    _writeFile(); // async fire-and-forget
   }
 
   function _load() {
@@ -639,7 +663,7 @@ const NFS_COSTEO_DB = (function () {
         bom: Array.isArray(part.bom) ? part.bom.map(_normalizeBomItem) : [],
       };
       _parts.push(p);
-      _persist();
+      _afterMutate();
       return p;
     },
     update(id, patch) {
@@ -650,7 +674,7 @@ const NFS_COSTEO_DB = (function () {
       p.descripcion = String(patch.descripcion ?? p.descripcion).trim();
       p.precio = Number(patch.precio ?? p.precio) || 0;
       if (patch.bom !== undefined) p.bom = Array.isArray(patch.bom) ? patch.bom.map(_normalizeBomItem) : [];
-      _persist();
+      _afterMutate();
       return true;
     },
     setBom(id, bomItems) {
@@ -658,7 +682,7 @@ const NFS_COSTEO_DB = (function () {
       if (!p) return false;
       p.bom = Array.isArray(bomItems) ? bomItems.map(_normalizeBomItem) : [];
       p.precio = _computeBomTotal(p.bom) || p.precio;
-      _persist();
+      _afterMutate();
       return true;
     },
     recalcFromMaterials() {
@@ -669,16 +693,16 @@ const NFS_COSTEO_DB = (function () {
           if (total && total !== p.precio) { p.precio = total; changed = true; }
         }
       });
-      if (changed) _persist();
+      if (changed) _afterMutate();
       return changed;
     },
     remove(id) {
       _parts = _parts.filter(x => Number(x.id) !== Number(id));
-      _persist();
+      _afterMutate();
     },
     reset() {
       _parts = JSON.parse(JSON.stringify(DEFAULT_PARTS));
-      _persist();
+      _afterMutate();
     },
     exportJSON() {
       return JSON.stringify(_parts, null, 2);
@@ -694,8 +718,11 @@ const NFS_COSTEO_DB = (function () {
         precio: Number(x.precio) || 0,
         bom: Array.isArray(x.bom) ? x.bom.map(_normalizeBomItem) : [],
       }));
-      _persist();
+      _afterMutate();
     },
+    setFileHandle(h) { _fileHandle = h; },
+    getFileHandle() { return _fileHandle; },
+    handleKey: HANDLE_KEY,
   };
 })();
 
@@ -747,8 +774,83 @@ function _populateCategorySelect(sel, selected) {
 function openCostPartsModal() {
   _renderCostPartsTable();
   _populateCategorySelect(document.getElementById('cp_new_categoria'));
+  _costPartsUpdateFileStatus();
   document.getElementById('costPartsModal').classList.remove('hidden');
 }
+
+/* =====================================================
+   File System Access API – connect cost parts file
+   ===================================================== */
+
+async function costPartsConnectFile() {
+  if (!window.showOpenFilePicker) {
+    alert('Tu navegador no soporta escritura directa a archivos (File System Access API).\n\nUsa "Exportar"/"Importar". Chrome/Edge 86+ soportan esta función.');
+    return;
+  }
+  try {
+    const [handle] = await window.showOpenFilePicker({
+      id: 'nfs-costparts',
+      types: [{ description: 'Base de partes de costeo NFS (JSON)', accept: { 'application/json': ['.json'] } }],
+      multiple: false,
+    });
+    const ok = await NFS_HANDLES.ensurePermission(handle);
+    if (!ok) { alert('Se requiere permiso de escritura para vincular el archivo.'); return; }
+
+    const file = await handle.getFile();
+    const text = await file.text();
+    if (text.trim()) {
+      try { NFS_COSTEO_DB.importJSON(text); } catch (_) { /* keep current if invalid */ }
+    }
+
+    NFS_COSTEO_DB.setFileHandle(handle);
+    await NFS_HANDLES.save(NFS_COSTEO_DB.handleKey, handle);
+    _renderCostPartsTable();
+    _costPartsUpdateFileStatus();
+  } catch (e) {
+    if (e.name !== 'AbortError') alert('Error al conectar con el archivo:\n' + e.message);
+  }
+}
+
+async function _costPartsTryAutoReconnect() {
+  const handle = await NFS_HANDLES.load(NFS_COSTEO_DB.handleKey);
+  if (!handle) return;
+  const ok = await NFS_HANDLES.ensurePermission(handle);
+  if (!ok) return;
+  NFS_COSTEO_DB.setFileHandle(handle);
+  _costPartsUpdateFileStatus();
+}
+
+function _costPartsUpdateFileStatus() {
+  const el = document.getElementById('costPartsFileStatus');
+  if (!el) return;
+  const h = NFS_COSTEO_DB.getFileHandle();
+  if (h) {
+    el.className = 'db-file-status db-file-connected';
+    el.innerHTML =
+      '<span class="db-file-icon">🔗</span>' +
+      'Vinculado a <strong>' + _escCP(h.name) + '</strong> – cambios guardados automáticamente en el archivo' +
+      '<span id="costPartsSaveIndicator" class="db-save-indicator"></span>';
+  } else {
+    el.className = 'db-file-status db-file-disconnected';
+    el.innerHTML =
+      '<span class="db-file-icon">💾</span>' +
+      'Cambios guardados en el navegador. ' +
+      '<button class="btn-db-link" onclick="costPartsConnectFile()">Vincular archivo JSON…</button>' +
+      ' para persistencia permanente.';
+  }
+  if (typeof _dbLinkRefreshGlobalBadge === 'function') _dbLinkRefreshGlobalBadge();
+}
+
+function _costPartsFlashSaved() {
+  const el = document.getElementById('costPartsSaveIndicator');
+  if (!el) return;
+  el.textContent = ' ✓ guardado';
+  el.style.opacity = '1';
+  clearTimeout(el._hideTimer);
+  el._hideTimer = setTimeout(() => { el.style.opacity = '0'; }, 2000);
+}
+
+document.addEventListener('DOMContentLoaded', _costPartsTryAutoReconnect);
 
 function closeCostPartsModal() {
   document.getElementById('costPartsModal').classList.add('hidden');

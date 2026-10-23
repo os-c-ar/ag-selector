@@ -1,8 +1,8 @@
 /* =====================================================
    NFS – Database Module  v2
    Persistence strategy (priority order):
-     1. FILES/database.json  – via File System Access API (write-through)
-     2. localStorage         – automatic fallback (same browser)
+     1. FILES/DATABASE/database.json  – via File System Access API (write-through)
+     2. localStorage                  – automatic fallback (same browser)
    ===================================================== */
 
 'use strict';
@@ -11,7 +11,7 @@ const NFS_DB = (function () {
 
   const STORAGE_KEY = 'nfs_db_v1';
 
-  /* Default dataset – mirrors FILES/database.json */
+  /* Default dataset – mirrors FILES/DATABASE/database.json */
   const DEFAULTS = [
     { id: 1,  label: 'Acondicionamiento de lodos (polímero, cal, etc.)', intensidad: '5 - 7' },
     { id: 2,  label: 'Homogeinización de lodos floculentos',             intensidad: '4 - 5' },
@@ -244,7 +244,7 @@ function dbResetAll() {
    ===================================================== */
 
 /**
- * Connect the app to FILES/database.json.
+ * Connect the app to FILES/DATABASE/database.json.
  * After connecting, every change is written through to the file automatically.
  */
 async function dbConnectFile() {
@@ -354,6 +354,7 @@ function _dbUpdateFileStatus() {
       `<button class="btn-db-link" onclick="dbConnectFile()">Vincular archivo JSON…</button>` +
       ` para persistencia permanente.`;
   }
+  if (typeof _dbLinkRefreshGlobalBadge === 'function') _dbLinkRefreshGlobalBadge();
 }
 
 function _dbFlashSaved() {
