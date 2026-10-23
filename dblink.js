@@ -208,6 +208,7 @@ async function linkAllDatabasesFromFolder() {
 
       const text = await (await fileHandle.getFile()).text();
       try { entry.apply(mod, text); } catch (_) { /* archivo vacío o inválido: se vincula igual, conservando los datos actuales */ }
+      if (typeof mod.markSynced === 'function') mod.markSynced(text);
 
       mod.setFileHandle(fileHandle);
       await NFS_HANDLES.save(entry.handleKey, fileHandle);

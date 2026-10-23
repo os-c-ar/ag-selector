@@ -11,6 +11,7 @@ const NFS_CLIENTS = (function () {
   const HANDLE_KEY = 'clients';
   let _data = null;
   let _fileHandle = null; // FileSystemFileHandle (File System Access API)
+  let _lastSyncedText = null; // last content we read/wrote, for conflict detection
 
   function _persist() {
     try { localStorage.setItem(KEY, JSON.stringify(_data)); } catch (e) {}
@@ -22,9 +23,30 @@ const NFS_CLIENTS = (function () {
     try {
       const ok = await NFS_HANDLES.ensurePermission(_fileHandle);
       if (!ok) { _fileHandle = null; _clientsUpdateFileStatus(); return; }
+
+      const check = await NFS_HANDLES.checkConflict(_fileHandle, _lastSyncedText);
+      if (!check.proceed) {
+        // Another user/computer changed the file: adopt their version instead of overwriting it.
+        try {
+          const parsed = check.externalText.trim() ? JSON.parse(check.externalText) : null;
+          if (parsed && Array.isArray(parsed.contacts)) {
+            _data = { version: parsed.version || 1, contacts: parsed.contacts.map(_normalizeContact) };
+          }
+        } catch (_) { /* keep current in-memory data if the external file is invalid */ }
+        _lastSyncedText = check.externalText;
+        _persist();
+        if (typeof _clientsRefreshFilter === 'function') _clientsRefreshFilter();
+        if (typeof _clientsRefreshHeaderList === 'function') _clientsRefreshHeaderList();
+        if (typeof clientsRenderTable === 'function') clientsRenderTable();
+        _clientsUpdateFileStatus();
+        return;
+      }
+
+      const text = JSON.stringify(_data, null, 2);
       const writable = await _fileHandle.createWritable();
-      await writable.write(JSON.stringify(_data, null, 2));
+      await writable.write(text);
       await writable.close();
+      _lastSyncedText = text;
       _clientsFlashSaved();
     } catch (e) {
       _fileHandle = null;
@@ -124,6 +146,7 @@ const NFS_CLIENTS = (function () {
     setFileHandle(h) { _fileHandle = h; },
     getFileHandle()  { return _fileHandle; },
     handleKey: HANDLE_KEY,
+    markSynced(text) { _lastSyncedText = text; },
   };
 })();
 
@@ -494,6 +517,7 @@ async function clientsConnectFile() {
         NFS_CLIENTS.importObject(parsed);
       }
     }
+    NFS_CLIENTS.markSynced(text);
 
     NFS_CLIENTS.setFileHandle(handle);
     await NFS_HANDLES.save(NFS_CLIENTS.handleKey, handle);
@@ -512,6 +536,7 @@ async function _clientsTryAutoReconnect() {
   const ok = await NFS_HANDLES.ensurePermission(handle);
   if (!ok) return;
   NFS_CLIENTS.setFileHandle(handle);
+  NFS_CLIENTS.markSynced(await NFS_HANDLES.readText(handle));
   _clientsUpdateFileStatus();
 }
 

@@ -10,6 +10,7 @@ const NFS_STAFF = (function () {
   const HANDLE_KEY = 'staff';
   let _profiles = [];
   let _fileHandle = null;
+  let _lastSyncedText = null; // last content we read/wrote, for conflict detection
 
   function _newId() {
     return Date.now() + '-' + Math.random().toString(36).slice(2, 7);
@@ -45,9 +46,28 @@ const NFS_STAFF = (function () {
         staffUpdateFileStatus('Se perdió el permiso del archivo. Los cambios siguen guardados en el navegador.');
         return;
       }
+
+      const check = await NFS_HANDLES.checkConflict(_fileHandle, _lastSyncedText);
+      if (!check.proceed) {
+        // Another user/computer changed the file: adopt their version instead of overwriting it.
+        try {
+          const parsed = check.externalText.trim() ? JSON.parse(check.externalText) : null;
+          if (parsed && Array.isArray(parsed.staff)) _profiles = parsed.staff.map(_normalize);
+        } catch (_) { /* keep current in-memory data if the external file is invalid */ }
+        _lastSyncedText = check.externalText;
+        _persist();
+        if (typeof staffRefreshFilter === 'function') staffRefreshFilter();
+        if (typeof staffRefreshHeaderList === 'function') staffRefreshHeaderList();
+        if (typeof staffRenderTable === 'function') staffRenderTable();
+        staffUpdateFileStatus();
+        return;
+      }
+
+      const text = exportJSON();
       const writable = await _fileHandle.createWritable();
-      await writable.write(exportJSON());
+      await writable.write(text);
       await writable.close();
+      _lastSyncedText = text;
       staffFlashSaved();
     } catch (error) {
       console.error('No se pudo actualizar el archivo de elaboradores.', error);
@@ -119,6 +139,7 @@ const NFS_STAFF = (function () {
     setFileHandle(handle) { _fileHandle = handle; },
     getFileHandle() { return _fileHandle; },
     handleKey: HANDLE_KEY,
+    markSynced(text) { _lastSyncedText = text; },
   };
 })();
 
@@ -397,6 +418,7 @@ async function staffConnectFile() {
       const parsed = JSON.parse(text);
       if (!NFS_STAFF.importObject(parsed)) throw new Error('El archivo no contiene un arreglo "staff" válido.');
     }
+    NFS_STAFF.markSynced(text);
     NFS_STAFF.setFileHandle(handle);
     await NFS_HANDLES.save(NFS_STAFF.handleKey, handle);
     staffRefreshFilter();
@@ -417,6 +439,7 @@ async function staffTryAutoReconnect() {
   const ok = await NFS_HANDLES.ensurePermission(handle);
   if (!ok) return;
   NFS_STAFF.setFileHandle(handle);
+  NFS_STAFF.markSynced(await NFS_HANDLES.readText(handle));
   staffUpdateFileStatus();
 }
 

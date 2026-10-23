@@ -15,6 +15,7 @@ const NFS_RECORDS = (function () {
   const HANDLE_KEY = 'records';
   let _list = [];
   let _fileHandle = null; // FileSystemFileHandle (File System Access API)
+  let _lastSyncedText = null; // last content we read/wrote, for conflict detection
 
   function _persist() {
     try { localStorage.setItem(KEY, JSON.stringify(_list)); } catch (e) {}
@@ -26,9 +27,27 @@ const NFS_RECORDS = (function () {
     try {
       const ok = await NFS_HANDLES.ensurePermission(_fileHandle);
       if (!ok) { _fileHandle = null; _recUpdateFileStatus(); return; }
+
+      const check = await NFS_HANDLES.checkConflict(_fileHandle, _lastSyncedText);
+      if (!check.proceed) {
+        // Another user/computer changed the file: adopt their version instead of overwriting it.
+        try {
+          const parsed = check.externalText.trim() ? JSON.parse(check.externalText) : [];
+          if (Array.isArray(parsed)) _list = parsed;
+        } catch (_) { /* keep current in-memory data if the external file is invalid */ }
+        _lastSyncedText = check.externalText;
+        _persist();
+        if (typeof _recRenderTable === 'function') _recRenderTable();
+        if (typeof _recRenderBadge === 'function') _recRenderBadge();
+        _recUpdateFileStatus();
+        return;
+      }
+
+      const text = JSON.stringify(_list, null, 2);
       const writable = await _fileHandle.createWritable();
-      await writable.write(JSON.stringify(_list, null, 2));
+      await writable.write(text);
       await writable.close();
+      _lastSyncedText = text;
       _recFlashSaved();
     } catch (e) {
       _fileHandle = null;
@@ -87,6 +106,7 @@ const NFS_RECORDS = (function () {
     setFileHandle(h) { _fileHandle = h; },
     getFileHandle()  { return _fileHandle; },
     handleKey: HANDLE_KEY,
+    markSynced(text) { _lastSyncedText = text; },
   };
 })();
 
@@ -881,6 +901,7 @@ async function recConnectFile() {
       const parsed = JSON.parse(text);
       if (Array.isArray(parsed)) NFS_RECORDS.importObject(parsed);
     }
+    NFS_RECORDS.markSynced(text);
 
     NFS_RECORDS.setFileHandle(handle);
     await NFS_HANDLES.save(NFS_RECORDS.handleKey, handle);
@@ -898,6 +919,7 @@ async function _recTryAutoReconnect() {
   const ok = await NFS_HANDLES.ensurePermission(handle);
   if (!ok) return;
   NFS_RECORDS.setFileHandle(handle);
+  NFS_RECORDS.markSynced(await NFS_HANDLES.readText(handle));
   _recUpdateFileStatus();
 }
 

@@ -585,6 +585,7 @@ const NFS_COSTEO_DB = (function () {
 
   let _parts = [];
   let _fileHandle = null; // FileSystemFileHandle (File System Access API)
+  let _lastSyncedText = null; // last content we read/wrote, for conflict detection
 
   function _persist() {
     try { localStorage.setItem(KEY, JSON.stringify(_parts)); } catch (_) {}
@@ -596,9 +597,35 @@ const NFS_COSTEO_DB = (function () {
     try {
       const ok = await NFS_HANDLES.ensurePermission(_fileHandle);
       if (!ok) { _fileHandle = null; if (typeof _costPartsUpdateFileStatus === 'function') _costPartsUpdateFileStatus(); return; }
+
+      const check = await NFS_HANDLES.checkConflict(_fileHandle, _lastSyncedText);
+      if (!check.proceed) {
+        // Another user/computer changed the file: adopt their version instead of overwriting it.
+        try {
+          const parsed = check.externalText.trim() ? JSON.parse(check.externalText) : [];
+          if (Array.isArray(parsed)) {
+            _parts = parsed.map((x, i) => ({
+              id: Number(x.id) || (i + 1),
+              categoria: String(x.categoria || '').trim().toUpperCase(),
+              codigo: String(x.codigo || '').trim(),
+              descripcion: String(x.descripcion || '').trim(),
+              precio: Number(x.precio) || 0,
+              bom: Array.isArray(x.bom) ? x.bom.map(_normalizeBomItem) : [],
+            }));
+          }
+        } catch (_) { /* keep current in-memory data if the external file is invalid */ }
+        _lastSyncedText = check.externalText;
+        _persist();
+        if (typeof _renderCostPartsTable === 'function') _renderCostPartsTable();
+        if (typeof _costPartsUpdateFileStatus === 'function') _costPartsUpdateFileStatus();
+        return;
+      }
+
+      const text = JSON.stringify(_parts, null, 2);
       const writable = await _fileHandle.createWritable();
-      await writable.write(JSON.stringify(_parts, null, 2));
+      await writable.write(text);
       await writable.close();
+      _lastSyncedText = text;
       if (typeof _costPartsFlashSaved === 'function') _costPartsFlashSaved();
     } catch (_) {
       _fileHandle = null;
@@ -723,6 +750,7 @@ const NFS_COSTEO_DB = (function () {
     setFileHandle(h) { _fileHandle = h; },
     getFileHandle() { return _fileHandle; },
     handleKey: HANDLE_KEY,
+    markSynced(text) { _lastSyncedText = text; },
   };
 })();
 
@@ -801,6 +829,7 @@ async function costPartsConnectFile() {
     if (text.trim()) {
       try { NFS_COSTEO_DB.importJSON(text); } catch (_) { /* keep current if invalid */ }
     }
+    NFS_COSTEO_DB.markSynced(text);
 
     NFS_COSTEO_DB.setFileHandle(handle);
     await NFS_HANDLES.save(NFS_COSTEO_DB.handleKey, handle);
@@ -817,6 +846,7 @@ async function _costPartsTryAutoReconnect() {
   const ok = await NFS_HANDLES.ensurePermission(handle);
   if (!ok) return;
   NFS_COSTEO_DB.setFileHandle(handle);
+  NFS_COSTEO_DB.markSynced(await NFS_HANDLES.readText(handle));
   _costPartsUpdateFileStatus();
 }
 

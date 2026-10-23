@@ -30,6 +30,7 @@ const NFS_DB = (function () {
 
   let _data       = null;
   let _fileHandle = null; // FileSystemFileHandle (File System Access API)
+  let _lastSyncedText = null; // last content we read/wrote, for conflict detection
 
   /* ── localStorage ── */
   function _persist() {
@@ -46,9 +47,25 @@ const NFS_DB = (function () {
       }
       if (perm !== 'granted') { _fileHandle = null; _dbUpdateFileStatus(); return; }
 
+      const check = await NFS_HANDLES.checkConflict(_fileHandle, _lastSyncedText);
+      if (!check.proceed) {
+        // Another user/computer changed the file: adopt their version instead of overwriting it.
+        try {
+          const parsed = check.externalText.trim() ? JSON.parse(check.externalText) : null;
+          if (parsed && Array.isArray(parsed.procesos)) _data = { version: parsed.version || 1, procesos: parsed.procesos };
+        } catch (_) { /* keep current in-memory data if the external file is invalid */ }
+        _lastSyncedText = check.externalText;
+        _persist();
+        if (typeof _dbRenderTable === 'function') _dbRenderTable();
+        _dbUpdateFileStatus();
+        return;
+      }
+
+      const text = JSON.stringify(_data, null, 2);
       const writable = await _fileHandle.createWritable();
-      await writable.write(JSON.stringify(_data, null, 2));
+      await writable.write(text);
       await writable.close();
+      _lastSyncedText = text;
       _dbFlashSaved();
     } catch (e) {
       _fileHandle = null;
@@ -115,6 +132,7 @@ const NFS_DB = (function () {
 
     setFileHandle(h) { _fileHandle = h; },
     getFileHandle()  { return _fileHandle; },
+    markSynced(text) { _lastSyncedText = text; },
   };
 
 })();
@@ -276,11 +294,13 @@ async function dbConnectFile() {
 
     /* Load data from the file */
     const file   = await handle.getFile();
-    const parsed = JSON.parse(await file.text());
+    const text   = await file.text();
+    const parsed = text.trim() ? JSON.parse(text) : null;
     if (parsed && Array.isArray(parsed.procesos)) {
       NFS_DB.loadFromObject(parsed);
       _dbRenderTable();
     }
+    NFS_DB.markSynced(text);
 
     NFS_DB.setFileHandle(handle);
     await NFS_HANDLES.save('database', handle);
@@ -381,6 +401,7 @@ async function _dbTryAutoReconnect() {
   const ok = await NFS_HANDLES.ensurePermission(handle);
   if (!ok) return;
   NFS_DB.setFileHandle(handle);
+  NFS_DB.markSynced(await NFS_HANDLES.readText(handle));
   _dbUpdateFileStatus();
 }
 

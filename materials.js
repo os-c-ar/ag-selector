@@ -12,6 +12,7 @@ const NFS_MATERIALS = (function () {
   const HANDLE_KEY = 'materials';
   let _items = [];
   let _fileHandle = null;
+  let _lastSyncedText = null; // last content we read/wrote, for conflict detection
 
   // Base completa extraída de la hoja "INSUMOS" del archivo PP-03 PLANTILLA DE PRECIOS (523 ítems, 22 categorías).
   const DEFAULT_ITEMS = [
@@ -549,9 +550,27 @@ const NFS_MATERIALS = (function () {
     try {
       const ok = await NFS_HANDLES.ensurePermission(_fileHandle);
       if (!ok) { _fileHandle = null; _materialsUpdateFileStatus(); return; }
+
+      const check = await NFS_HANDLES.checkConflict(_fileHandle, _lastSyncedText);
+      if (!check.proceed) {
+        // Another user/computer changed the file: adopt their version instead of overwriting it.
+        try {
+          const parsed = check.externalText.trim() ? JSON.parse(check.externalText) : [];
+          if (Array.isArray(parsed)) _items = parsed.map((x, i) => _normalizeItem(x, i + 1));
+        } catch (_) { /* keep current in-memory data if the external file is invalid */ }
+        _lastSyncedText = check.externalText;
+        _persist();
+        if (typeof _renderMaterialsTable === 'function') _renderMaterialsTable();
+        if (typeof _populateMaterialCategoryDatalist === 'function') _populateMaterialCategoryDatalist();
+        _materialsUpdateFileStatus();
+        return;
+      }
+
+      const text = JSON.stringify(_items, null, 2);
       const writable = await _fileHandle.createWritable();
-      await writable.write(JSON.stringify(_items, null, 2));
+      await writable.write(text);
       await writable.close();
+      _lastSyncedText = text;
       _materialsFlashSaved();
     } catch (_) {
       _fileHandle = null;
@@ -640,6 +659,7 @@ const NFS_MATERIALS = (function () {
     setFileHandle(h) { _fileHandle = h; },
     getFileHandle() { return _fileHandle; },
     handleKey: HANDLE_KEY,
+    markSynced(text) { _lastSyncedText = text; },
   };
 })();
 
@@ -813,6 +833,7 @@ async function materialsConnectFile() {
     if (text.trim()) {
       try { NFS_MATERIALS.importJSON(text); } catch (_) { /* keep current if invalid */ }
     }
+    NFS_MATERIALS.markSynced(text);
 
     NFS_MATERIALS.setFileHandle(handle);
     await NFS_HANDLES.save(NFS_MATERIALS.handleKey, handle);
@@ -830,6 +851,7 @@ async function _materialsTryAutoReconnect() {
   const ok = await NFS_HANDLES.ensurePermission(handle);
   if (!ok) return;
   NFS_MATERIALS.setFileHandle(handle);
+  NFS_MATERIALS.markSynced(await NFS_HANDLES.readText(handle));
   _materialsUpdateFileStatus();
 }
 

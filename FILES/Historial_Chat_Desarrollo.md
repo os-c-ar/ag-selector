@@ -257,6 +257,165 @@ vía `gatherSelectionData`), y el nuevo desplegable del header, verificados en n
 
 ---
 
+## 2026-10-23 10:18 — Indicador global y panel centralizado de vinculación de bases de datos
+
+**Solicitud:** dado que la app tiene varias bases de datos y la idea es siempre trabajar vinculado a
+cada una, se pidió (1) una indicación visual de que **todas** las bases están vinculadas y (2) una
+forma de **centralizar** la vinculación, adicional al enlace que ya existe dentro de cada módulo.
+
+**Análisis realizado:** se inventariaron los 6 "módulos tipo base de datos" de la app
+(`database.js`/Procesos, `materials.js`, `costeo_db.js`/Partes de costeo, `records.js`/Historial,
+`clients.js`, `staff.js`). Cada uno vincula su propio archivo JSON vía File System Access API de
+forma **totalmente independiente y silenciosa** (sin visibilidad cruzada), y se detectó que
+**Partes de costeo era el único de los 6 que solo usaba `localStorage`** (sin vínculo a archivo),
+una inconsistencia frente al resto.
+
+**Cambios implementados:**
+- Nuevo archivo `dblink.js`: registro central (`DB_LINK_REGISTRY`) de las 6 bases con su icono,
+  nombre, nombre de archivo esperado, función de conexión y función de refresco de UI propias de
+  cada módulo (sin duplicar su lógica).
+- Badge global siempre visible en el header (`🔗 N/6 vinculadas`, con color verde/amarillo/rojo
+  según cuántas estén realmente vinculadas a archivo) — se actualiza automáticamente cada vez que
+  cualquier módulo cambia su estado de vínculo.
+- Nuevo modal **"Vinculación de bases de datos"**, accesible desde el badge y desde una nueva
+  primera opción del menú "☰ Opciones", que lista las 6 bases con su estado individual y un botón
+  "Vincular…"/"Re-vincular" por fila (reutiliza las funciones de conexión ya existentes).
+- Acción **"Vincular carpeta…"**: un solo diálogo de carpeta (`showDirectoryPicker`) detecta los 6
+  archivos por su nombre dentro de la carpeta elegida y los vincula todos de un solo paso.
+- `costeo_db.js` (Partes de costeo) ganó soporte de vínculo a archivo igual que los otros 5 módulos
+  (handle, escritura write-through, botón "Vincular archivo JSON…" en su propio modal), quedando los
+  6 bajo el mismo esquema.
+
+**Validación:** probado en navegador (Playwright): el badge calcula bien el conteo, el panel
+centralizado lista las 6 bases y abre correctamente, y Partes de costeo ya muestra su propia barra
+de estado de vínculo sin errores de consola.
+
+---
+
+## 2026-10-23 10:33 — Reorganización de las bases de datos en `FILES/DATABASE/` y publicación a GitHub
+
+**Solicitud:** el usuario propuso crear una carpeta específica `DATABASE` para las 6 bases (dentro
+de `FILES` o al mismo nivel) y pidió una recomendación crítica antes de proceder.
+
+**Análisis crítico realizado:**
+- Se revisó qué referencias de ruta existen realmente en el código: `FILES/logo-nfs.png` y
+  `FILES/Fondo.png` están **hardcodeadas** en `index.html`/`styles.css` (deben permanecer en una
+  ruta fija); en cambio, ninguna de las 6 bases JSON ni las plantillas `.docx`/`.xlsx` tienen ruta
+  fija en el código — solo se abren vía selector de archivo (File System Access API), por lo que
+  **se pueden mover libremente sin romper nada**.
+- Se verificó que las 6 bases **sí estaban versionadas en git** con historial propio (no eran datos
+  puramente locales).
+- Comparación anidada (`FILES/DATABASE/`) vs. hermana (`DATABASE/` al mismo nivel que `FILES/`):
+  la ventaja decisiva de la opción anidada es que la acción "Vincular carpeta…" recién creada pediría
+  permiso de carpeta solo sobre los 6 JSON (principio de menor privilegio), en vez de sobre toda
+  `FILES` (que incluye presupuestos de clientes en Excel, plantillas, y el propio historial de
+  desarrollo). La opción hermana solo se justificaría si se quisiera dejar de versionar las bases en
+  git con una regla `.gitignore` más "limpia" a nivel de raíz — lo cual, dado que es una decisión de
+  estrategia y no una limitación técnica, se dejó a elección del usuario.
+- **Decisión del usuario:** carpeta anidada `FILES/DATABASE/`, y además dejar de versionar esas 6
+  bases en git a partir de este punto (tratarlas como datos operativos mutables).
+
+**Cambios implementados:**
+- `git mv` de `database.json`, `materiales.json`, `partes_costeo.json`, `registros.json`,
+  `clientes.json` y `elaboradores.json` de `FILES/` a `FILES/DATABASE/` (preservando el historial).
+- `.gitignore`: se agregó `FILES/DATABASE/`; `git rm --cached` de los 6 archivos para dejar de
+  versionarlos (siguen presentes en disco, solo dejan de registrarse en futuros commits).
+- `dblink.js`: la acción de vinculación por carpeta ahora apunta a `DATABASE` y, si el usuario
+  selecciona `FILES` por costumbre, detecta automáticamente la subcarpeta `DATABASE` como *fallback*.
+- Comentarios de ruta actualizados en `database.js` y `persist.js`; textos de la UI del panel
+  centralizado actualizados ("Vincular carpeta DATABASE…").
+- Commit `c0c5156` ("Centralizar vinculación de bases de datos y mover JSON a FILES/DATABASE") y
+  `git push` a `origin/main` (repositorio `os-c-ar/ag-selector`).
+
+**Validación:** recarga de la app en navegador tras el commit — el logo/fondo (rutas fijas) siguen
+cargando bien, el badge y el panel centralizado muestran el texto nuevo correctamente.
+
+---
+
+## 2026-10-23 10:43 — Análisis crítico: ¿ubicar las bases en una carpeta de Google Drive?
+
+**Solicitud:** el usuario preguntó si una carpeta de Google Drive sería una ubicación lógica para que
+las bases de datos sean "funcionales" (compartidas/accesibles), dado que varias personas las usan.
+
+**Preguntas de contexto planteadas y respuestas del usuario:** ecosistema de nube real = **Google
+Workspace/Drive**; patrón de uso = **varias personas editando clientes/registros/precios al mismo
+tiempo**; se requiere acceso **sin internet** en algunos casos (visitas a planta).
+
+**Razonamiento / análisis crítico entregado:**
+1. **Requisito técnico:** la File System Access API que usa la app solo puede leer/escribir rutas de
+   disco **locales reales**. Por eso "Google Drive" solo sirve si se usa **Google Drive para
+   Escritorio** (carpeta local sincronizada); la versión web (drive.google.com) no expone una ruta
+   de archivo utilizable y por tanto no es compatible con el mecanismo de vínculo actual.
+2. **El problema de fondo no es la ubicación, es el modelo de datos:** cada base se carga completa en
+   memoria y se **reescribe completa** en cada cambio (no hay bloqueo ni fusión por registro). Con
+   edición realmente simultánea de dos personas sobre el mismo archivo, la segunda persona en guardar
+   sobrescribe silenciosamente los cambios de la primera ("lost update") — esto ocurre igual con
+   Google Drive, OneDrive, Dropbox o un servidor de red; la sincronización en la nube no resuelve la
+   concurrencia, solo resuelve la disponibilidad/respaldo del archivo.
+3. **El riesgo no es igual para las 6 bases:** Clientes e Historial se editan simultáneamente por
+   varias personas (riesgo alto); Procesos/Materiales/Partes de costeo las mantiene normalmente una
+   sola persona y cambian poco (riesgo bajo).
+4. **Recomendación en dos pasos:** (1) ahora, Google Drive para Escritorio como carpeta compartida
+   —que de paso aporta historial de versiones automático de Drive, compensando que las bases ya no se
+   versionan en git— **más** una validación de concurrencia en la app (releer el archivo antes de
+   guardar y avisar si cambió, en vez de sobrescribir en silencio); (2) a futuro, si los choques
+   reales son frecuentes en Clientes/Historial, migrar esas dos específicamente a algo con
+   concurrencia real por fila (ej. Google Sheets vía API, ya que usan Google Workspace), dejando las
+   demás como están.
+
+**Decisión del usuario:** proceder con el punto 1 (validación de concurrencia) de inmediato.
+
+---
+
+## 2026-10-23 10:50 — Implementación: guardia de concurrencia optimista (detectar cambios externos antes de guardar)
+
+**Solicitud:** implementar el punto 1 del análisis anterior (avisar en vez de sobrescribir cuando el
+archivo cambió en disco desde la última lectura), y registrar todo este trabajo en este historial con
+el razonamiento.
+
+**Diseño de la solución:**
+- Se centralizó la lógica común en `persist.js` (`NFS_HANDLES`), agregando:
+  - `readText(handle)`: lee el contenido actual de un handle de archivo.
+  - `checkConflict(handle, lastSyncedText)`: vuelve a leer el archivo justo antes de escribir y lo
+    compara contra `lastSyncedText` (la última versión que esta pestaña leyó o escribió). Si
+    coinciden, no hay conflicto. Si difieren, usa `confirm()` para preguntar al usuario: **Aceptar**
+    = conservar y guardar mis cambios actuales (sobrescribe lo que la otra persona guardó);
+    **Cancelar** = descartar mis cambios en memoria y adoptar la versión más reciente del archivo.
+- Cada uno de los 6 módulos (`database.js`, `materials.js`, `costeo_db.js`, `clients.js`,
+  `records.js`, `staff.js`) ahora mantiene una variable privada `_lastSyncedText` (línea base) y
+  expone un método público `markSynced(text)`:
+  - Se fija al **conectar** manualmente un archivo (con el texto recién leído).
+  - Se fija al **reconectar automáticamente** al abrir la app (releyendo el archivo en ese momento,
+    no asumiendo que el estado local sigue vigente).
+  - Se fija tras cada **escritura exitosa** (con el texto recién escrito).
+  - Se usa en `_writeFile()`: antes de escribir, se llama a `checkConflict`; si el usuario elige
+    adoptar la versión externa, el módulo la aplica a su propio modelo en memoria (sin pasar por su
+    `importJSON`/`importObject` público, para evitar un segundo ciclo de escritura recursivo),
+    actualiza localStorage y refresca su tabla, y **no** escribe el archivo en ese ciclo.
+- `dblink.js` (vinculación masiva por carpeta) también llama a `markSynced` tras leer cada archivo,
+  para que las bases vinculadas por ese camino queden con la misma protección.
+
+**Validación realizada (en navegador, vía Playwright):**
+- Se recorrieron los 6 modales (Procesos, Materiales, Partes de costeo, Historial, Clientes, sin
+  handle real vinculado) sin errores de consola, confirmando que el flujo normal (sin archivo
+  vinculado) no se vio afectado.
+- Se simuló un handle de archivo falso en `NFS_DB` (Procesos) vía `page.evaluate`, forzando una
+  diferencia entre el contenido "en disco" y la línea base local, y se disparó una mutación real
+  (`NFS_DB.add(...)`):
+  - Con **Cancelar**: se confirmó que el proceso agregado localmente se descartó y la tabla pasó a
+    mostrar el "proceso" simulado del archivo externo (adopción correcta de la versión externa).
+  - Con **Aceptar**: se confirmó que el archivo "en disco" (simulado) terminó con el contenido local
+    (incluido el proceso agregado localmente) y **sin** el contenido externo, y que se disparó el
+    indicador visual "✓ guardado".
+- Se limpiaron los datos de prueba (`NFS_DB.reset()`) al finalizar.
+
+**Pendiente / posible siguiente paso:** si en el uso real los choques en Clientes/Historial resultan
+frecuentes a pesar de esta guardia (que avisa pero no fusiona cambios), evaluar la migración de esas
+dos bases específicamente a un backend con concurrencia real por registro (ver análisis del punto
+anterior).
+
+---
+
 ## Cómo se mantiene actualizado
 
 Este archivo **no se regenera automáticamente** (es un documento narrativo, no un reporte generado
