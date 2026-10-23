@@ -416,6 +416,37 @@ anterior).
 
 ---
 
+## 2026-10-23 11:10 — Carpeta de plantillas y acción "Generar oferta"
+
+**Solicitud:** crear `FILES/PLANTILLAS`, usarla desde la acción de oferta y
+renombrar "Borrador oferta" como "Generar oferta".
+
+**Cambios implementados:**
+- Se movieron las dos plantillas Word `CA_NNN_26_CLIENTE_AGITADOR.docx` y
+  `CA_NNN_26_CLIENTE_AGITADOR_variables.docx` a `FILES/PLANTILLAS/`.
+  No se movieron los Excel de referencia ni se modificó el contenido de las plantillas.
+- Se renombró la acción del menú y sus avisos de éxito/error. Se conservan la
+  función interna y el nombre de descarga existente para no alterar otros comportamientos.
+- En Chrome/Edge, la primera ejecución solicita seleccionar `FILES/PLANTILLAS`.
+  Se recuerda el handle de esa carpeta mediante el almacenamiento existente
+  `NFS_HANDLES` y se pasa como `startIn` al selector de archivos Word.
+  El selector se abre antes de cargar la biblioteca del documento para no
+  consumir la activación del usuario esperando una descarga.
+- En navegadores sin estos selectores se mantiene el selector convencional,
+  indicando que debe elegirse la plantilla en `FILES/PLANTILLAS`.
+- Se actualizó `Variables_Plantilla_Cotizacion.md` con el nuevo nombre y ubicación.
+
+**Criterio técnico:** el navegador no permite fijar una ruta local arbitraria
+en un `<input type="file">`. Por eso se usa una carpeta autorizada por el usuario,
+recordada como ubicación inicial, sin afirmar que es una restricción de acceso.
+
+**Validación:** comprobación de archivos movidos y `git diff --check`.
+Prueba en navegador con selectores simulados: nombre del menú, carpeta inicial,
+reutilización de la carpeta recordada y cancelación. No se automatizó el diálogo
+nativo ni se generó una oferta real en esta tanda.
+
+---
+
 ## Cómo se mantiene actualizado
 
 Este archivo **no se regenera automáticamente** (es un documento narrativo, no un reporte generado

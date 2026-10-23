@@ -9,8 +9,14 @@ ${nombre_variable}
 [[nombre_variable]]
 ```
 
-Al generar el borrador con el botón **🧾 Borrador oferta**, cada marca se reemplaza
+Al generar el documento con el botón **🧾 Generar oferta**, cada marca se reemplaza
 por el valor actual del formulario.
+
+Las plantillas Word se encuentran en `PLANTILLAS/` (dentro de `FILES`).
+En Chrome/Edge se solicita seleccionar esa carpeta la primera vez y se recuerda
+como ubicación inicial del selector de plantillas. El navegador permite navegar
+a otra carpeta; no se trata de una restricción de acceso. En otros navegadores,
+seleccione manualmente la plantilla en `FILES/PLANTILLAS`.
 
 ## Datos generales del encabezado
 

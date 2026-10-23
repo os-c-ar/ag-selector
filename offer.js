@@ -431,7 +431,27 @@ function _downloadBlob(blob, fileName) {
   URL.revokeObjectURL(url);
 }
 
-function _pickOfferTemplateDocx() {
+async function _pickOfferTemplateDocx() {
+  if (window.showDirectoryPicker && window.showOpenFilePicker) {
+    let directory = await NFS_HANDLES.load('offer-templates-directory');
+    if (!directory) {
+      alert('Seleccione la carpeta FILES\\PLANTILLAS. Se recordara como ubicacion inicial para las proximas ofertas.');
+      directory = await window.showDirectoryPicker({ id: 'nfs-offer-templates', mode: 'read' });
+      await NFS_HANDLES.save('offer-templates-directory', directory);
+    }
+    const [handle] = await window.showOpenFilePicker({
+      id: 'nfs-offer-docx',
+      startIn: directory,
+      types: [{
+        description: 'Plantilla de oferta Word',
+        accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] },
+      }],
+      multiple: false,
+    });
+    return handle.getFile();
+  }
+
+  alert('Seleccione la plantilla Word en FILES\\PLANTILLAS. Este navegador no permite configurar la carpeta inicial del selector.');
   return new Promise((resolve, reject) => {
     const input = Object.assign(document.createElement('input'), {
       type: 'file',
@@ -442,6 +462,7 @@ function _pickOfferTemplateDocx() {
       if (file) resolve(file);
       else reject(new Error('No se selecciono plantilla.'));
     };
+    input.oncancel = () => reject(new Error('No se selecciono plantilla.'));
     input.click();
   });
 }
@@ -461,12 +482,12 @@ async function generateOfferDraft() {
     const data = _offerCurrentData();
     const anyKey = [data.cliente, data.cotizacion, data.agitadorSeleccionado, data.codigoAgitador].join('').trim();
     if (!anyKey) {
-      alert('No hay datos de seleccion para generar el borrador.');
+      alert('No hay datos de seleccion para generar la oferta.');
       return;
     }
 
-    const PizZip = await _ensurePizZip();
     const file = await _pickOfferTemplateDocx();
+    const PizZip = await _ensurePizZip();
     const arr = await file.arrayBuffer();
     const zip = new PizZip(arr);
     const docPath = 'word/document.xml';
@@ -493,12 +514,12 @@ async function generateOfferDraft() {
     _downloadBlob(outBlob, outName);
 
     if (typeof _showToast === 'function') {
-      _showToast('✔ Borrador de oferta generado.');
+      _showToast('✔ Oferta generada.');
     } else {
-      alert('Borrador de oferta generado correctamente.');
+      alert('Oferta generada correctamente.');
     }
   } catch (err) {
-    if (String(err && err.message || '').includes('No se selecciono plantilla')) return;
-    alert('No se pudo generar el borrador de oferta:\n' + err.message);
+    if (err.name === 'AbortError' || String(err && err.message || '').includes('No se selecciono plantilla')) return;
+    alert('No se pudo generar la oferta:\n' + err.message);
   }
 }
