@@ -318,6 +318,7 @@ function staffApplyHeaderProfile() {
   document.getElementById('extensionElaboro').value = profile.extension;
   document.getElementById('celularElaboro').value = profile.celular;
   document.getElementById('correoElaboro').value = profile.correo;
+  updateGeneralInfoSummary();
 }
 
 function staffAddRow() {
@@ -386,6 +387,7 @@ function staffUseProfile(id) {
   document.getElementById('extensionElaboro').value = profile.extension;
   document.getElementById('celularElaboro').value = profile.celular;
   document.getElementById('correoElaboro').value = profile.correo;
+  updateGeneralInfoSummary();
   closeStaffModal();
 }
 

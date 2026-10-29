@@ -129,6 +129,26 @@
   <div class="main-content">
 
     <!-- ===== TANK INFO ===== -->
+    <section class="card">
+      <h2 class="section-title">0. INFORMACIÓN GENERAL</h2>
+      <div class="section-body">
+        <div class="general-info-summary">
+          <div class="general-info-group">
+            <div class="info-field"><label for="generalCliente">CLIENTE:</label><output id="generalCliente" for="cliente">Sin seleccionar</output></div>
+            <div class="info-field"><label for="generalContacto">CONTACTO:</label><output id="generalContacto" for="contactoCliente">—</output></div>
+            <div class="info-field"><label for="generalCiudad">CIUDAD:</label><output id="generalCiudad" for="ciudadCliente">—</output></div>
+            <div class="info-field"><label for="generalTelefono">TELÉFONO:</label><output id="generalTelefono" for="telefonoCliente">—</output></div>
+            <div class="info-field"><label for="generalCelularCliente">CELULAR:</label><output id="generalCelularCliente" for="celularCliente">—</output></div>
+            <div class="info-field"><label for="generalCorreoCliente">CORREO:</label><output id="generalCorreoCliente" for="correoCliente">—</output></div>
+          </div>
+          <div class="general-info-group">
+            <div class="info-field"><label for="generalElaboro">ELABORÓ:</label><output id="generalElaboro" for="elaboro">Sin seleccionar</output></div>
+            <div class="info-field"><label for="generalCargo">CARGO:</label><output id="generalCargo" for="cargoElaboro">—</output></div>
+            <div class="info-field"><label for="generalExtension">EXTENSIÓN:</label><output id="generalExtension" for="extensionElaboro">—</output></div>
+            <div class="info-field"><label for="generalCelularElaboro">CELULAR:</label><output id="generalCelularElaboro" for="celularElaboro">—</output></div>
+            <div class="info-field"><label for="generalCorreoElaboro">CORREO:</label><output id="generalCorreoElaboro" for="correoElaboro">—</output></div>
+          </div>
+        </div>
     <div class="tank-info-row">
       <div class="info-field">
         <label>NOMBRE DEL TANQUE:</label>
@@ -143,6 +163,8 @@
         <input type="text" id="tagAgitador" placeholder="TAG" />
       </div>
     </div>
+      </div>
+    </section>
 
     <!-- ===== SECTION 1: FLUID ===== -->
     <section class="card">
@@ -153,7 +175,9 @@
           <div class="form-row full-width">
             <label class="field-label">Descripción del proceso:</label>
             <select id="proceso" class="input-select"><!-- populated by database.js --></select>
+            <button type="button" id="processRecommendationsButton" class="btn-db btn-db-edit" onclick="openProcessRecommendations()" title="Ver recomendaciones típicas del proceso">📝 Recomendaciones de selección <span id="processRecommendationsBadge" class="process-recommendations-badge" hidden><span aria-hidden="true">!</span> Consultar</span></button>
           </div>
+          <p id="processRecommendationsNote" class="section-note">Al seleccionar un proceso se cargan su viscosidad y densidad típicas, si están definidas en Base de datos. Ambos valores son editables.</p>
 
           <div class="form-row">
             <label class="field-label">Intensidad recomendada:</label>
@@ -177,6 +201,7 @@
           </div>
 
         </div>
+        <p id="viscosityEstimateNote" class="section-note viscosity-estimate-note hidden" role="status">Factor de viscosidad estimado, la curva original para este cálculo tenía como límite 2000 cP</p>
       </div>
     </section>
 
@@ -304,7 +329,7 @@
             <span class="ph-modelo">Modelo</span>
             <span class="ph-diam">Diámetro (mm)</span>
             <span class="ph-rp">Rp (D/Dtq)</span>
-            <span class="ph-kp">Kp</span>
+            <span class="ph-kp" title="Número de potencia adimensional Np; referencia: agua a 1000 kg/m³">Kp (–)</span>
             <span class="ph-nq">Nq</span>
             <span class="ph-idx">Índice local</span>
           </div>
@@ -393,17 +418,10 @@
             <input type="number" id="rpm" value="170" step="1" min="1" class="input-value" />
             <span class="unit">rpm</span>
           </div>
-          <div class="form-row">
-            <label class="field-label">RPM referencia (propela 1):</label>
-            <input type="text" id="rpmRef" class="input-calc" readonly />
-            <span class="unit">rpm</span>
-          </div>
-          <div class="form-row">
-            <label class="field-label">RPM máx. permitida (×1.1):</label>
-            <input type="text" id="rpmMax" class="input-calc" readonly />
-            <span class="unit">rpm</span>
-          </div>
         </div>
+        <input type="hidden" id="rpmRef" />
+        <input type="hidden" id="rpmMax" />
+        <p id="rpmWarningNote" class="section-note rpm-warning-note hidden" role="status"></p>
 
         <!-- Intermediate results -->
         <div class="subsection-title">Resultados técnicos</div>
@@ -1408,7 +1426,7 @@
 
         <div class="form-grid mt-20">
           <div class="form-row"><label class="field-label">Subtotal materiales:</label><input type="text" id="cst_subtotal_mat" class="input-calc highlight-blue" readonly /></div>
-          <div class="form-row"><label class="field-label">Margen materiales (%):</label><input type="number" id="cst_margen_materiales_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
+          <div class="form-row"><label class="field-label">Margen materiales:</label><input type="number" id="cst_margen_materiales_pct" class="input-value" step="0.1" min="0" max="99.9" required /><span>%</span></div>
           <div class="form-row"><label class="field-label">Margen materiales (valor):</label><input type="text" id="cst_margen_materiales_val" class="input-calc" readonly /></div>
           <div class="form-row"><label class="field-label">Subtotal materiales con margen:</label><input type="text" id="cst_subtotal_mat_margen" class="input-calc highlight-blue" readonly /></div>
         </div>
@@ -1433,7 +1451,7 @@
 
         <div class="form-grid mt-20">
           <div class="form-row"><label class="field-label">Subtotal ingeniería:</label><input type="text" id="cst_ing_subtotal" class="input-calc highlight-green" readonly /></div>
-          <div class="form-row"><label class="field-label">Margen ingeniería (%):</label><input type="number" id="cst_margen_ingenieria_pct" class="input-value" step="0.001" min="0" max="0.99" /></div>
+          <div class="form-row"><label class="field-label">Margen ingeniería:</label><input type="number" id="cst_margen_ingenieria_pct" class="input-value" step="0.1" min="0" max="99.9" required /><span>%</span></div>
           <div class="form-row"><label class="field-label">Margen ingeniería (valor):</label><input type="text" id="cst_margen_ingenieria_val" class="input-calc" readonly /></div>
           <div class="form-row"><label class="field-label">Subtotal ingeniería con margen:</label><input type="text" id="cst_ing_subtotal_margen" class="input-calc highlight-green" readonly /></div>
         </div>
@@ -1462,6 +1480,35 @@
           <div class="form-row"><label class="field-label">Unitario COP:</label><input type="text" id="cst_unitario_cop" class="input-calc" readonly /></div>
           <div class="form-row"><label class="field-label">Unitario USD:</label><input type="text" id="cst_unitario_usd" class="input-calc" readonly /></div>
         </div>
+        <section class="cst-offer-panel" aria-labelledby="offerPricesTitle">
+          <div class="cst-offer-header">
+            <h3 id="offerPricesTitle">Precios finales de la oferta</h3>
+            <span class="cst-offer-badge">Valores para el cliente</span>
+          </div>
+          <div class="cst-offer-grid">
+            <fieldset class="cst-offer-currency">
+              <legend>Moneda de la oferta</legend>
+              <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="offerCurrency" value="COP" checked /> COP</label>
+                <label class="radio-label"><input type="radio" name="offerCurrency" value="USD" /> USD</label>
+              </div>
+            </fieldset>
+            <div class="cst-offer-field">
+              <label for="cst_precio_unitario_oferta">Precio unitario final <span data-offer-currency>COP</span></label>
+              <input type="number" id="cst_precio_unitario_oferta" class="input-value" min="0" step="0.01" required aria-describedby="offerPriceHelp" />
+              <button type="button" class="btn-db-add" id="cst_usar_precio_calculado">Usar precio calculado</button>
+            </div>
+            <div class="cst-offer-field cst-offer-total">
+              <label for="cst_precio_total_oferta">Total de la oferta <span data-offer-currency>COP</span></label>
+              <input type="text" id="cst_precio_total_oferta" class="input-calc" readonly />
+              <span>Precio unitario final × cantidad de equipos</span>
+            </div>
+          </div>
+          <p id="offerPriceHelp" class="cst-offer-help">Puede editar el precio unitario. Su valor se conserva al recalcular; cambiar de moneda o pulsar «Usar precio calculado» restablece el unitario calculado.</p>
+        </section>
+        <input type="hidden" id="cst_moneda_oferta" value="COP" />
+        <input type="hidden" id="cst_margenes_formato" value="porcentaje" />
+        <input type="hidden" id="cst_precio_oferta_manual" value="false" />
 
         <div class="form-row full-width mt-20">
           <button type="button" class="btn-db-add" id="btnExportCosteo" onclick="exportCosteoToExcel()">⬇ Descargar presupuesto en Excel</button>
@@ -1490,6 +1537,27 @@
         <button type="button" class="btn-db-add"
           onclick="addComentarioField('', 'cstComercialesList', 'input-cst-comercial-line', 'cst_comerciales')">＋ Agregar consideración</button>
         <textarea id="cst_comerciales" class="textarea-comments" style="display:none" aria-hidden="true"></textarea>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title section-title-highlight">📤 INFORMACIÓN COMERCIAL ESPECÍFICA - <span class="section-title-highlight-text">PARA EL CLIENTE EN OFERTA</span></h2>
+      <div class="section-body">
+        <p class="section-note">Condiciones iniciales de la plantilla, editables para cada oferta. Estos valores se incluyen mediante sus variables de Word.</p>
+        <div class="cst-commercial-fields">
+          <label for="cst_validez_oferta">Validez de la oferta</label>
+          <textarea id="cst_validez_oferta" rows="2"></textarea>
+          <label for="cst_tiempo_entrega">Tiempo de entrega</label>
+          <textarea id="cst_tiempo_entrega" rows="2"></textarea>
+          <label for="cst_forma_pago">Forma de pago</label>
+          <textarea id="cst_forma_pago" rows="3"></textarea>
+          <label for="cst_sitio_entrega">Sitio de entrega</label>
+          <textarea id="cst_sitio_entrega" rows="2"></textarea>
+          <label for="cst_empaque">Empaque</label>
+          <textarea id="cst_empaque" rows="2"></textarea>
+          <label for="cst_garantia">Garantía</label>
+          <textarea id="cst_garantia" rows="3"></textarea>
+        </div>
       </div>
     </section>
 
@@ -1849,6 +1917,9 @@
               <th class="db-td-num">#</th>
               <th>Descripción del proceso</th>
               <th class="db-td-intens">Intensidad</th>
+              <th>Viscosidad típica (cps)</th>
+              <th>Densidad típica (Ton/m³)</th>
+              <th class="db-td-recommendations">Recomendaciones típicas</th>
               <th class="db-td-actions">Acciones</th>
             </tr>
           </thead>
@@ -1870,6 +1941,22 @@
 
     </div>
   </div>
+
+  <dialog id="processRecommendationsDialog" aria-labelledby="processRecommendationsTitle">
+    <div class="modal-header">
+      <h2 id="processRecommendationsTitle">Recomendaciones típicas</h2>
+      <button type="button" class="modal-close" onclick="document.getElementById('processRecommendationsDialog').close()" aria-label="Cerrar recomendaciones">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="processRecommendationsProcess"></p>
+      <p id="processRecommendationsHelp" class="section-note"></p>
+      <textarea id="processRecommendationsText" aria-label="Recomendaciones típicas del proceso" aria-describedby="processRecommendationsHelp"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="processRecommendationsClose" class="btn-modal-io" onclick="document.getElementById('processRecommendationsDialog').close()">Cerrar</button>
+      <button type="button" id="processRecommendationsSave" class="btn-modal-close" onclick="saveProcessRecommendations()">Guardar recomendaciones</button>
+    </div>
+  </dialog>
 
   <!-- ===== RECORDS MODAL ===== -->
   <div id="recModal" class="modal-overlay hidden" onclick="_recModalOverlayClick(event)">

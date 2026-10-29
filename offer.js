@@ -77,6 +77,7 @@ function _offerCurrentData() {
       codigoAgitador: fromGather.codigoAgitador || '',
       comentarios: fromGather.comentarios || '',
       consideraciones: [...document.querySelectorAll('.input-comentario-line')].map(i => i.value || ''),
+      consideracionesComerciales: [...document.querySelectorAll('.input-cst-comercial-line')].map(i => i.value || ''),
       cod_tipo1: fromGather.cod_tipo1 || '',
       cod_num1: fromGather.cod_num1 || '',
       cod_diam1: fromGather.cod_diam1 || '',
@@ -164,6 +165,7 @@ function _offerCurrentData() {
     codigoAgitador: _offerText('cod_resultado'),
     comentarios: _offerField('comentarios'),
     consideraciones: [...document.querySelectorAll('.input-comentario-line')].map(i => i.value || ''),
+    consideracionesComerciales: [...document.querySelectorAll('.input-cst-comercial-line')].map(i => i.value || ''),
     potenciaRequerida: _offerField('potenciaRequerida'),
     numPropelas: _offerField('numPropelas'),
     nivelAgitacion: _offerField('nivelAgitacion'),
@@ -226,6 +228,11 @@ function _buildOfferPlaceholderMap(data) {
     elaboro_extension: data.extensionElaboro,
     elaboro_celular: data.celularElaboro,
     elaboro_correo: data.correoElaboro,
+    elaborador_nombre: data.elaboro,
+    elaborador_cargo: data.cargoElaboro,
+    elaborador_extension: data.extensionElaboro,
+    elaborador_celular: data.celularElaboro,
+    elaborador_correo: data.correoElaboro,
     nombre_tanque: data.nombreTanque,
     tag_tanque: data.tagTanque,
     tag_agitador: data.tagAgitador,
@@ -307,45 +314,172 @@ function _buildOfferPlaceholderMap(data) {
   for (let i = 1; i <= Math.max(CONSIDERACIONES_MAX, consideraciones.length); i++) {
     map[`consideracion${i}`] = consideraciones[i - 1] || '';
   }
+  const comerciales = Array.isArray(data.consideracionesComerciales) ? data.consideracionesComerciales : [];
+  for (let i = 1; i <= Math.max(CONSIDERACIONES_MAX, comerciales.length); i++) {
+    map[`consideracion_comercial${i}`] = comerciales[i - 1] || '';
+  }
 
+  Object.assign(map, data.costeoOferta);
   return map;
 }
 
-// Word often splits one paragraph's text across several <w:t> nodes (autocorrect/spellcheck
-// as you type), so a placeholder like {{propela2_tipo}} can land half in one node and half
-// in the next, which the plain regex replace below would never match. A regex-based scan for
-// <w:p>...</w:p> is unsafe here because templates can contain nested <w:p> (e.g. text boxes
-// in a letterhead), which misaligns the match and corrupts the XML. Parse it as real XML
-// instead and only rewrite text content, leaving every tag exactly where it was.
-function _normalizePlaceholderRuns(xml) {
-  let doc;
-  try {
-    doc = new DOMParser().parseFromString(xml, 'application/xml');
-    if (doc.getElementsByTagName('parsererror').length) return xml;
-  } catch (e) {
-    return xml;
-  }
+const _OFFER_W_NS = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
 
-  Array.from(doc.getElementsByTagName('w:p')).forEach(p => {
-    if (p.getElementsByTagName('w:p').length > 0) return; // nested paragraph (text box): skip, don't risk it
-    const tNodes = Array.from(p.getElementsByTagName('w:t'));
-    if (tNodes.length < 2) return;
-    const combined = tNodes.map(t => t.textContent).join('');
-    if (!/\{\{|\$\{|\[\[/.test(combined)) return;
-    tNodes.forEach((t, idx) => {
-      if (idx === 0) {
-        t.textContent = combined;
-        t.setAttribute('xml:space', 'preserve');
-      } else {
-        t.textContent = '';
+function _offerParseXml(xml) {
+  const doc = new DOMParser().parseFromString(xml, 'application/xml');
+  if (doc.getElementsByTagName('parsererror').length) {
+    throw new Error('El documento Word contiene XML no valido.');
+  }
+  return doc;
+}
+
+// Join only split placeholders, never the surrounding text or text across tabs/breaks.
+function _normalizePlaceholderRuns(xml) {
+  const doc = _offerParseXml(xml);
+  function normalize(nodes) {
+    const combined = nodes.map(t => t.textContent).join('');
+    const matches = [...combined.matchAll(/\{\{\s*\w+\s*\}\}|\$\{\s*\w+\s*\}|\[\[\s*\w+\s*\]\]/g)];
+    const starts = [];
+    let offset = 0;
+    nodes.forEach(t => { starts.push(offset); offset += t.textContent.length; });
+    for (const match of matches.reverse()) {
+      const start = match.index;
+      const end = start + match[0].length;
+      const first = nodes.findIndex((t, i) => start >= starts[i] && start < starts[i] + t.textContent.length);
+      const last = nodes.findIndex((t, i) => end > starts[i] && end <= starts[i] + t.textContent.length);
+      if (first < 0 || last <= first) continue;
+      const suffix = nodes[last].textContent.slice(end - starts[last]);
+      nodes[first].textContent = nodes[first].textContent.slice(0, start - starts[first]) + match[0];
+      nodes[first].setAttribute('xml:space', 'preserve');
+      for (let i = first + 1; i < last; i++) nodes[i].textContent = '';
+      nodes[last].textContent = suffix;
+      nodes[last].setAttribute('xml:space', 'preserve');
+    }
+  }
+  Array.from(doc.getElementsByTagNameNS(_OFFER_W_NS, 'p')).forEach(p => {
+    let nodes = [];
+    const flush = () => { normalize(nodes); nodes = []; };
+    const visit = element => {
+      if (element !== p && element.namespaceURI === _OFFER_W_NS &&
+          ['p', 'tab', 'br', 'cr', 'drawing', 'pict', 'fldChar', 'instrText', 'sym'].includes(element.localName)) {
+        flush();
+        return;
       }
-    });
+      if (element.namespaceURI === _OFFER_W_NS && element.localName === 't') nodes.push(element);
+      else Array.from(element.children).forEach(visit);
+    };
+    visit(p);
+    flush();
   });
 
   let serialized = new XMLSerializer().serializeToString(doc);
   const declMatch = xml.match(/^<\?xml[^>]*\?>/);
   if (declMatch && !/^<\?xml/.test(serialized)) serialized = declMatch[0] + serialized;
   return serialized;
+}
+
+async function _offerDiagramPng() {
+  drawTankDiagram();
+  drawTankTopView();
+  const svgs = ['tankDiagram', 'tankDiagramTop'].map(id => document.getElementById(id));
+  if (svgs.some(svg => !svg || svg.textContent.includes('Ingrese dimensiones válidas'))) {
+    throw new Error('Ingrese dimensiones validas para incluir el diagrama general en la oferta.');
+  }
+  const width = 580;
+  let height = 0;
+  const parts = svgs.map(svg => {
+    const clone = svg.cloneNode(true);
+    const box = svg.viewBox.baseVal;
+    const scaledHeight = width * box.height / box.width;
+    clone.setAttribute('x', '0');
+    clone.setAttribute('y', String(height));
+    clone.setAttribute('width', String(width));
+    clone.setAttribute('height', String(scaledHeight));
+    height += scaledHeight;
+    return new XMLSerializer().serializeToString(clone);
+  });
+  const source = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect width="100%" height="100%" fill="white"/>${parts.join('')}</svg>`;
+  const url = URL.createObjectURL(new Blob([source], { type: 'image/svg+xml' }));
+  try {
+    const image = new Image();
+    await new Promise((resolve, reject) => {
+      image.onload = resolve;
+      image.onerror = () => reject(new Error('No se pudo convertir el diagrama general a imagen.'));
+      image.src = url;
+    });
+    const canvas = document.createElement('canvas');
+    canvas.width = width * 2;
+    canvas.height = Math.ceil(height * 2);
+    const context = canvas.getContext('2d');
+    if (!context) throw new Error('El navegador no permite exportar el diagrama general.');
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+    if (!blob) throw new Error('No se pudo crear la imagen PNG del diagrama general.');
+    return { bytes: await blob.arrayBuffer(), width, height };
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+async function _insertOfferDiagram(zip, xml) {
+  if (!/\{\{\s*diagrama_general\s*\}\}|\$\{\s*diagrama_general\s*\}|\[\[\s*diagrama_general\s*\]\]/i.test(xml)) {
+    return { xml, replacements: 0 };
+  }
+  const doc = _offerParseXml(xml);
+  const paragraphs = Array.from(doc.getElementsByTagNameNS(_OFFER_W_NS, 'p')).filter(p => {
+    if (p.getElementsByTagNameNS(_OFFER_W_NS, 'p').length) return false;
+    const text = Array.from(p.getElementsByTagNameNS(_OFFER_W_NS, 't')).map(t => t.textContent).join('');
+    return /\{\{\s*diagrama_general\s*\}\}|\$\{\s*diagrama_general\s*\}|\[\[\s*diagrama_general\s*\]\]/i.test(text);
+  });
+  for (const p of paragraphs) {
+    const text = Array.from(p.getElementsByTagNameNS(_OFFER_W_NS, 't')).map(t => t.textContent).join('');
+    if (!/^\s*(\{\{\s*diagrama_general\s*\}\}|\$\{\s*diagrama_general\s*\}|\[\[\s*diagrama_general\s*\]\])\s*$/i.test(text) ||
+        p.getElementsByTagNameNS(_OFFER_W_NS, 'drawing').length ||
+        p.getElementsByTagNameNS(_OFFER_W_NS, 'pict').length) {
+      throw new Error('Coloque la variable diagrama_general sola en un parrafo de la plantilla.');
+    }
+  }
+  if (!paragraphs.length) throw new Error('No se pudo localizar la marca diagrama_general en un parrafo de Word.');
+  const image = await _offerDiagramPng();
+  const relNs = 'http://schemas.openxmlformats.org/package/2006/relationships';
+  const relPath = 'word/_rels/document.xml.rels';
+  const relFile = zip.file(relPath);
+  const rels = _offerParseXml(relFile ? relFile.asText() : `<Relationships xmlns="${relNs}"/>`);
+  let number = 1;
+  while (zip.file(`word/media/nfs-diagrama-${number}.png`) ||
+         Array.from(rels.documentElement.children).some(el => el.getAttribute('Id') === `rIdNfsDiagram${number}`)) number++;
+  const relationshipId = `rIdNfsDiagram${number}`;
+  const filename = `nfs-diagrama-${number}.png`;
+  zip.file(`word/media/${filename}`, image.bytes);
+  const relation = rels.createElementNS(relNs, 'Relationship');
+  relation.setAttribute('Id', relationshipId);
+  relation.setAttribute('Type', 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/image');
+  relation.setAttribute('Target', `media/${filename}`);
+  rels.documentElement.appendChild(relation);
+  zip.file(relPath, new XMLSerializer().serializeToString(rels));
+  const typesFile = zip.file('[Content_Types].xml');
+  if (!typesFile) throw new Error('La plantilla no contiene [Content_Types].xml.');
+  const types = _offerParseXml(typesFile.asText());
+  if (!Array.from(types.documentElement.children).some(el => el.localName === 'Default' && el.getAttribute('Extension').toLowerCase() === 'png')) {
+    const entry = types.createElementNS(types.documentElement.namespaceURI, 'Default');
+    entry.setAttribute('Extension', 'png');
+    entry.setAttribute('ContentType', 'image/png');
+    types.documentElement.appendChild(entry);
+    zip.file('[Content_Types].xml', new XMLSerializer().serializeToString(types));
+  }
+  const wpNs = 'http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing';
+  let drawingId = Math.max(0, ...Array.from(doc.getElementsByTagNameNS(wpNs, 'docPr')).map(el => Number(el.getAttribute('id')) || 0)) + 1;
+  const scale = Math.min(5 * 914400 / image.width, 6.5 * 914400 / image.height);
+  const cx = Math.round(image.width * scale);
+  const cy = Math.round(image.height * scale);
+  for (const p of paragraphs) {
+    const drawing = _offerParseXml(`<w:r xmlns:w="${_OFFER_W_NS}" xmlns:wp="${wpNs}" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="${cx}" cy="${cy}"/><wp:docPr id="${drawingId++}" name="Diagrama general" descr="Vista de elevacion y vista superior del tanque y agitador"/><wp:cNvGraphicFramePr><a:graphicFrameLocks noChangeAspect="1"/></wp:cNvGraphicFramePr><a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic><pic:nvPicPr><pic:cNvPr id="0" name="${filename}"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="${relationshipId}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>`);
+    Array.from(p.childNodes).forEach(child => {
+      if (!(child.namespaceURI === _OFFER_W_NS && child.localName === 'pPr')) p.removeChild(child);
+    });
+    p.appendChild(doc.importNode(drawing.documentElement, true));
+  }
+  return { xml: new XMLSerializer().serializeToString(doc), replacements: paragraphs.length };
 }
 
 function _replaceKnownPlaceholders(xml, data) {
@@ -364,7 +498,7 @@ function _replaceKnownPlaceholders(xml, data) {
     patterns.forEach(rx => {
       const found = out.match(rx);
       if (found && found.length) replacements += found.length;
-      out = out.replace(rx, value);
+      out = out.replace(rx, () => value);
     });
   });
 
@@ -407,6 +541,21 @@ function _appendOfferBlock(xml, data) {
     _wP(`Motoreductor seleccionado: ${data.motoreductorSeleccionado}`),
     _wP(`Codigo agitador: ${data.codigoAgitador}`),
     _wP(`Comentarios: ${data.comentarios}`),
+    ...(data.costeoOferta ? [
+      _wP('INFORMACION COMERCIAL PARA EL CLIENTE', true),
+      _wP(`Validez de la oferta: ${data.costeoOferta.validez_oferta}`),
+      _wP(`Tiempo de entrega: ${data.costeoOferta.tiempo_entrega}`),
+      _wP(`Forma de pago: ${data.costeoOferta.forma_pago}`),
+      _wP(`Sitio de entrega: ${data.costeoOferta.sitio_entrega}`),
+      _wP(`Empaque: ${data.costeoOferta.empaque}`),
+      _wP(`Garantia: ${data.costeoOferta.garantia}`),
+    ] : []),
+    ...((data.consideracionesComerciales || []).some(line => line.trim())
+      ? [
+        _wP('CONSIDERACIONES COMERCIALES PARA EL CLIENTE', true),
+        ...data.consideracionesComerciales.filter(line => line.trim()).map(line => _wP(line)),
+      ]
+      : []),
   ].join('');
 
   const sectIdx = xml.indexOf('<w:sectPr');
@@ -468,23 +617,27 @@ async function _pickOfferTemplateDocx() {
 }
 
 function _offerOutputName(data) {
-  const date = (data.fecha || '').replace(/-/g, '') || new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  const now = new Date();
-  const hh = String(now.getHours()).padStart(2, '0');
-  const mm = String(now.getMinutes()).padStart(2, '0');
-  const ss = String(now.getSeconds()).padStart(2, '0');
-  const cli = (data.cliente || 'Cliente').replace(/[^a-zA-Z0-9_\-]/g, '_').slice(0, 30);
-  return `Borrador_Oferta_Agitador_${cli}_${date}_${hh}${mm}${ss}.docx`;
+  const clean = value => String(value || '').normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '').toUpperCase()
+    .replace(/[^A-Z0-9_-]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 80);
+  const quote = clean(data.cotizacion);
+  const client = clean(data.cliente);
+  if (!quote || !client) {
+    throw new Error('Complete el numero de cotizacion y el cliente para nombrar la oferta.');
+  }
+  return `${quote}_${client}_AGITADOR.docx`;
 }
 
 async function generateOfferDraft() {
   try {
     const data = _offerCurrentData();
+    data.costeoOferta = getCosteoOfferData();
     const anyKey = [data.cliente, data.cotizacion, data.agitadorSeleccionado, data.codigoAgitador].join('').trim();
     if (!anyKey) {
       alert('No hay datos de seleccion para generar la oferta.');
       return;
     }
+    const outName = _offerOutputName(data);
 
     const file = await _pickOfferTemplateDocx();
     const PizZip = await _ensurePizZip();
@@ -499,8 +652,9 @@ async function generateOfferDraft() {
 
     const originalXml = f.asText();
     const normalizedXml = _normalizePlaceholderRuns(originalXml);
-    const replaced = _replaceKnownPlaceholders(normalizedXml, data);
-    const finalXml = replaced.replacements > 0
+    const diagram = await _insertOfferDiagram(zip, normalizedXml);
+    const replaced = _replaceKnownPlaceholders(diagram.xml, data);
+    const finalXml = replaced.replacements + diagram.replacements > 0
       ? replaced.xml
       : _appendOfferBlock(originalXml, data);
 
@@ -510,7 +664,6 @@ async function generateOfferDraft() {
       mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     });
 
-    const outName = _offerOutputName(data);
     _downloadBlob(outBlob, outName);
 
     if (typeof _showToast === 'function') {

@@ -11,72 +11,74 @@
 
 /**
  * Propeller catalog.
- * Kp  = C_kW / (N_rpm^3 * D_mm^5)  → Power factor
+ * Kp = Np = P_W / (rho_water * n_rps^3 * D_m^5), dimensionless.
+ * Converted from legacy kW/(rpm^3 * mm^5): Kp = legacy * 2.16e20.
+ * Reference water density: 1000 kg/m³; fluid density correction is applied later.
  * Nq  = Q_m3h / (60 * N_rpm * (D_mm/1000)^3) → Flow number
  * Usage:
- *   Power (kW)  = Kp * rpm^3 * D_mm^5
+ *   Power (kW)  = Kp * 1000 * (rpm/60)^3 * (D_mm/1000)^5 / 1000
  *   Flow (m³/h) = Nq * rpm * (D_mm/1000)^3 * 60
  */
 const PROPELLERS = {
-  'VR3A-020': { rpm: 364,  D: 200,  Kp: 4.5357e-21, Nq: 0.8585, type: 'TRIPALA'      },
-  'VR3A-030': { rpm: 359,  D: 300,  Kp: 4.5361e-21, Nq: 0.8563, type: 'TRIPALA'      },
-  'VR3A-040': { rpm: 359,  D: 400,  Kp: 5.2165e-21, Nq: 0.9847, type: 'TRIPALA'      },
-  'VR3A-050': { rpm: 99,   D: 500,  Kp: 4.5063e-21, Nq: 0.8573, type: 'TRIPALA'      },
-  'VR3A-060': { rpm: 99,   D: 600,  Kp: 4.5063e-21, Nq: 0.8573, type: 'TRIPALA'      },
-  'VR3A-070': { rpm: 99,   D: 700,  Kp: 4.5063e-21, Nq: 0.8573, type: 'TRIPALA'      },
-  'VR3A-080': { rpm: 113,  D: 800,  Kp: 4.2276e-22, Nq: 0.3389, type: 'TRIPALA'      },
-  'VR3A-100': { rpm: 113,  D: 1000, Kp: 4.2276e-22, Nq: 0.3389, type: 'TRIPALA'      },
-  'VR3A-120': { rpm: 100,  D: 1200, Kp: 4.2599e-22, Nq: 0.3390, type: 'TRIPALA'      },
-  'VR3A-150': { rpm: 90,   D: 1500, Kp: 4.2579e-22, Nq: 0.3390, type: 'TRIPALA'      },
-  'VR3A-180': { rpm: 57,   D: 1800, Kp: 4.2579e-22, Nq: 0.3390, type: 'TRIPALA'      },
+  'VR3A-020': { rpm: 364,  D: 200,  Kp: 0.9797112, Nq: 0.8585, type: 'TRIPALA'      },
+  'VR3A-030': { rpm: 359,  D: 300,  Kp: 0.9797976, Nq: 0.8563, type: 'TRIPALA'      },
+  'VR3A-040': { rpm: 359,  D: 400,  Kp: 1.126764, Nq: 0.9847, type: 'TRIPALA'      },
+  'VR3A-050': { rpm: 99,   D: 500,  Kp: 0.9733608, Nq: 0.8573, type: 'TRIPALA'      },
+  'VR3A-060': { rpm: 99,   D: 600,  Kp: 0.9733608, Nq: 0.8573, type: 'TRIPALA'      },
+  'VR3A-070': { rpm: 99,   D: 700,  Kp: 0.9733608, Nq: 0.8573, type: 'TRIPALA'      },
+  'VR3A-080': { rpm: 113,  D: 800,  Kp: 0.09131616, Nq: 0.3389, type: 'TRIPALA'      },
+  'VR3A-100': { rpm: 113,  D: 1000, Kp: 0.09131616, Nq: 0.3389, type: 'TRIPALA'      },
+  'VR3A-120': { rpm: 100,  D: 1200, Kp: 0.09201384, Nq: 0.3390, type: 'TRIPALA'      },
+  'VR3A-150': { rpm: 90,   D: 1500, Kp: 0.09197064, Nq: 0.3390, type: 'TRIPALA'      },
+  'VR3A-180': { rpm: 57,   D: 1800, Kp: 0.09197064, Nq: 0.3390, type: 'TRIPALA'      },
 
 
-'VR3A-200': { rpm: 57,   D: 2000, Kp: 4.2579e-22, Nq: 0.3390, type: 'TRIPALA'      },
-'VR3A-250': { rpm: 57,   D: 2500, Kp: 4.2579e-22, Nq: 0.3390, type: 'TRIPALA'      },
-'VR3A-300': { rpm: 57,   D: 3000, Kp: 4.2579e-22, Nq: 0.3390, type: 'TRIPALA'      },
+'VR3A-200': { rpm: 57,   D: 2000, Kp: 0.09197064, Nq: 0.3390, type: 'TRIPALA'      },
+'VR3A-250': { rpm: 57,   D: 2500, Kp: 0.09197064, Nq: 0.3390, type: 'TRIPALA'      },
+'VR3A-300': { rpm: 57,   D: 3000, Kp: 0.09197064, Nq: 0.3390, type: 'TRIPALA'      },
 
 
 
 
-  'VR2A-020': { rpm: 103,  D: 200,  Kp: 8.5795e-21, Nq: 0.9304, type: 'TURBINA'      },
-  'VR2A-035': { rpm: 126,  D: 350,  Kp: 4.7590e-21, Nq: 0.5368, type: 'TURBINA'      },
-  'VR2A-050': { rpm: 100,  D: 500,  Kp: 3.2000e-21, Nq: 0.3747, type: 'TURBINA'      },
-  'VR2A-055': { rpm: 137,  D: 550,  Kp: 4.7136e-21, Nq: 0.5455, type: 'TURBINA'      },
-  'VR2A-070': { rpm: 102,  D: 700,  Kp: 5.5507e-21, Nq: 0.6426, type: 'TURBINA'      },
-  'VR2A-080': { rpm: 100,  D: 800,  Kp: 4.8523e-21, Nq: 0.5625, type: 'TURBINA'      },
-  'VR4A-020': { rpm: 289,  D: 200,  Kp: 3.3532e-20, Nq: 1.0741, type: 'GRAN CAUDAL'  },
-  'VR4A-030': { rpm: 293,  D: 300,  Kp: 8.5891e-21, Nq: 1.0723, type: 'GRAN CAUDAL'  },
-  'VR4A-040': { rpm: 158,  D: 400,  Kp: 9.5321e-21, Nq: 1.0713, type: 'GRAN CAUDAL'  },
-  'VR4A-060': { rpm: 99,   D: 600,  Kp: 1.0205e-20, Nq: 1.0748, type: 'GRAN CAUDAL'  },
-  'VR4A-080': { rpm: 126,  D: 800,  Kp: 4.2717e-21, Nq: 1.0727, type: 'GRAN CAUDAL'  },
-  'VR4A-100': { rpm: 69.3, D: 1000, Kp: 4.6272e-21, Nq: 1.0702, type: 'GRAN CAUDAL'  },
-  'VR4A-120': { rpm: 63.7, D: 1200, Kp: 4.3534e-21, Nq: 1.0697, type: 'GRAN CAUDAL'  },
-  'VR4A-140': { rpm: 53.3, D: 1400, Kp: 4.7276e-21, Nq: 1.0702, type: 'GRAN CAUDAL'  },
-  'VR4A-160': { rpm: 47.7, D: 1600, Kp: 4.6132e-21, Nq: 1.0705, type: 'GRAN CAUDAL'  },
-  'VR5-040':  { rpm: 70.3, D: 400,  Kp: 7.2800e-20, Nq: 0.5742, type: 'FLOC. BIPALA' },
-  'VR5-050':  { rpm: 56.3, D: 500,  Kp: 4.6443e-20, Nq: 0.5684, type: 'FLOC. BIPALA' },
-  'VR5-060':  { rpm: 49.3, D: 600,  Kp: 2.7797e-20, Nq: 0.5713, type: 'FLOC. BIPALA' },
-  'VR5-080':  { rpm: 35.2, D: 800,  Kp: 1.8123e-20, Nq: 0.5734, type: 'FLOC. BIPALA' },
-  'VR5-100':  { rpm: 28.7, D: 1000, Kp: 2.5381e-21, Nq: 0.5807, type: 'FLOC. BIPALA' },
-  'VR5-120':  { rpm: 22.6, D: 1200, Kp: 9.0171e-21, Nq: 0.5761, type: 'FLOC. BIPALA' },
-  'VR5-140':  { rpm: 18.7, D: 1400, Kp: 7.3644e-21, Nq: 0.5684, type: 'FLOC. BIPALA' },
-  'VR5-160':  { rpm: 16.7, D: 1600, Kp: 5.3034e-21, Nq: 0.5726, type: 'FLOC. BIPALA' },
-  'VR5-200':  { rpm: 15,   D: 2000, Kp: 2.3981e-21, Nq: 0.5632, type: 'FLOC. BIPALA' },
-  'VR5-250':  { rpm: 11.6, D: 2500, Kp: 2.5257e-21, Nq: 0.5425, type: 'FLOC. BIPALA' },
-  'VR5-300':  { rpm: 9.8,  D: 3000, Kp: 2.2955e-21, Nq: 0.5669, type: 'FLOC. BIPALA' },
-  'VR5-360':  { rpm: 8,    D: 3600, Kp: 2.4872e-21, Nq: 0.5693, type: 'FLOC. BIPALA' },
-  'VR5-040-T':{ rpm: 72.6, D: 400,  Kp: 2.5521e-21, Nq: 0.5667, type: 'FLOC. TRIPALA'},
-  'VR5-050-T':{ rpm: 53.7, D: 500,  Kp: 2.0665e-21, Nq: 0.5661, type: 'FLOC. TRIPALA'},
-  'VR5-060-T':{ rpm: 47,   D: 600,  Kp: 2.4773e-21, Nq: 0.5664, type: 'FLOC. TRIPALA'},
-  'VR5-080-T':{ rpm: 35.2, D: 800,  Kp: 2.7989e-21, Nq: 0.5669, type: 'FLOC. TRIPALA'},
-  'VR5-100-T':{ rpm: 27,   D: 1000, Kp: 2.5403e-21, Nq: 0.5673, type: 'FLOC. TRIPALA'},
-  'VR5-120-T':{ rpm: 24.7, D: 1200, Kp: 2.6669e-21, Nq: 0.5670, type: 'FLOC. TRIPALA'},
-  'VR5-140-T':{ rpm: 19.2, D: 1400, Kp: 2.6270e-21, Nq: 0.5669, type: 'FLOC. TRIPALA'},
-  'VR5-160-T':{ rpm: 16.7, D: 1600, Kp: 2.6619e-21, Nq: 0.5670, type: 'FLOC. TRIPALA'},
-  'VR5-200-T':{ rpm: 15,   D: 2000, Kp: 2.5926e-21, Nq: 0.5669, type: 'FLOC. TRIPALA'},
-  'VR5-250-T':{ rpm: 11.6, D: 2500, Kp: 2.6241e-21, Nq: 0.5670, type: 'FLOC. TRIPALA'},
-  'VR5-300-T':{ rpm: 9.6,  D: 3000, Kp: 2.6048e-21, Nq: 0.5670, type: 'FLOC. TRIPALA'},
-  'VR5-360-T':{ rpm: 8,    D: 3600, Kp: 2.5841e-21, Nq: 0.5670, type: 'FLOC. TRIPALA'},
+  'VR2A-020': { rpm: 103,  D: 200,  Kp: 1.853172, Nq: 0.9304, type: 'TURBINA'      },
+  'VR2A-035': { rpm: 126,  D: 350,  Kp: 1.027944, Nq: 0.5368, type: 'TURBINA'      },
+  'VR2A-050': { rpm: 100,  D: 500,  Kp: 0.6912, Nq: 0.3747, type: 'TURBINA'      },
+  'VR2A-055': { rpm: 137,  D: 550,  Kp: 1.0181376, Nq: 0.5455, type: 'TURBINA'      },
+  'VR2A-070': { rpm: 102,  D: 700,  Kp: 1.1989512, Nq: 0.6426, type: 'TURBINA'      },
+  'VR2A-080': { rpm: 100,  D: 800,  Kp: 1.0480968, Nq: 0.5625, type: 'TURBINA'      },
+  'VR4A-020': { rpm: 289,  D: 200,  Kp: 7.242912, Nq: 1.0741, type: 'GRAN CAUDAL'  },
+  'VR4A-030': { rpm: 293,  D: 300,  Kp: 1.8552456, Nq: 1.0723, type: 'GRAN CAUDAL'  },
+  'VR4A-040': { rpm: 158,  D: 400,  Kp: 2.0589336, Nq: 1.0713, type: 'GRAN CAUDAL'  },
+  'VR4A-060': { rpm: 99,   D: 600,  Kp: 2.20428, Nq: 1.0748, type: 'GRAN CAUDAL'  },
+  'VR4A-080': { rpm: 126,  D: 800,  Kp: 0.9226872, Nq: 1.0727, type: 'GRAN CAUDAL'  },
+  'VR4A-100': { rpm: 69.3, D: 1000, Kp: 0.9994752, Nq: 1.0702, type: 'GRAN CAUDAL'  },
+  'VR4A-120': { rpm: 63.7, D: 1200, Kp: 0.9403344, Nq: 1.0697, type: 'GRAN CAUDAL'  },
+  'VR4A-140': { rpm: 53.3, D: 1400, Kp: 1.0211616, Nq: 1.0702, type: 'GRAN CAUDAL'  },
+  'VR4A-160': { rpm: 47.7, D: 1600, Kp: 0.9964512, Nq: 1.0705, type: 'GRAN CAUDAL'  },
+  'VR5-040':  { rpm: 70.3, D: 400,  Kp: 15.7248, Nq: 0.5742, type: 'FLOC. BIPALA' },
+  'VR5-050':  { rpm: 56.3, D: 500,  Kp: 10.031688, Nq: 0.5684, type: 'FLOC. BIPALA' },
+  'VR5-060':  { rpm: 49.3, D: 600,  Kp: 6.004152, Nq: 0.5713, type: 'FLOC. BIPALA' },
+  'VR5-080':  { rpm: 35.2, D: 800,  Kp: 3.914568, Nq: 0.5734, type: 'FLOC. BIPALA' },
+  'VR5-100':  { rpm: 28.7, D: 1000, Kp: 0.5482296, Nq: 0.5807, type: 'FLOC. BIPALA' },
+  'VR5-120':  { rpm: 22.6, D: 1200, Kp: 1.9476936, Nq: 0.5761, type: 'FLOC. BIPALA' },
+  'VR5-140':  { rpm: 18.7, D: 1400, Kp: 1.5907104, Nq: 0.5684, type: 'FLOC. BIPALA' },
+  'VR5-160':  { rpm: 16.7, D: 1600, Kp: 1.1455344, Nq: 0.5726, type: 'FLOC. BIPALA' },
+  'VR5-200':  { rpm: 15,   D: 2000, Kp: 0.5179896, Nq: 0.5632, type: 'FLOC. BIPALA' },
+  'VR5-250':  { rpm: 11.6, D: 2500, Kp: 0.5455512, Nq: 0.5425, type: 'FLOC. BIPALA' },
+  'VR5-300':  { rpm: 9.8,  D: 3000, Kp: 0.495828, Nq: 0.5669, type: 'FLOC. BIPALA' },
+  'VR5-360':  { rpm: 8,    D: 3600, Kp: 0.5372352, Nq: 0.5693, type: 'FLOC. BIPALA' },
+  'VR5-040-T':{ rpm: 72.6, D: 400,  Kp: 0.5512536, Nq: 0.5667, type: 'FLOC. TRIPALA'},
+  'VR5-050-T':{ rpm: 53.7, D: 500,  Kp: 0.446364, Nq: 0.5661, type: 'FLOC. TRIPALA'},
+  'VR5-060-T':{ rpm: 47,   D: 600,  Kp: 0.5350968, Nq: 0.5664, type: 'FLOC. TRIPALA'},
+  'VR5-080-T':{ rpm: 35.2, D: 800,  Kp: 0.6045624, Nq: 0.5669, type: 'FLOC. TRIPALA'},
+  'VR5-100-T':{ rpm: 27,   D: 1000, Kp: 0.5487048, Nq: 0.5673, type: 'FLOC. TRIPALA'},
+  'VR5-120-T':{ rpm: 24.7, D: 1200, Kp: 0.5760504, Nq: 0.5670, type: 'FLOC. TRIPALA'},
+  'VR5-140-T':{ rpm: 19.2, D: 1400, Kp: 0.567432, Nq: 0.5669, type: 'FLOC. TRIPALA'},
+  'VR5-160-T':{ rpm: 16.7, D: 1600, Kp: 0.5749704, Nq: 0.5670, type: 'FLOC. TRIPALA'},
+  'VR5-200-T':{ rpm: 15,   D: 2000, Kp: 0.5600016, Nq: 0.5669, type: 'FLOC. TRIPALA'},
+  'VR5-250-T':{ rpm: 11.6, D: 2500, Kp: 0.5668056, Nq: 0.5670, type: 'FLOC. TRIPALA'},
+  'VR5-300-T':{ rpm: 9.6,  D: 3000, Kp: 0.5626368, Nq: 0.5670, type: 'FLOC. TRIPALA'},
+  'VR5-360-T':{ rpm: 8,    D: 3600, Kp: 0.5581656, Nq: 0.5670, type: 'FLOC. TRIPALA'},
   'N.A.':     { rpm: 0,    D: 0,    Kp: 0,           Nq: 0,      type: 'N.A.'         },
 };
 
@@ -102,10 +104,11 @@ for (const [model, data] of Object.entries(PROPELLERS)) {
 
 /**
  * Viscosity correction factor.
- * =IF(visc<20, 1.1, 0.18612*LN(visc)+0.54256)
+ * =IF(visc<10, 1, IF(visc<20, 1.05, 0.18612*LN(visc)+0.54256))
  */
 function viscosityFactor(visc) {
-  if (visc < 20) return 1.1;
+  if (visc < 10) return 1;
+  if (visc < 20) return 1.05;
   return 0.18612 * Math.log(visc) + 0.54256;
 }
 
@@ -119,10 +122,11 @@ function propellerFlow(Nq, rpm, D_mm) {
 
 /**
  * Power absorbed in water by one propeller.
- * P = Kp * rpm^3 * D_mm^5  [kW]
+ * P_kW = Kp * rho_water * n_rps^3 * D_m^5 / 1000.
  */
 function propellerPower(Kp, rpm, D_mm) {
-  return Kp * Math.pow(rpm, 3) * Math.pow(D_mm, 5);
+  const waterDensity = 1000; // kg/m³
+  return Kp * waterDensity * Math.pow(rpm / 60, 3) * Math.pow(D_mm / 1000, 5) / 1000;
 }
 
 /**
@@ -206,7 +210,16 @@ function onTipoChange(n) {
 // MAIN CALCULATION
 // =====================================================
 
+function updateGeneralInfoSummary() {
+  document.querySelectorAll('.general-info-summary output').forEach(output => {
+    const source = output.getAttribute('for');
+    const empty = source === 'cliente' || source === 'elaboro' ? 'Sin seleccionar' : '—';
+    output.textContent = document.getElementById(source).value.trim() || empty;
+  });
+}
+
 function calculate() {
+  updateGeneralInfoSummary();
   /* ── 1. Tank ── */
   const tankType = document.querySelector('input[name="tipoTanque"]:checked').value;
   let tankDiameter; // effective tank diameter used for Rp ratio
@@ -233,6 +246,7 @@ function calculate() {
 
   /* ── 2. Fluid ── */
   const proceso   = document.getElementById('proceso').value;
+  updateProcessRecommendationsIndicator();
   const viscosidad = parseFloat(document.getElementById('viscosidad').value) || 1;
   const densidad   = parseFloat(document.getElementById('densidad').value)   || 1;
   const fVisc      = viscosityFactor(viscosidad);
@@ -240,6 +254,7 @@ function calculate() {
   const intensity  = getIntensity(proceso);
 
   document.getElementById('factorViscosidad').value    = fmt(fVisc, 4);
+  document.getElementById('viscosityEstimateNote').classList.toggle('hidden', viscosidad <= 2000);
   document.getElementById('intensidadRecomendada').value  = intensity;
   document.getElementById('intensidadRecomendada2').value = intensity;
 
@@ -278,7 +293,7 @@ function calculate() {
 
     document.getElementById('diam' + n).value = D_mm > 0 ? D_mm.toFixed(0) : '–';
     document.getElementById('rp' + n).value   = Rp > 0 ? fmt(Rp, 4) : '–';
-    document.getElementById('kp' + n).value   = Kp > 0 ? fmtSci(Kp) : '–';
+    document.getElementById('kp' + n).value   = Kp > 0 ? fmt(Kp, 4) : '–';
     document.getElementById('nq' + n).value   = Nq > 0 ? fmt(Nq, 4) : '–';
 
     // Local agitation index = Q_local / (area * 108)
@@ -294,6 +309,12 @@ function calculate() {
   const rpmRef = props[0].data.rpm;
   document.getElementById('rpmRef').value = rpmRef > 0 ? rpmRef.toFixed(1) : '–';
   document.getElementById('rpmMax').value = rpmRef > 0 ? (rpmRef * 1.1).toFixed(1) : '–';
+  const rpmWarning = document.getElementById('rpmWarningNote');
+  const exceedsMaxRpm = rpmRef > 0 && rpm > rpmRef * 1.1;
+  rpmWarning.classList.toggle('hidden', !exceedsMaxRpm);
+  rpmWarning.textContent = exceedsMaxRpm
+    ? `Las rpm seleccionadas superan en más de 10% las rpm de referencia (${rpmRef.toFixed(1)}) para esta propela, usar con precaución`
+    : '';
 
   // ── Flows ──
   // Q1 = full flow of propeller 1
@@ -419,6 +440,7 @@ function buildProcesoSelect() {
   });
   /* Restore previous selection when possible */
   if ([...sel.options].some(o => o.value === prev)) sel.value = prev;
+  updateProcessRecommendationsIndicator();
 }
 
 function initModelDropdowns() {
@@ -433,7 +455,29 @@ function initModelDropdowns() {
   });
 }
 
+function applyProcessRecommendations() {
+  const selected = document.getElementById('proceso').value;
+  const process = NFS_DB.getProcesos().find(p => p.label === selected);
+  const missing = [];
+  for (const key of ['viscosidad', 'densidad']) {
+    const value = process?.[key];
+    const input = document.getElementById(key);
+    const number = Number(value);
+    if (value !== null && value !== undefined && value !== '' && Number.isFinite(number) &&
+        number >= Number(input.min)) {
+      input.value = String(number);
+    } else {
+      missing.push(key);
+    }
+  }
+  document.getElementById('processRecommendationsNote').textContent = missing.length
+    ? `Sin valor típico de ${missing.join(' y ')} para este proceso; se conserva el valor actual. Puede definirlo en Base de datos.`
+    : 'Viscosidad y densidad inicializadas con los valores típicos del proceso. Puede editarlas.';
+  calculate();
+}
+
 function attachListeners() {
+  document.getElementById('proceso').addEventListener('change', applyProcessRecommendations);
   const ids = [
     'tipoCircular', 'tipoRectangular',
     'diametro', 'ancho', 'longitud',
@@ -539,6 +583,9 @@ function addComentarioField(value, listId, lineClass, hiddenId) {
     `<input type="text" class="${lineClass}" placeholder="Ingresar consideración técnica..." />` +
     '<button type="button" class="btn-db btn-db-del" onclick="removeComentarioField(this)">🗑</button>';
   const input = row.querySelector('.' + lineClass);
+  if (hiddenId === 'cst_comerciales' || hiddenId === 'cst_comerciales_internas') {
+    input.placeholder = 'Ingresar consideración comercial...';
+  }
   input.value = value || '';
   input.addEventListener('input', () => _comentariosSyncHidden(lineClass, hiddenId));
   list.appendChild(row);
@@ -580,7 +627,12 @@ document.addEventListener('DOMContentLoaded', () => {
   buildReferenceTable();
   initModelDropdowns();
   attachListeners();
+  for (const id of ['cliente', 'contactoCliente', 'ciudadCliente', 'telefonoCliente', 'celularCliente', 'correoCliente',
+    'elaboro', 'cargoElaboro', 'extensionElaboro', 'celularElaboro', 'correoElaboro']) {
+    document.getElementById(id).addEventListener('input', updateGeneralInfoSummary);
+    document.getElementById(id).addEventListener('change', updateGeneralInfoSummary);
+  }
   renderComentariosFromString('');
   renderComentariosFromString('', 'comentariosInternasList', 'input-comentario-interna-line', 'comentariosInternas');
-  calculate();
+  applyProcessRecommendations();
 });

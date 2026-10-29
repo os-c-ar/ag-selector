@@ -57,6 +57,7 @@ const NFS_DB = (function () {
         _lastSyncedText = check.externalText;
         _persist();
         if (typeof _dbRenderTable === 'function') _dbRenderTable();
+        updateProcessRecommendationsIndicator();
         _dbUpdateFileStatus();
         return;
       }
@@ -76,6 +77,7 @@ const NFS_DB = (function () {
   /* Called after every data mutation */
   function _afterMutate() {
     _persist();
+    updateProcessRecommendationsIndicator();
     _writeFile(); // async fire-and-forget
   }
 
@@ -112,15 +114,22 @@ const NFS_DB = (function () {
 
     exportJSON() { return JSON.stringify(_data, null, 2); },
 
-    add(label, intensidad) {
+    add(label, intensidad, viscosidad = null, densidad = null, recomendaciones = '') {
       const maxId = _data.procesos.reduce((m, p) => Math.max(m, p.id), 0);
-      _data.procesos.push({ id: maxId + 1, label: label.trim(), intensidad: intensidad.trim() });
+      _data.procesos.push({ id: maxId + 1, label: label.trim(), intensidad: intensidad.trim(), viscosidad, densidad, recomendaciones });
       _afterMutate();
     },
 
-    update(id, label, intensidad) {
+    update(id, label, intensidad, viscosidad = null, densidad = null, recomendaciones = '') {
       const p = _data.procesos.find(x => x.id === id);
-      if (p) { p.label = label.trim(); p.intensidad = intensidad.trim(); _afterMutate(); }
+      if (p) { p.label = label.trim(); p.intensidad = intensidad.trim(); p.viscosidad = viscosidad; p.densidad = densidad; p.recomendaciones = recomendaciones; _afterMutate(); }
+    },
+
+    setRecommendations(id, text) {
+      const process = _data.procesos.find(p => p.id === id);
+      if (!process) throw new Error('El proceso ya no existe en la base de datos.');
+      process.recomendaciones = text;
+      _afterMutate();
     },
 
     remove(id) {
@@ -157,6 +166,61 @@ function closeDbModal() {
 
 /* ── Table ── */
 
+let _processRecommendationsRow = null;
+
+function updateProcessRecommendationsIndicator() {
+  const selected = document.getElementById('proceso').value;
+  const process = NFS_DB.getProcesos().find(p => p.label === selected);
+  const hasRecommendations = Boolean(process?.recomendaciones?.trim());
+  const button = document.getElementById('processRecommendationsButton');
+  button.classList.toggle('has-recommendations', hasRecommendations);
+  button.title = hasRecommendations
+    ? 'Hay recomendaciones de selección disponibles. Pulse para consultarlas.'
+    : 'Ver recomendaciones típicas del proceso';
+  document.getElementById('processRecommendationsBadge').hidden = !hasRecommendations;
+}
+
+function openProcessRecommendations(button) {
+  const row = button ? button.closest('tr') : null;
+  const process = row
+    ? NFS_DB.getProcesos().find(p => p.id === Number(row.dataset.id))
+    : NFS_DB.getProcesos().find(p => p.label === document.getElementById('proceso').value);
+  const editingRow = row && row.classList.contains('db-row-editing');
+  _processRecommendationsRow = row;
+  const text = editingRow ? row.dataset.recomendaciones : process?.recomendaciones;
+  const label = editingRow ? row.querySelector('.db-input-label').value : process?.label;
+  document.getElementById('processRecommendationsProcess').textContent = label || 'Proceso sin nombre';
+  const editor = document.getElementById('processRecommendationsText');
+  editor.value = text || '';
+  editor.readOnly = !row;
+  editor.placeholder = row ? 'Escriba las recomendaciones típicas para este proceso...' : 'No hay recomendaciones típicas definidas para este proceso.';
+  document.getElementById('processRecommendationsSave').hidden = !row;
+  document.getElementById('processRecommendationsSave').textContent = editingRow ? 'Aceptar texto para la fila' : 'Guardar recomendaciones';
+  document.getElementById('processRecommendationsClose').textContent = row ? 'Cerrar sin guardar' : 'Cerrar';
+  document.getElementById('processRecommendationsHelp').textContent = row
+    ? (editingRow ? 'Al aceptar, el texto queda pendiente de Guardar en la fila del proceso.' : 'Guardar actualiza las recomendaciones de este proceso en la base de datos.')
+    : 'Consulta de solo lectura. Las recomendaciones se administran desde Base de datos.';
+  document.getElementById('processRecommendationsDialog').showModal();
+}
+
+function saveProcessRecommendations() {
+  const row = _processRecommendationsRow;
+  if (!row || !row.isConnected) {
+    alert('La fila del proceso ya no esta disponible. Cierre y vuelva a abrir el editor.');
+    return;
+  }
+  const text = document.getElementById('processRecommendationsText').value;
+  if (row.classList.contains('db-row-editing')) row.dataset.recomendaciones = text;
+  else NFS_DB.setRecommendations(Number(row.dataset.id), text);
+  const button = row.querySelector('.db-recommendations');
+  button.title = text.trim() ? 'Editar recomendaciones típicas' : 'Agregar recomendaciones típicas';
+  document.getElementById('processRecommendationsDialog').close();
+}
+
+function _dbRecommendationsCell() {
+  return '<td class="db-td-recommendations"><button type="button" class="btn-db btn-db-edit db-recommendations" onclick="openProcessRecommendations(this)" title="Recomendaciones típicas" aria-label="Abrir recomendaciones típicas">📝</button></td>';
+}
+
 function _dbRenderTable() {
   const tbody = document.getElementById('dbTableBody');
   tbody.innerHTML = '';
@@ -170,6 +234,9 @@ function _dbRowRead(p) {
     `<td class="db-td-num">${p.id}</td>` +
     `<td>${_esc(p.label)}</td>` +
     `<td class="db-td-intens"><span class="intensity-badge">${_esc(p.intensidad)}</span></td>` +
+    `<td>${_esc(p.viscosidad ?? '—')}</td>` +
+    `<td>${_esc(p.densidad ?? '—')}</td>` +
+    _dbRecommendationsCell() +
     `<td class="db-td-actions">` +
       `<button class="btn-db btn-db-edit" onclick="dbEditRow(${p.id},this)">✏ Editar</button>` +
       `<button class="btn-db btn-db-del"  onclick="dbDeleteRow(${p.id},this)">🗑</button>` +
@@ -177,14 +244,35 @@ function _dbRowRead(p) {
   return tr;
 }
 
+function _dbFluidInputs(p) {
+  return `<td><input type="number" class="db-input db-input-viscosidad" min="1" step="1" aria-label="Viscosidad típica (cps)" placeholder="Sin definir" value="${_esc(p.viscosidad ?? '')}" /></td>` +
+    `<td><input type="number" class="db-input db-input-densidad" min="0.1" step="0.01" aria-label="Densidad típica (Ton/m³)" placeholder="Sin definir" value="${_esc(p.densidad ?? '')}" /></td>`;
+}
+
+function _dbReadFluidInputs(tr) {
+  const result = {};
+  for (const key of ['viscosidad', 'densidad']) {
+    const input = tr.querySelector('.db-input-' + key);
+    if (!input.reportValidity()) {
+      alert('Revise la viscosidad y densidad tipicas. Puede dejarlas vacias si no estan definidas.');
+      return null;
+    }
+    result[key] = input.value === '' ? null : Number(input.value);
+  }
+  return result;
+}
+
 function _dbRowEdit(p) {
   const tr = document.createElement('tr');
   tr.dataset.id = p.id;
   tr.classList.add('db-row-editing');
+  tr.dataset.recomendaciones = p.recomendaciones || '';
   tr.innerHTML =
     `<td class="db-td-num">${p.id}</td>` +
     `<td><input class="db-input db-input-label" value="${_esc(p.label)}" /></td>` +
     `<td class="db-td-intens"><input class="db-input db-input-intens" value="${_esc(p.intensidad)}" /></td>` +
+    _dbFluidInputs(p) +
+    _dbRecommendationsCell() +
     `<td class="db-td-actions">` +
       `<button class="btn-db btn-db-save"   onclick="dbSaveRow(${p.id},this)">✔ Guardar</button>` +
       `<button class="btn-db btn-db-cancel" onclick="dbCancelRow(${p.id},this)">✖</button>` +
@@ -203,7 +291,9 @@ function dbSaveRow(id, btn) {
   const label    = tr.querySelector('.db-input-label').value;
   const intensidad = tr.querySelector('.db-input-intens').value;
   if (!label.trim()) { alert('La descripción no puede estar vacía.'); return; }
-  NFS_DB.update(id, label, intensidad);
+  const fluid = _dbReadFluidInputs(tr);
+  if (!fluid) return;
+  NFS_DB.update(id, label, intensidad, fluid.viscosidad, fluid.densidad, tr.dataset.recomendaciones || '');
   const p = NFS_DB.getProcesos().find(x => x.id === id);
   tr.parentNode.replaceChild(_dbRowRead(p), tr);
 }
@@ -229,6 +319,8 @@ function dbAddRow() {
     `<td class="db-td-num">–</td>` +
     `<td><input class="db-input db-input-label" placeholder="Descripción del proceso" /></td>` +
     `<td class="db-td-intens"><input class="db-input db-input-intens" placeholder="Ej. 4 - 6" /></td>` +
+    _dbFluidInputs({}) +
+    _dbRecommendationsCell() +
     `<td class="db-td-actions">` +
       `<button class="btn-db btn-db-save"   onclick="dbSaveNewRow(this)">✔ Guardar</button>` +
       `<button class="btn-db btn-db-cancel" onclick="this.closest('tr').remove()">✖</button>` +
@@ -242,7 +334,9 @@ function dbSaveNewRow(btn) {
   const label  = tr.querySelector('.db-input-label').value.trim();
   const intens = tr.querySelector('.db-input-intens').value.trim();
   if (!label) { alert('La descripción no puede estar vacía.'); return; }
-  NFS_DB.add(label, intens || '–');
+  const fluid = _dbReadFluidInputs(tr);
+  if (!fluid) return;
+  NFS_DB.add(label, intens || '–', fluid.viscosidad, fluid.densidad, tr.dataset.recomendaciones || '');
   const list = NFS_DB.getProcesos();
   tr.parentNode.replaceChild(_dbRowRead(list[list.length - 1]), tr);
 }

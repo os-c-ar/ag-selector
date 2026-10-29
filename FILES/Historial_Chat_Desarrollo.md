@@ -447,6 +447,397 @@ nativo ni se generó una oferta real en esta tanda.
 
 ---
 
+## 2026-10-23 11:44 — Porcentajes y precio comercial para la oferta
+
+**Solicitud:** mostrar los margenes como porcentajes, agregar debajo del total
+COP una moneda COP/USD y un precio unitario final editable, y habilitar cantidad,
+moneda, tasa de cambio, precio unitario y total para Word.
+
+**Decision confirmada por el usuario:** conservar el precio manual al recalcular
+hasta pulsar "Usar precio calculado". Cambiar de moneda restablece el precio
+calculado, sin convertir el valor manual.
+
+**Cambios:**
+- Los margenes de materiales e ingenieria muestran 30 % en lugar de 0,3.
+  Las formulas y el Excel siguen usando fracciones internamente. Un indicador
+  de formato permite convertir registros antiguos sin convertir dos veces
+  los registros nuevos.
+- Se agregaron selector de moneda, precio unitario final, boton para recuperar
+  el calculo automatico y total comercial (unitario final por cantidad).
+  Los campos y el modo manual se incluyen en los registros existentes.
+- Se habilitaron `cantidad`, `moneda_oferta`, `tasa_cambio`, `precio_unitario`,
+  `precio_total`, `margen_materiales` y `margen_ingenieria` para Word.
+  Los precios usan dos decimales; los margenes incluyen el signo %.
+- Se validan los datos comerciales antes de generar el documento y se actualizo
+  el listado de variables. Los otros factores porcentuales no cambiaron.
+- Se conservaron intactos los cambios del usuario a las plantillas Word.
+
+**Validacion:** pruebas en una pestana separada, sin guardar registros ni escribir
+bases de datos: migracion de margenes antiguos, recarga sin doble conversion,
+calculo conservado, precio automatico COP/USD, precio manual y su restauracion,
+boton de restablecimiento, precio cero y total por cantidad. Exportacion Excel
+real y lectura posterior del archivo en memoria: ambos margenes conservan 0,3
+con formato porcentual y formulas. Generacion de DOCX de prueba con selector y
+descarga simulados: las siete variables se reemplazaron en el XML con los valores
+esperados. No se probo la plantilla del usuario en Word de escritorio.
+
+---
+
+## 2026-10-23 12:00 — Presentacion de los precios finales de oferta
+
+**Solicitud:** agrupar los precios comerciales en una subseccion, usar verde
+para identificarlos como valores para el cliente, cambiar moneda a opciones
+radio y reorganizar campos y boton.
+
+**Cambios:** bloque "Precios finales de la oferta", fondo y acentos verdes,
+identificador textual "Valores para el cliente", moneda COP/USD a la izquierda,
+precio unitario editable con boton debajo y total destacado a la derecha.
+Las etiquetas muestran la moneda activa. Los totales internos del presupuesto
+quedan agrupados antes del bloque comercial. En anchos reducidos el bloque
+se distribuye en una columna.
+
+Se conserva `cst_moneda_oferta` como campo de persistencia para mantener
+compatibilidad con registros y variables Word; las opciones radio se sincronizan
+al cargar registros y al recalcular. No cambiaron las reglas de precios.
+
+**Validacion:** inspeccion visual en navegador; cambio COP/USD con controles
+reales, navegacion por teclado, conservacion de precio manual, restauracion
+de registro con moneda y precio, boton de restablecimiento y valores para Word.
+Pruebas sin guardar registros ni escribir bases de datos.
+
+---
+
+## 2026-10-23 12:10 — Consideraciones comerciales y variables de oferta
+
+**Solicitud:** igualar las casillas comerciales con las tecnicas, habilitar las
+consideraciones comerciales para el cliente en Word y entregar el listado
+actualizado de variables.
+
+**Cambios:** ambas listas comerciales usan el mismo ancho, tipografia, espaciado
+y foco de las listas tecnicas, con texto de ayuda de consideracion comercial.
+Se habilitaron `consideracion_comercial1` a `consideracion_comercial10` y mas
+si existen mas lineas, respetando el orden del formulario. Las lineas sin usar
+producen texto vacio. Solo se leen las condiciones comerciales para el cliente;
+las internas no se incorporan al mapa ni al bloque de respaldo sin marcas.
+Se mantuvieron los campos de almacenamiento y la restauracion de registros.
+El reemplazo conserva literalmente textos con secuencias como `$&`, ademas
+de escapar caracteres XML. Se actualizo la guia de variables, incluidos los
+datos de contacto de quien elabora que ya estaban disponibles en codigo.
+
+**Validacion:** pruebas en navegador del ancho de ambas listas, textos de ayuda,
+orden, lineas vacias, tres formatos de marcas, escape XML, exclusion de internas,
+agregar/eliminar filas, restauracion de registros y mas de diez condiciones.
+Sin guardar registros ni escribir bases de datos.
+
+---
+
+## 2026-10-23 13:44 — Informacion comercial especifica y elaborador
+
+**Solicitud:** agregar al final de Costeo una seccion para validez, entrega,
+pago, sitio de entrega, empaque y garantia, con valores iniciales de la
+plantilla, y habilitar variables del elaborador.
+
+**Cambios:** nueva seccion verde con seis campos editables y etiquetas.
+Se leyo `FILES/PLANTILLAS/01_GENERAL.docx` sin modificarlo, tomando sus
+condiciones como valores iniciales. Sitio de entrega solo contenia una marca
+en la plantilla; se mantuvo el texto inicial existente de la aplicacion.
+Se habilitaron `validez_oferta`, `tiempo_entrega`, `forma_pago`, `sitio_entrega`,
+`empaque` y `garantia`. Los registros capturan y restauran los seis campos;
+los antiguos usan defaults y los nuevos conservan campos vacios intencionales.
+El bloque de respaldo sin marcas tambien incluye las condiciones comerciales.
+
+Los datos del elaborador ya tenian variables `elaboro` y `elaboro_*`.
+Se agregaron los alias explicitos `elaborador_nombre`, `elaborador_cargo`,
+`elaborador_extension`, `elaborador_celular` y `elaborador_correo`, sin
+romper las marcas anteriores. Se actualizo la guia de variables.
+
+**Validacion:** navegador: seis defaults, carga de registro antiguo, captura
+y restauracion de ediciones y campos vacios, sitio editable, cinco alias,
+reemplazo de once marcas y bloque de respaldo. Sin guardar registros ni
+escribir bases de datos. La plantilla del usuario se conserva intacta.
+
+---
+
+## 2026-10-23 15:57 — Diagrama general en Word y posiciones del texto
+
+**Solicitud:** habilitar una variable para el grafico de Diagrama general.
+Como seguimiento al problema anterior de posiciones, se corrigio tambien
+la normalizacion de marcas fragmentadas por Word.
+
+**Cambios:** `diagrama_general` inserta una imagen PNG con elevacion y vista
+superior del diagrama actual. Se exige una marca sola en su parrafo y dimensiones
+validas. La imagen se incrusta en el DOCX con su relacion y tipo de contenido,
+identificadores sin colision y proporcion conservada (maximo 12,7 x 16,51 cm).
+Sin marca no se agrega una imagen ni se exige tener diagrama.
+La plantilla original no se modifica.
+
+El normalizador anterior trasladaba todo el texto del parrafo al primer nodo,
+dejando las tabulaciones detras de los valores. Ahora solo une los fragmentos
+de cada marca y no atraviesa tabulaciones, saltos ni dibujos; conserva el
+texto y formato circundantes. El XML invalido se notifica explicitamente.
+
+**Validacion:** navegador: marcas divididas, tabulaciones, saltos y formato.
+Prueba con `01_GENERAL.docx` leido como archivo sin modificarlo: tres filas
+tecnicas conservaron sus marcas despues del tabulador, y se mantuvieron las
+cantidades de tabulaciones, saltos, dibujos y propiedades de formato.
+Se agrego una marca de imagen solo a la copia en memoria y se genero un PNG
+valido; se reconstruyo el ZIP y se verificaron dibujo, relaciones y tipos de
+contenido. No se verifico la representacion final en Word de escritorio.
+
+---
+
+## 2026-10-27 11:15 — Nombre de archivo de oferta por cotizacion y cliente
+
+**Solicitud confirmada:** `CA_125_26_CLIENTE_AGITADOR.docx`.
+
+**Cambios:** el nombre usa el numero de cotizacion y el cliente del formulario,
+con sufijo fijo `AGITADOR`, sin fecha ni hora adicionales. Se normalizan
+mayusculas, tildes y caracteres especiales para obtener un nombre compatible
+con Windows, con limite de 80 caracteres por componente. Si falta alguno de
+los dos campos se notifica antes de seleccionar plantilla. No se inventan
+prefijo ni ano: se toman del numero de cotizacion ingresado.
+La plantilla original y los cambios pendientes del usuario se conservan.
+Se actualizo la guia de variables con el formato y comportamiento de descarga.
+
+---
+
+## 2026-10-27 11:26 — Seccion 0: informacion general
+
+**Solicitud:** titular el bloque del nombre y TAG del tanque y agitador como
+"0. INFORMACION GENERAL" y mostrar encima cliente y elaborador no editables,
+sin modificar el ingreso original.
+
+**Cambios:** se agrupo el bloque en una tarjeta con el mismo encabezado que
+las secciones posteriores. Se agregaron salidas de texto para cliente y
+elaborador, con "Sin seleccionar" cuando estan vacios. Se sincronizan al
+escribir, seleccionar desde las bases y recalcular despues de cargar registros.
+Los campos de ingreso originales y las variables de oferta no cambiaron.
+
+**Validacion:** navegador: escritura, cambio, valores vacios, actualizacion
+al recalcular y encabezado. Se probaron las acciones de seleccionar cliente
+y elaborador con perfiles simulados, restaurando las funciones y campos.
+No se guardaron registros ni se escribieron bases de datos.
+
+---
+
+## 2026-10-27 11:28 — Datos completos de cliente y elaborador a la vista
+
+**Solicitud:** ampliar la informacion general no editable con los campos
+adicionales de cliente y elaborador.
+
+**Cambios:** dos bloques de solo lectura: cliente, contacto, ciudad, telefono,
+celular y correo; elaborador, cargo, extension, celular y correo. Se conserva
+el ingreso en los controles originales. Los datos se sincronizan al editar,
+seleccionar contactos o perfiles desde los modales y cargar registros.
+Los campos adicionales vacios muestran un guion.
+
+**Validacion:** once salidas verificadas en navegador: edicion manual,
+seleccion desde ambos modales con datos simulados y cambio de perfil.
+Se restauraron campos y funciones sin guardar registros ni bases de datos.
+
+---
+
+## 2026-10-27 11:31 — Resumen general compacto en dos filas
+
+**Solicitud:** minimizar el espacio vertical mostrando los datos del cliente
+en una fila horizontal y los del elaborador en otra.
+
+**Cambios:** distribucion horizontal compacta por grupo, con etiquetas y valores
+en linea. Los campos se ajustan a otra linea si el ancho disponible no alcanza,
+sin ocultar datos ni cambiar su sincronizacion.
+
+**Validacion:** navegador a 1400 px con once valores de prueba: cada grupo
+ocupa una fila, con 40 px de alto para el resumen completo. Se restauraron
+los valores originales.
+
+---
+
+## 2026-10-27 11:34 — Ancho visual de los TAG
+
+**Solicitud:** dimensionar TAG del tanque y TAG del agitador para ocho
+caracteres, sin limitar la longitud del dato ingresado.
+
+**Cambios:** ancho visual de ocho caracteres mas relleno y bordes, sin
+expansion horizontal de esos dos campos. No se agrega `maxlength` ni se
+modifica el contenido o almacenamiento de los TAG.
+
+---
+
+## 2026-10-27 11:37 — Propiedades recomendadas por proceso
+
+**Solicitud:** asociar viscosidad y densidad recomendadas al proceso seleccionado,
+como valores iniciales editables. El usuario eligio completar las recomendaciones
+en la base de procesos; no se inventaron valores tecnicos.
+
+**Cambios:** columnas editables opcionales de viscosidad (cps) y densidad
+(Ton/m3) en Base de datos, incluidas al crear, editar, guardar e importar/exportar
+los procesos. Los datos anteriores sin esos campos siguen siendo compatibles.
+Al seleccionar proceso se aplican las recomendaciones definidas, sin sobrescribir
+ediciones manuales en recalculos posteriores ni al restaurar registros.
+Si falta una recomendacion se conserva el valor actual y se informa en pantalla.
+Al iniciar la aplicacion se aplican las recomendaciones del proceso inicial.
+
+**Validacion:** navegador con procesos simulados: carga inicial de ambos valores,
+conservacion de cambios manuales tras recalcular, compatibilidad sin recomendaciones,
+columnas del editor y lectura de valores numericos u opcionales vacios.
+Sin guardar ni modificar las bases de datos del usuario durante las pruebas.
+
+---
+
+## 2026-10-27 11:46 — Ventana ampliada de base de procesos
+
+**Solicitud:** ampliar la ventana de la base de datos de descripcion de proceso
+para mejorar la usabilidad.
+
+**Cambios:** ventana de procesos de hasta 1280 px de ancho, con 96% del ancho
+disponible y 90% de la altura de pantalla. Se reserva espacio para la descripcion
+y las recomendaciones, y se permite ajustar los encabezados en varias lineas.
+En pantallas pequenas la tabla se desplaza dentro de la ventana.
+El pie puede distribuir sus botones en varias filas. Las demas ventanas
+conservan sus dimensiones.
+
+---
+
+## 2026-10-27 11:52 — Terminologia de viscosidad y densidad
+
+Se cambio "recomendada" por "tipica" en los encabezados, etiquetas accesibles,
+avisos y ayuda de viscosidad y densidad por proceso. Se actualizo la guia.
+Sin cambios en logica, datos, unidades ni variables. La intensidad conserva
+su denominacion "recomendada".
+
+---
+
+## 2026-10-27 11:58 — Recomendaciones tipicas de seleccion por proceso
+
+**Solicitud:** texto largo asociado al proceso, editable mediante un simbolo
+en la base y consultable sin editar mediante "Recomendaciones de seleccion"
+en la pantalla principal, sin ampliar la seccion con el texto completo.
+
+**Cambios:** propiedad opcional `recomendaciones` en procesos; columna con boton
+para un dialogo amplio de texto multilinea. Desde una fila normal se guarda
+solo este dato; desde una fila en edicion o nueva se conserva como borrador
+hasta guardar la fila, respetando Cancelar. El boton junto al selector de
+proceso abre el mismo dialogo de solo lectura con el proceso actual.
+Los procesos antiguos sin texto muestran una indicacion de ausencia.
+El campo se conserva en las operaciones existentes de JSON y persistencia.
+No se agregan limites artificiales de longitud ni variables de oferta.
+
+**Validacion:** navegador con datos y guardado simulados: consulta no editable,
+texto largo con saltos, guardado directo, edicion diferida de fila, cancelacion
+y compatibilidad de procesos sin recomendaciones. Sin escribir bases reales.
+
+---
+
+## 2026-10-27 12:03 — Factor de viscosidad para menos de 10 cP
+
+**Solicitud:** usar factor 1 si la viscosidad es menor a 10 cP, sin aplicar
+la formula logaritmica.
+
+**Cambio:** se agrega el tramo menor a 10 cP con factor 1. Se conserva el
+factor 1,1 desde 10 hasta menos de 20 cP y la formula logaritmica desde 20 cP.
+
+---
+
+## 2026-10-27 12:05 — Ajuste del factor entre 10 y 20 cP
+
+Se cambia el factor a 1,05 para 10 <= viscosidad < 20 cP, por solicitud
+del usuario. Se mantiene 1 para menos de 10 cP y la formula logaritmica
+desde 20 cP.
+
+---
+
+## 2026-10-27 12:07 — Aviso por viscosidad superior a 2000 cP
+
+Se agrega al pie de la seccion fisicoquimica la nota "Estimado, la curva
+original para este calculo tenia como limite 2000 cP" cuando la viscosidad
+es estrictamente mayor de 2000 cP. Se oculta al volver a 2000 cP o menos.
+El calculo no cambia.
+
+---
+
+## 2026-10-27 12:09 — Texto del aviso de viscosidad
+
+Se actualiza la nota a: "Factor de viscosidad estimado, la curva original
+para este cálculo tenía como límite 2000 cP". Sin cambios en el umbral
+ni en el calculo.
+
+---
+
+## 2026-10-27 12:20 — Kp convertido a numero de potencia adimensional
+
+**Solicitud:** recalcular Kp para usar coeficientes adimensionales.
+
+**Cambios:** conversion de los 53 coeficientes activos del catalogo, mas la
+entrada N.A. que sigue en cero. Se usa Kp = Np con agua de referencia de
+1000 kg/m3: Kp_nuevo = Kp_anterior * 2,16e20. La funcion de potencia convierte
+rpm a rev/s y mm a m, aplica P = Kp * rho_agua * n^3 * D^5 y devuelve kW.
+Las correcciones posteriores por densidad del fluido, viscosidad y otros
+factores permanecen intactas. En pantalla se identifica Kp como adimensional
+y se presenta con cuatro decimales, manteniendo precision completa en calculos.
+Se documenta la referencia y que es una conversion, no una recalibracion fisica.
+
+**Validacion:** comparacion de las 54 entradas contra el catalogo original de
+Git. En navegador, 216 comparaciones de potencia para los modelos a diferentes
+velocidades, con error relativo maximo aproximado de 7,1e-16; valores
+equivalentes dentro de precision numerica. VR2A-055: Kp 1,0181376, con
+potencia 0,6099972458 kW a 137 rpm y 550 mm.
+
+---
+
+## 2026-10-29 09:30 — Señal de recomendaciones de selección disponibles
+
+**Solicitud:** destacar la consulta de recomendaciones cuando el proceso
+seleccionado tenga contenido.
+
+**Cambios:** el botón "Recomendaciones de selección" se resalta en ámbar y
+muestra la etiqueta "! Consultar" si el texto contiene caracteres distintos
+de espacios. La señal se actualiza al cambiar de proceso, recalcular,
+reconstruir el selector o modificar los datos, incluida la adopción de cambios
+externos por conflicto. La consulta conserva su comportamiento de solo lectura.
+
+**Validación:** navegador con recomendaciones vacías, solo espacios y con texto;
+guardado, eliminación, cambio de proceso, selección programática y reconstrucción
+del selector. Se comprobó la apertura del contenido en modo de solo lectura,
+restaurando los datos usados durante la prueba.
+
+---
+
+## 2026-10-29 09:52 — Advertencia condicional por RPM superiores al máximo
+
+**Solicitud:** retirar los campos visibles de RPM de referencia y RPM máxima,
+y mostrar una nota de precaución con el formato del aviso de viscosidad
+únicamente cuando la velocidad seleccionada supere la referencia multiplicada
+por 1,1.
+
+**Cambios:** se sustituyen los campos visibles por valores ocultos, conservados
+para registros y ofertas. Bajo la velocidad de rotación se muestra:
+"Las rpm seleccionadas superan en más de 10% las rpm de referencia (#Valor)
+para esta propela, usar con precaución". El valor corresponde a la propela 1,
+con un decimal. La nota reutiliza los estilos del aviso de viscosidad y
+desaparece al reducir las RPM o seleccionar una propela sin referencia válida.
+
+**Validación:** navegador por debajo, exactamente en y por encima del máximo;
+comprobación del texto, estilo, actualización al recalcular y selección N.A.
+Se verificó que los campos anteriores no son visibles y mantienen sus valores.
+Comprobación de espacios en los cambios mediante `git diff --check`.
+
+---
+
+## 2026-10-29 09:57 — Actualización del historial y publicación de pendientes
+
+**Solicitud:** actualizar este historial y GitHub. Se confirmó expresamente
+incluir todos los cambios funcionales pendientes, documentación y plantillas,
+no solo los dos ajustes más recientes.
+
+**Alcance:** código de selección, procesos, clientes, elaboradores, costeo y
+ofertas; interfaz y estilos; documentación de variables y este historial;
+plantilla `FILES/PLANTILLAS/01_GENERAL.docx` en sustitución de las dos plantillas
+anteriores eliminadas del directorio de trabajo.
+Se excluyen carpetas temporales, archivos `desktop.ini` y el archivo local
+`FILES/registros.json`, que contiene datos operativos de clientes.
+
+---
+
 ## Cómo se mantiene actualizado
 
 Este archivo **no se regenera automáticamente** (es un documento narrativo, no un reporte generado

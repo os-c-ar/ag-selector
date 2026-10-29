@@ -429,9 +429,11 @@ function _setContactHeaderFields(c) {
   if (telefono) telefono.value = c ? (c.telefono || '') : '';
   if (celular) celular.value = c ? (c.celular || '') : '';
   if (correo) correo.value = c ? (c.correo || '') : '';
+  updateGeneralInfoSummary();
 }
 
 function syncClientContacts() {
+  updateGeneralInfoSummary();
   const clientInput = document.getElementById('cliente');
   const contactInput = document.getElementById('contactoCliente');
   const contactList = document.getElementById('contactsList');

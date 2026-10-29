@@ -49,6 +49,15 @@ const CST_DEFAULT_SERVICIOS = [
 let _cstRowSeq = 1;
 const _cstState = { materiales: [], servicios: [] };
 
+const CST_COMMERCIAL_DEFAULTS = {
+  validez_oferta: '30 Días.',
+  tiempo_entrega: 'Diez (10) semanas después de la orden de compra, anticipo y aprobación de planos.',
+  forma_pago: '50% con la orden de compra; 50% contra pruebas en planta de NovatecFS y previo al despacho. Otra: a convenir.',
+  sitio_entrega: 'En sus instalaciones en territorio nacional',
+  empaque: 'Doméstico – madera.',
+  garantia: 'Doce (12) meses contra daños que puedan presentarse por defectos de fabricación tanto de materiales como de mano de obra.',
+};
+
 function _cstNextId(prefix) {
   return prefix + (_cstRowSeq++);
 }
@@ -350,8 +359,8 @@ function setCosteoDefaults() {
   set('cst_dolar', 3196);
   set('cst_cantidad', 1);
   set('cst_imprevistos_pct', 0.05);
-  set('cst_margen_materiales_pct', 0.3);
-  set('cst_margen_ingenieria_pct', 0.3);
+  set('cst_margen_materiales_pct', 30);
+  set('cst_margen_ingenieria_pct', 30);
   set('cst_financiero_cuotas', 2);
   set('cst_financiero_pct', 0.011);
   set('cst_administrativos_pct', 0.02);
@@ -359,6 +368,9 @@ function setCosteoDefaults() {
   set('cst_polizas_pct', 0);
   set('cst_empaque_val', 500000);
   set('cst_transporte_val', 500000);
+  for (const [key, value] of Object.entries(CST_COMMERCIAL_DEFAULTS)) {
+    set('cst_' + key, value);
+  }
 }
 
 function buildCosteoRows() {
@@ -387,6 +399,76 @@ function attachCosteoListeners() {
     el.addEventListener('input', calculateCosteo);
     el.addEventListener('change', calculateCosteo);
   });
+  document.getElementById('cst_precio_unitario_oferta').addEventListener('input', () => {
+    document.getElementById('cst_precio_oferta_manual').value = 'true';
+    calculateCosteo();
+  });
+  document.querySelectorAll('input[name="offerCurrency"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (!radio.checked) return;
+      document.getElementById('cst_moneda_oferta').value = radio.value;
+      useCalculatedOfferPrice();
+    });
+  });
+  document.getElementById('cst_usar_precio_calculado').addEventListener('click', useCalculatedOfferPrice);
+}
+
+function useCalculatedOfferPrice() {
+  document.getElementById('cst_precio_oferta_manual').value = 'false';
+  calculateCosteo();
+}
+
+function _updateCosteoOfferPrice() {
+  const currency = document.getElementById('cst_moneda_oferta').value;
+  document.querySelectorAll('input[name="offerCurrency"]').forEach(radio => {
+    radio.checked = radio.value === currency;
+  });
+  document.querySelectorAll('[data-offer-currency]').forEach(label => {
+    label.textContent = currency;
+  });
+  const price = document.getElementById('cst_precio_unitario_oferta');
+  if (document.getElementById('cst_precio_oferta_manual').value !== 'true') {
+    const calculated = currency === 'USD' ? _cstComputed.unitarioUsd : _cstComputed.unitarioCop;
+    price.value = calculated.toFixed(2);
+  }
+  const quantity = _num('cst_cantidad');
+  const valid = price.value !== '' && price.checkValidity() && quantity > 0;
+  document.getElementById('cst_precio_total_oferta').value = valid
+    ? (Number(price.value) * quantity).toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '';
+}
+
+function getCosteoOfferData() {
+  calculateCosteo();
+  for (const id of ['cst_margen_materiales_pct', 'cst_margen_ingenieria_pct', 'cst_precio_unitario_oferta']) {
+    if (!document.getElementById(id).reportValidity()) {
+      throw new Error('Revise los margenes y el precio unitario final en Costeo.');
+    }
+  }
+  const cantidad = _num('cst_cantidad');
+  const tasaCambio = _num('cst_dolar');
+  const moneda = document.getElementById('cst_moneda_oferta').value;
+  if (cantidad <= 0 || tasaCambio <= 0) {
+    throw new Error('La cantidad y la tasa de cambio de Costeo deben ser mayores que cero.');
+  }
+  if (moneda !== 'COP' && moneda !== 'USD') {
+    throw new Error('Seleccione COP o USD como moneda de la oferta en Costeo.');
+  }
+  const unitario = Number(document.getElementById('cst_precio_unitario_oferta').value);
+  const money = value => value.toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const percent = id => _num(id).toLocaleString('es-CO') + '%';
+  return {
+    ...Object.fromEntries(Object.keys(CST_COMMERCIAL_DEFAULTS).map(key => [
+      key, document.getElementById('cst_' + key).value,
+    ])),
+    cantidad: cantidad.toLocaleString('es-CO'),
+    moneda_oferta: moneda,
+    tasa_cambio: tasaCambio.toLocaleString('es-CO', { maximumFractionDigits: 6 }),
+    precio_unitario: money(unitario),
+    precio_total: money(unitario * cantidad),
+    margen_materiales: percent('cst_margen_materiales_pct'),
+    margen_ingenieria: percent('cst_margen_ingenieria_pct'),
+  };
 }
 
 /* Numeric snapshot of every computed value, kept alongside the
@@ -403,11 +485,11 @@ function calculateCosteo() {
   let subtotalServicios = 0;
   _cstState.servicios.forEach(row => { subtotalServicios += _refreshSrvRowOutputs(row); });
 
-  const margenMatPct = _num('cst_margen_materiales_pct');
+  const margenMatPct = _num('cst_margen_materiales_pct') / 100;
   const margenMatVal = _safeMargin(subtotalMateriales, margenMatPct);
   const subtotalMatMargen = subtotalMateriales + margenMatVal;
 
-  const margenIngPct = _num('cst_margen_ingenieria_pct');
+  const margenIngPct = _num('cst_margen_ingenieria_pct') / 100;
   const margenIngVal = _safeMargin(subtotalServicios, margenIngPct);
   const subtotalIngMargen = subtotalServicios + margenIngVal;
 
@@ -467,6 +549,7 @@ function calculateCosteo() {
     empaqueVal, transporteVal, totalCop, totalUsd, unitarioCop, unitarioUsd,
   });
 
+  _updateCosteoOfferPrice();
   _persistRowsJson();
 }
 
@@ -480,6 +563,9 @@ function _persistRowsJson() {
 function restoreCosteoFromRecord(fields) {
   if (!fields) return;
   const setVal = (id, val) => { const el = document.getElementById(id); if (el && val !== undefined) el.value = val; };
+  for (const [key, defaultValue] of Object.entries(CST_COMMERCIAL_DEFAULTS)) {
+    setVal('cst_' + key, fields['cst_' + key] ?? defaultValue);
+  }
 
   [
     'cst_dolar', 'cst_cantidad', 'cst_codigo_equipo', 'cst_cotizacion_no',
@@ -488,6 +574,16 @@ function restoreCosteoFromRecord(fields) {
     'cst_financiero_cuotas', 'cst_financiero_pct', 'cst_administrativos_pct',
     'cst_comision_pct', 'cst_polizas_pct', 'cst_empaque_val', 'cst_transporte_val',
   ].forEach(id => { if (fields[id] !== undefined) setVal(id, fields[id]); });
+  // Records saved before percentage display stored margin fractions (0.3 = 30%).
+  if (fields.cst_margenes_formato !== 'porcentaje') {
+    for (const id of ['cst_margen_materiales_pct', 'cst_margen_ingenieria_pct']) {
+      if (fields[id] !== undefined) setVal(id, _num(id) * 100);
+    }
+  }
+  setVal('cst_margenes_formato', 'porcentaje');
+  setVal('cst_moneda_oferta', fields.cst_moneda_oferta || 'COP');
+  setVal('cst_precio_oferta_manual', fields.cst_precio_oferta_manual === 'true' ? 'true' : 'false');
+  setVal('cst_precio_unitario_oferta', fields.cst_precio_unitario_oferta || '');
 
   const parseRows = (json, fallback) => {
     if (!json) return fallback();
@@ -649,7 +745,7 @@ async function exportCosteoToExcel() {
     const subtotalMatRow = r; r++;
 
     ws.getCell(`B${r}`).value = 'MARGEN';
-    ws.getCell(`D${r}`).value = _num('cst_margen_materiales_pct');
+    ws.getCell(`D${r}`).value = _num('cst_margen_materiales_pct') / 100;
     ws.getCell(`D${r}`).numFmt = CST_FMT_PCT;
     ws.getCell(`E${r}`).value = { formula: `(E${subtotalMatRow}/(1-D${r}))-E${subtotalMatRow}`, result: _cstComputed.margenMatVal };
     ws.getCell(`E${r}`).numFmt = CST_FMT_COP;
@@ -690,7 +786,7 @@ async function exportCosteoToExcel() {
     const subtotalSrvRow = r; r++;
 
     ws.getCell(`B${r}`).value = 'MARGEN';
-    ws.getCell(`D${r}`).value = _num('cst_margen_ingenieria_pct');
+    ws.getCell(`D${r}`).value = _num('cst_margen_ingenieria_pct') / 100;
     ws.getCell(`D${r}`).numFmt = CST_FMT_PCT;
     ws.getCell(`E${r}`).value = { formula: `(E${subtotalSrvRow}/(1-D${r}))-E${subtotalSrvRow}`, result: _cstComputed.margenIngVal };
     ws.getCell(`E${r}`).numFmt = CST_FMT_COP;
