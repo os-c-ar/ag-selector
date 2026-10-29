@@ -838,6 +838,257 @@ Se excluyen carpetas temporales, archivos `desktop.ini` y el archivo local
 
 ---
 
+## 2026-10-29 10:02 — Presentación de cambios para dirección
+
+**Solicitud:** presentar los cambios realizados en el proyecto, tomando este
+historial como fuente principal. Se confirmó una presentación PowerPoint
+detallada de 20 a 25 diapositivas, dirigida a dirección.
+
+**Entrega:** `Presentacion_Cambios_AG_SELECTOR_2026-10-29.pptx`, en esta carpeta,
+con 25 diapositivas editables, formato panorámico y logo del proyecto.
+Resume la evolución del 22 al 29 de octubre: costeo, catálogo y Excel;
+precios y condiciones comerciales; generación de Word y diagrama;
+información general, procesos, recomendaciones, viscosidad, Kp y RPM;
+vinculación de bases, concurrencia, validaciones y límites.
+Incluye notas del presentador con referencias fechadas a este historial.
+Las propuestas de seguimiento se distinguen de los cambios implementados;
+no se atribuyen ahorros ni resultados económicos no medidos.
+El corte de código presentado corresponde al commit publicado `3ef52f1`.
+
+**Validación:** generación y reapertura del archivo, comprobación de 25
+diapositivas y sus notas, límites geométricos y ajuste estimado de textos.
+Se abrió el archivo con PowerPoint de escritorio y se renderizaron las 25
+diapositivas; revisión visual de la vista general y corrección de un
+solapamiento en la diapositiva de RPM. Una segunda apertura verificó que
+ningún texto desbordara su cuadro. No se modificó el código de la aplicación.
+La presentación y esta entrada quedan locales, sin una nueva publicación.
+
+---
+
+## 2026-10-29 10:32 — Base técnica de propelas, adición, edición y peso por modelo
+
+**Solicitud:** administrar los datos técnicos de las propelas como una base
+de datos con módulo de adición y edición. Se confirmó permitir tipos nuevos
+y mantener fijo el modelo al editar, porque identifica las selecciones
+guardadas. Como ampliación, se solicitó incluir el peso en la base:
+editable para modelos existentes y obligatorio para los nuevos.
+
+**Cambios implementados:**
+- Nuevo módulo `propellers.js`, accesible en Opciones → Base técnica de
+  propelas. Incluye búsqueda por modelo/tipo, alta y edición mediante formulario,
+  cancelación sin guardar, validación de duplicados sin distinguir mayúsculas,
+  campos obligatorios y números finitos mayores que cero.
+- Datos por modelo: `modelo`, `type`, `D` (mm), `rpm` de referencia,
+  `Kp` adimensional, `Nq`, `peso` (kg) y `codType` (categoría de codificación).
+  Se admite un tipo nuevo como texto; su categoría se elige del catálogo
+  de codificación existente, sin asignar silenciosamente otro diseño.
+  `N.A.` sigue reservado como opción sin propela y no es editable.
+- Se conservan los 53 modelos iniciales y sus coeficientes sin cambios.
+  El catálogo incorporado en el código se usa como semilla, mientras los
+  cálculos y selectores consultan los datos administrados por la nueva base.
+  El peso inicial de cada modelo reproduce la interpolación/extrapolación
+  que antes hacía el cálculo del eje. Son valores de continuidad del cálculo,
+  no una nueva medición física: deben verificarse con ingeniería.
+- El cálculo del eje ahora usa el peso editable del modelo seleccionado,
+  en lugar de inferirlo por tipo y diámetro en cada cálculo.
+  La edición actualiza resultados hidráulicos, aviso de RPM, cálculo del
+  eje y codificación. Se conservan diámetros decimales; si un diámetro no
+  tiene equivalencia de código, se muestra un aviso y `?` en vez de conservar
+  un diámetro anterior como si fuera válido.
+- Los cuatro selectores se reconstruyen con los tipos/modelos de la base,
+  conservando el modelo seleccionado cuando existe. Los registros cargados
+  resuelven el tipo actual por modelo. Si falta un modelo en la base importada
+  o al restaurar un registro, se avisa y se selecciona `N.A.` para revisión.
+  Los registros siguen identificando el modelo; sus cálculos usan la base
+  técnica vigente, no una copia histórica de sus coeficientes o peso.
+- Persistencia local en `nfs_propellers_v1`, importación y exportación
+  `propelas.json`, vinculación individual, reconexión y guardado automático.
+  El panel central y el indicador global incluyen ahora siete bases.
+  La vinculación carga y valida el archivo antes de adoptarlo, sin escribir
+  en el archivo previamente vinculado.
+- Guardados consecutivos serializados y protección de concurrencia mediante
+  el helper existente. Se añadió una opción estricta al helper para esta base:
+  no escribir si falta la versión de referencia o falla la lectura previa.
+  Las demás bases conservan el comportamiento anterior. Los fallos de
+  escritura/permisos se notifican y mantienen la copia local; un JSON local
+  inválido se conserva para recuperación, con aviso, catálogo inicial en
+  memoria y edición bloqueada hasta importar/vincular datos válidos.
+
+**Archivo inicial:** se generó `FILES/DATABASE/propelas.json` con 53 modelos,
+sin sobrescribir archivos existentes. Sigue excluido de Git, como las demás
+bases operativas. Para usarlo compartido, vincularlo individualmente o mediante
+"Vincular carpeta DATABASE…".
+
+**Formato del JSON:** objeto con `version: 1` y lista `propelas`. Ejemplo:
+
+```json
+{
+  "version": 1,
+  "propelas": [
+    {
+      "modelo": "VR2A-055",
+      "type": "TURBINA",
+      "D": 550,
+      "rpm": 137,
+      "Kp": 1.0181376,
+      "Nq": 0.5455,
+      "peso": 4.08,
+      "codType": "TURBINA"
+    }
+  ]
+}
+```
+
+**Validación:** navegador con los 53 pesos iniciales comparados contra el
+cálculo anterior; altas, edición y cancelación de formulario; persistencia
+tras recarga; cambios de tipo y restauración de registros; caudal, potencia,
+peso del eje y aviso de RPM con datos editados. Se comprobaron duplicados,
+valores inválidos, modelo fijo, catálogo vacío, tipos nuevos y diámetros
+decimales sin equivalencia de código. También se probó el arranque con un
+catálogo exclusivamente nuevo y con el modelo inicial cambiado de tipo.
+Importación/exportación verificadas con archivos en memoria; vinculación
+individual y por carpeta, guardado y ambas decisiones de conflicto con
+handles simulados; errores de lectura, escritura, permisos y recuperación
+de JSON local inválido. Se restauraron los datos de las pruebas, sin escribir
+en archivos operativos existentes. No se automatizaron los diálogos nativos
+de selección de archivo/carpeta ni se publicó esta tanda en GitHub.
+
+---
+
+## 2026-10-29 11:02 — Ocultar el parámetro de circulación
+
+**Solicitud:** ocultar la etiqueta "Parámetro de circulación" y las opciones
+"Tiempo de Residencia (h)" y "Flujo del Tanque (m³/h)".
+
+**Cambio:** se oculta el bloque completo en la interfaz, conservando sus
+controles, valor seleccionado, eventos y persistencia de registros.
+No se modifican los cálculos ni se eliminan los datos internos.
+
+**Validación:** recarga en navegador: bloque sin espacio visible, dos opciones
+conservadas y selección interna vigente. Recálculo ejecutado correctamente.
+
+---
+
+## 2026-10-29 11:55 — Agitadores estándar y geometría real del eje
+
+**Solicitud:** administrar modelos de agitador terminados en una nueva pestaña,
+con configuración técnica, presupuesto por equipo, consideraciones para el
+cliente y precio recomendado, sin copiar datos de tanque, fluido o cotización.
+
+**Criterios acordados:**
+- El modelo comercial identifica el diseño con eje a longitud máxima y tiene
+  un rango mínimo/máximo recomendado. La longitud real se ajusta al tanque,
+  automática o manualmente, sin cambiar modelo, cantidades del eje ni precio.
+- Se permite trabajar fuera del rango, con advertencia de revisar diseño y
+  precio. La potencia instalada permanece fija; si la requerida la supera,
+  se advierte sin sustituir el motor del producto.
+- Al aplicar se bloquean los datos de diseño. Para modificarlos se utiliza
+  **Desvincular estándar**; la longitud real y el precio final siguen editables.
+- Precio recomendado por equipo en COP o USD: se inicializa al aplicar, no
+  durante los recálculos. Volver a aplicar inicializa deliberadamente el precio.
+- Presupuesto normalizado por equipo. Materiales y servicios se escalan con la
+  cantidad cotizada, conservando el dimensionamiento presupuestado del eje.
+- Se actualizan precios/descripciones de partes desde el catálogo al aplicar.
+  Las partes ausentes conservan su precio guardado y generan advertencia;
+  las líneas manuales conservan sus datos.
+- Se reemplazan las consideraciones técnicas/comerciales para el cliente, pero
+  se conservan tanque, fisicoquímicas, cliente, cotización, TAG, cantidad,
+  comentarios internos, factores, márgenes y condiciones comerciales generales.
+- Catálogo independiente con duplicación y activación/desactivación, sin
+  eliminación definitiva. Se mantiene el montaje vertical del selector actual;
+  no se implementa un cálculo nuevo para montaje horizontal.
+
+**Implementación:**
+- Nueva pestaña **AGITADORES ESTÁNDAR**: guardar configuración actual, editar
+  ficha, actualizar configuración desde selección/costeo, duplicar, buscar,
+  mostrar inactivos y aplicar. El modelo comercial existente no se renombra.
+- `standard_agitators.js`: validación del catálogo, persistencia local,
+  importación/exportación JSON, vinculación/reconexión de archivo y control de
+  conflictos. Los errores de lectura, escritura y permisos se notifican;
+  los cambios locales no se pierden por un fallo de guardado del archivo.
+  Vincular un archivo diferente exige confirmar el reemplazo del catálogo
+  local; cancelar conserva los datos sin vincular.
+- Octava base del panel central: `agitadores_estandar.json`. Se preparó
+  `FILES/DATABASE/agitadores_estandar.json` vacío, sin inventar modelos ni precios.
+  La carpeta de datos operativos permanece excluida de Git.
+- Nota en **Precios finales de la oferta** con modelo, precio recomendado y
+  moneda. El precio unitario final inicial es editable; los recálculos y cambios
+  de cantidad no revierten una edición manual.
+- Los registros guardan una copia de la versión del estándar aplicada, cantidad
+  de referencia del presupuesto, configuración constructiva y geometría real.
+  Editar/desactivar el catálogo no modifica las cotizaciones ya guardadas.
+- Se conserva la separación entre modelo comercial y código técnico. Word
+  incorpora `modelo_estandar` y `potencia_instalada`; `longitud_eje` representa
+  la longitud real. Se actualizó `FILES/Variables_Plantilla_Cotizacion.md`.
+
+**Geometría para todos los agitadores:**
+- Controles junto al diagrama: fondo→propela 1 como %D1, propela 1→2 como %D2,
+  propela 2→3 como %D3 y propela 3→4 como %D4. Solo se muestran los controles
+  de propelas activas; cero es un porcentaje válido.
+- `agitator_geometry.js` centraliza longitud automática/manual, posiciones y
+  brazos mecánicos, compartidos por el diagrama y los cálculos del eje.
+  La longitud manual inicial toma la automática sin perderla por el orden
+  de eventos del selector.
+- Los registros antiguos sin geometría nueva usan modo automático, su
+  porcentaje al fondo y separaciones de 100% del diámetro de cada propela.
+  Esta regla sustituye el espaciamiento anterior basado siempre en D1.
+- Se advierte si hay posiciones fuera de la altura del tanque o datos no válidos.
+  Se corrigió la lectura de la longitud decimal localizada en el cálculo
+  mecánico. Las listas de presupuesto explícitamente vacías ya se conservan
+  al restaurar; un JSON de filas inválido se informa expresamente.
+
+**Validación:** pruebas en navegador de alta, edición, cancelación, duplicación,
+modelo fijo, búsqueda, inactivación y actualización de configuración. Se
+comprobaron fichas inválidas, modelos duplicados, recuperación de almacenamiento
+local corrupto y persistencia tras recarga. Se verificaron advertencias ante
+cantidad cotizada inválida y rechazo de registros con referencia de cantidad
+inválida sin alterar el estándar aplicado. Aplicación con datos de tanque,
+fluido, cliente, TAG, márgenes, condiciones e internas conservados; precio
+recomendado inicial, edición manual, cambio deliberado al precio calculado y
+reaplicación. Verificados motor fijo, aviso de potencia insuficiente, límites
+del rango, longitud manual, cuatro posiciones con diámetros diferentes,
+porcentajes independientes y cero, brazos mecánicos y código técnico.
+
+Se probaron presupuestos vacíos, escalado de servicios/materiales, restauración
+sin doble escalado y recuperación después de recargar la página, incluso con
+el modelo posteriormente editado/desactivado en el catálogo. Se verificaron
+precios de partes actualizados, precio cero, partes ausentes y bloqueo ante
+precio de catálogo inválido, además de las nuevas variables de Word.
+Importación/exportación y vinculación por carpeta comprobadas con `File` y
+handles en memoria; guardado, cola de escrituras, ambas decisiones de conflicto
+y errores de lectura, escritura y permisos verificados sin tocar archivos
+operativos. Los diálogos nativos de archivo/carpeta no se automatizaron.
+
+Los modelos temporales de prueba se retiraron y se restauró la selección
+previa. Cambios locales, sin publicación en GitHub en esta tanda.
+
+---
+
+## 2026-10-29 17:37 — Actualización del historial y publicación de avances
+
+**Solicitud:** actualizar este historial y publicar los cambios pendientes en
+GitHub.
+
+**Alcance de esta entrega:**
+- Base técnica editable de propelas, con peso por modelo y persistencia JSON.
+- Ocultamiento del bloque de parámetro de circulación, sin eliminar sus datos.
+- Módulo de agitadores estándar, presupuesto por equipo, precio recomendado,
+  geometría real del eje y restauración de registros descritos arriba.
+- Guía de variables de la oferta y presentación PowerPoint de cambios para
+  dirección. La presentación conserva su corte original del commit `3ef52f1`;
+  no se ha ampliado para incluir los módulos desarrollados posteriormente.
+- Se excluyen los datos operativos de `FILES/DATABASE/`, `FILES/registros.json`,
+  archivos temporales y cambios de `desktop.ini`.
+
+**Comprobaciones previas:** `git diff --check` sin errores y rama remota
+`main` en `3ef52f131ce8433ccbc6634fddcff488dd6e567a`, coincidente con la
+base local. Las validaciones funcionales de navegador están documentadas
+en las entradas de cada módulo; esta tanda no modifica su comportamiento.
+La publicación solicitada tiene como destino `origin/main` del repositorio
+`os-c-ar/ag-selector`, sin reescritura del historial.
+
+---
+
 ## Cómo se mantiene actualizado
 
 Este archivo **no se regenera automáticamente** (es un documento narrativo, no un reporte generado

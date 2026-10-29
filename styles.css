@@ -946,7 +946,8 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
   overflow: hidden;
 }
 
-#dbModal .modal-container {
+#dbModal .modal-container,
+#propellersModal .modal-container {
   width: 96%;
   max-width: 1280px;
   height: 90vh;
@@ -966,6 +967,33 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
   gap: 10px;
 }
 #dbModal .db-td-recommendations { width: 120px; text-align: center; }
+#propellersModal .db-table { min-width: 1050px; }
+#propellersModal .modal-footer { flex-wrap: wrap; gap: 10px; }
+#propellerEditor {
+  margin: auto;
+  width: min(94vw, 800px);
+  max-height: 90vh;
+  overflow: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+}
+#propellerEditor::backdrop { background: rgba(0, 0, 0, 0.5); }
+#standardEditor {
+  margin: auto;
+  width: min(94vw, 900px);
+  max-height: 90vh;
+  overflow: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+}
+#standardEditor::backdrop { background: rgba(0, 0, 0, 0.5); }
+#standardEditor .db-input { display: block; margin-top: 6px; }
+.standards-table-wrap { overflow: auto; margin-top: 16px; }
+.standards-table-wrap table { min-width: 1150px; }
+.diagram-body .form-row { flex-wrap: wrap; margin-bottom: 8px; }
+#propellerEditor .db-input { display: block; margin-top: 6px; }
 #processRecommendationsDialog {
   margin: auto;
   width: min(94vw, 960px);

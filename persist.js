@@ -91,10 +91,17 @@ const NFS_HANDLES = (function () {
    *   { proceed: false, externalText }         – conflict, user chose to discard their
    *                                              in-memory changes and adopt `externalText`
    *                                              instead (caller must NOT write in this case)
+   * With requireRead, missing baselines and read errors reject the write.
    */
-  async function checkConflict(handle, lastSyncedText) {
+  async function checkConflict(handle, lastSyncedText, requireRead = false) {
+    if (requireRead && lastSyncedText == null) {
+      throw new Error('No hay una versión de referencia del archivo; vuelva a vincularlo.');
+    }
     if (lastSyncedText == null) return { proceed: true }; // no baseline yet, nothing to compare
     const diskText = await readText(handle);
+    if (requireRead && diskText === null) {
+      throw new Error('No se pudo leer el archivo para comprobar cambios externos.');
+    }
     if (diskText === null || diskText === lastSyncedText) return { proceed: true };
 
     const keepMine = confirm(

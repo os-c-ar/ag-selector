@@ -214,7 +214,6 @@ function drawTankDiagram() {
   const tipoTanque  = document.querySelector('input[name="tipoTanque"]:checked')?.value || 'CIRCULAR';
   const alturaUtil  = parseFloat(document.getElementById('alturaUtil').value)  || 0;
   const alturaTotal = parseFloat(document.getElementById('alturaTotal').value) || 0;
-  const pct         = (parseFloat(document.getElementById('pctFondo').value) || 90) / 100;
   const bafles      = document.querySelector('input[name="bafles"]:checked')?.value === 'SI';
 
   /* Propeller data [0]=P1 (bottom) … [3]=P4 (top) */
@@ -224,12 +223,14 @@ function drawTankDiagram() {
     return { active: tipo !== 'N.A.' && D_mm > 0, D_m: D_mm / 1000 };
   });
   const D1_m = props[0].D_m;
-  const clearance = D1_m > 0 ? pct * D1_m : 0.05 * alturaTotal;
-  const propH = props.map((p, i) => {
-    if (!p.active || D1_m <= 0) return null;
-    const h = clearance + i * D1_m;
-    return h <= alturaTotal + 0.001 ? h : null;
-  });
+  const geometry = getAgitatorGeometry();
+  if (!Number.isFinite(geometry.length) || !Number.isFinite(geometry.clearance)) {
+    _diagEmpty(svg);
+    return;
+  }
+  const clearance = geometry.clearance;
+  const propH = geometry.positions.map(h =>
+    h !== null && Number.isFinite(h) && h >= 0 && h <= alturaTotal + 0.001 ? h : null);
   const activePropNames = props.map((p, i) => p.active ? `P${i + 1}` : null).filter(Boolean);
 
   if (tipoTanque === 'CIRCULAR') {
@@ -621,4 +622,3 @@ function _drawRectangularTopView(svg, { ancho, longitud, bafles, props, activePr
 
   svg.innerHTML = E.join('\n');
 }
-

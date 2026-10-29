@@ -178,6 +178,9 @@ function gatherSelectionData() {
     // 3. Propellers
     rpm:      v('rpm'),
     pctFondo: v('pctFondo'),
+    agitatorPositions: captureAgitatorPositions(),
+    agitatorProductFields: Object.fromEntries(STANDARD_PRODUCT_FIELDS.map(id => [id, v(id)])),
+    standardApplication: typeof captureStandardApplication === 'function' ? captureStandardApplication() : null,
     propelas: [1, 2, 3, 4].map(n => ({
       tipo:     v('tipo' + n),
       modelo:   v('modelo' + n),
@@ -240,6 +243,15 @@ function gatherSelectionData() {
 // =====================================================
 function restoreSelectionData(rec) {
   if (!rec) return;
+  if (typeof restoreStandardApplication === 'function') restoreStandardApplication(rec.standardApplication || null);
+  restoreAgitatorPositions(rec.agitatorPositions, rec.pctFondo);
+  if (!rec.standardApplication && rec.agitatorProductFields) {
+    for (const id of STANDARD_PRODUCT_FIELDS) {
+      if (typeof rec.agitatorProductFields[id] === 'string') {
+        document.getElementById(id).value = rec.agitatorProductFields[id];
+      }
+    }
+  }
 
   const sv = (id, val) => { const el = document.getElementById(id); if (el) el.value = val ?? ''; };
   const sr = (name, val) => {
@@ -298,9 +310,14 @@ function restoreSelectionData(rec) {
       const tipoEl = document.getElementById('tipo' + n);
       const modEl  = document.getElementById('modelo' + n);
       if (!tipoEl || !modEl) return;
-      tipoEl.value = p.tipo;
-      populateModelDropdown(modEl, p.tipo);
-      modEl.value = p.modelo;
+      const data = Object.hasOwn(PROPELLERS, p.modelo) ? PROPELLERS[p.modelo] : null;
+      if (!data) {
+        alert('El modelo ' + p.modelo + ' del registro no existe en la base de propelas. ' +
+          'Se seleccionará N.A.; importe la base correspondiente y revise la selección.');
+      }
+      tipoEl.value = data ? data.type : 'N.A.';
+      populateModelDropdown(modEl, tipoEl.value);
+      modEl.value = data ? p.modelo : 'N.A.';
     });
   }
 
@@ -830,8 +847,13 @@ function recLoad(id) {
     `  Fecha:   ${rec.fecha      || '(sin fecha)'}\n\n` +
     'Se reemplazarán todos los datos actuales.'
   )) return;
+  try {
+    restoreSelectionData(rec);
+  } catch (e) {
+    alert('No se pudo cargar la selección. Revise sus datos y las bases vinculadas:\n' + e.message);
+    return;
+  }
   closeRecordsModal();
-  restoreSelectionData(rec);
   _setActiveRecord(id);
   _showToast('✔ Selección cargada desde el historial.');
 }

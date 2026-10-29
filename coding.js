@@ -147,10 +147,10 @@ function buildAgitatorCode() {
   /* Read form values */
   const tipo1  = g('cod_tipo1')?.value     || 'TURBINA';
   const num1   = parseInt(g('cod_num1')?.value)    || 1;
-  const diam1  = parseInt(g('cod_diam1')?.value)   || 0;
+  const diam1  = codParseNum(g('cod_diam1')?.value) || 0;
   const tipo2  = g('cod_tipo2')?.value     || 'NO APLICA';
   const num2   = parseInt(g('cod_num2')?.value)    || 1;
-  const diam2  = parseInt(g('cod_diam2')?.value)   || 0;
+  const diam2  = codParseNum(g('cod_diam2')?.value) || 0;
   const ejeM   = codParseNum(g('cod_eje')?.value) || 0;
   const pot    = codParseNum(g('cod_potencia')?.value) || 0;
   const rpm    = parseInt(g('cod_rpm')?.value)     || 0;
@@ -205,7 +205,8 @@ function buildAgitatorCode() {
 
   /* Sync "Agitador seleccionado" in section 4 with the generated code */
   const agSel = g('agitadorSeleccionado');
-  if (agSel) agSel.value = code;
+  if (agSel) agSel.value = typeof getAppliedStandard === 'function' && getAppliedStandard()
+    ? getAppliedStandard().model : code;
 
   /* Breakdown */
   _renderBreakdown({
@@ -252,8 +253,9 @@ function updateCodingFromCalc() {
   /* Get active propeller types and diameters from the calculator */
   const props = [1, 2, 3, 4].map(n => {
     const tipo = g('tipo' + n)?.value || 'N.A.';
+    const modelo = g('modelo' + n)?.value;
     const D_mm = parseFloat(g('diam' + n)?.value) || 0;
-    return { tipo, D_mm, active: tipo !== 'N.A.' && D_mm > 0 };
+    return { tipo, modelo, D_mm, active: tipo !== 'N.A.' && D_mm > 0 };
   });
 
   /* Group by (coding type + diameter) so that same-type propellers with
@@ -261,8 +263,8 @@ function updateCodingFromCalc() {
   const groups = new Map();
   for (const p of props) {
     if (!p.active) continue;
-    const codType = APP_TO_COD[p.tipo] || 'CURVA TRIPALA - CT';
-    const dKey = Math.round(p.D_mm);
+    const codType = PROPELLERS[p.modelo].codType;
+    const dKey = p.D_mm;
     const key = codType + '|' + dKey;
     if (!groups.has(key)) groups.set(key, { codType, diam: dKey, count: 0 });
     groups.get(key).count++;
@@ -271,6 +273,26 @@ function updateCodingFromCalc() {
   const groupList = [...groups.values()];
   const g1 = groupList[0];
   const g2 = groupList[1];
+
+  const unknownDiameters = [];
+  for (const [id, diameter] of [
+    ['cod_diam1', g1?.diam || 0], ['cod_diam2', g2?.diam || 0],
+  ]) {
+    const select = g(id);
+    select.querySelectorAll('option[data-catalog-diameter]').forEach(option => option.remove());
+    if (diameter > 0 && !Object.hasOwn(COD.diametro, diameter)) {
+      const option = new Option(diameter + ' mm (sin código)', String(diameter));
+      option.dataset.catalogDiameter = 'true';
+      select.add(option);
+      unknownDiameters.push(diameter);
+    }
+  }
+  const codingNote = g('propellerCodingNote');
+  codingNote.classList.toggle('hidden', !unknownDiameters.length);
+  codingNote.textContent = unknownDiameters.length
+    ? 'Los diámetros ' + [...new Set(unknownDiameters)].join(', ') +
+      ' mm no tienen equivalencia de codificación. El código mostrará ?; defina la equivalencia técnica antes de usarlo.'
+    : '';
 
   _setSelect('cod_tipo1', g1?.codType || 'TURBINA');
   _setSelect('cod_tipo2', g2?.codType || 'NO APLICA');

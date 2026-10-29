@@ -10,7 +10,8 @@
 // =====================================================
 
 /**
- * Propeller catalog.
+ * Initial propeller catalog, used to seed NFS_PROPELLERS.
+ * The live catalog is maintained by propellers.js.
  * Kp = Np = P_W / (rho_water * n_rps^3 * D_m^5), dimensionless.
  * Converted from legacy kW/(rpm^3 * mm^5): Kp = legacy * 2.16e20.
  * Reference water density: 1000 kg/m³; fluid density correction is applied later.
@@ -92,7 +93,7 @@ const STANDARD_MOTORS = [
 /* Process intensity data is now managed by NFS_DB (database.js). */
 
 /** Maps propeller type label → list of model names */
-const TYPE_MODELS = {};
+const TYPE_MODELS = Object.create(null);
 for (const [model, data] of Object.entries(PROPELLERS)) {
   if (!TYPE_MODELS[data.type]) TYPE_MODELS[data.type] = [];
   TYPE_MODELS[data.type].push(model);
@@ -206,6 +207,36 @@ function onTipoChange(n) {
   calculate();
 }
 
+function refreshPropellerCatalogSelectors() {
+  for (const type of Object.keys(TYPE_MODELS)) delete TYPE_MODELS[type];
+  for (const [model, data] of Object.entries(PROPELLERS)) {
+    if (!TYPE_MODELS[data.type]) TYPE_MODELS[data.type] = [];
+    TYPE_MODELS[data.type].push(model);
+  }
+  const missing = [];
+  for (let n = 1; n <= 4; n++) {
+    const typeEl = document.getElementById('tipo' + n);
+    const modelEl = document.getElementById('modelo' + n);
+    const model = modelEl.value;
+    const type = PROPELLERS[model]?.type || typeEl.value;
+    typeEl.replaceChildren();
+    for (const name of Object.keys(TYPE_MODELS)) {
+      typeEl.add(new Option(name, name));
+    }
+    typeEl.value = TYPE_MODELS[type] ? type : 'N.A.';
+    if (model && !PROPELLERS[model]) {
+      missing.push(model);
+      typeEl.value = 'N.A.';
+    }
+    populateModelDropdown(modelEl, typeEl.value);
+    if (PROPELLERS[model]) modelEl.value = model;
+  }
+  if (missing.length) {
+    alert('Los siguientes modelos no existen en la base cargada y se cambiaron a N.A.: ' +
+      [...new Set(missing)].join(', ') + '. Revise la selección antes de continuar.');
+  }
+}
+
 // =====================================================
 // MAIN CALCULATION
 // =====================================================
@@ -260,7 +291,6 @@ function calculate() {
 
   /* ── 3. Propellers ── */
   const rpm = parseFloat(document.getElementById('rpm').value) || 0;
-  const pct = parseFloat(document.getElementById('pctFondo').value) / 100 || 0.9;
 
   const props = [1, 2, 3, 4].map(n => {
     const tipoEl  = document.getElementById('tipo' + n);
@@ -291,7 +321,7 @@ function calculate() {
 
     const Rp   = (tankDiameter > 0 && D_mm > 0) ? D_m / tankDiameter : 0;
 
-    document.getElementById('diam' + n).value = D_mm > 0 ? D_mm.toFixed(0) : '–';
+    document.getElementById('diam' + n).value = D_mm > 0 ? String(D_mm) : '–';
     document.getElementById('rp' + n).value   = Rp > 0 ? fmt(Rp, 4) : '–';
     document.getElementById('kp' + n).value   = Kp > 0 ? fmt(Kp, 4) : '–';
     document.getElementById('nq' + n).value   = Nq > 0 ? fmt(Nq, 4) : '–';
@@ -355,7 +385,7 @@ function calculate() {
   /* ── 4. Results ── */
 
   // Shaft length: totalHeight – pct * D1_m
-  const longitudEje = D1_m > 0 ? alturaTotal - pct * D1_m : NaN;
+  const longitudEje = updateAgitatorGeometry().length;
   document.getElementById('longitudEje').value = isNaN(longitudEje) ? '–' : fmt(longitudEje, 3);
 
   // Agitation level: totalFlow / (area * 108)
@@ -389,7 +419,8 @@ function calculate() {
   document.getElementById('potenciaRequerida').value = fmt(potenciaRequerida, 2);
 
   // Standard motor selection
-  const motor = selectMotor(potenciaRequerida);
+  const motor = (typeof getAppliedStandard === 'function' && getAppliedStandard())
+    ? getAppliedStandard().product.power : selectMotor(potenciaRequerida);
   document.getElementById('motorCercano').value = motor !== null ? motor.toFixed(2) : '–';
 
   /* ── Summary ── */
@@ -411,6 +442,9 @@ function calculate() {
   /* ── Coding section ── */
   if (typeof updateCodingFromCalc === 'function') updateCodingFromCalc();
   if (typeof updateCostingFromSelection === 'function') updateCostingFromSelection();
+  if (typeof refreshStandardApplication === 'function') refreshStandardApplication(potenciaRequerida);
+  if (typeof calculateShaft === 'function') calculateShaft();
+  if (typeof calculateOG === 'function') calculateOG();
 }
 
 // =====================================================
@@ -447,6 +481,9 @@ function initModelDropdowns() {
   [1, 2, 3, 4].forEach(n => {
     const tipoEl  = document.getElementById('tipo' + n);
     const modelEl = document.getElementById('modelo' + n);
+    if ((n === 1 || n === 2) && PROPELLERS['VR2A-055']) {
+      tipoEl.value = PROPELLERS['VR2A-055'].type;
+    }
     populateModelDropdown(modelEl, tipoEl.value);
     // Set defaults from the original Excel example: props 1 & 2 → VR2A-055
     if ((n === 1 || n === 2) && PROPELLERS['VR2A-055']) {

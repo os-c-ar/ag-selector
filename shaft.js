@@ -61,8 +61,8 @@ const COUPLING_BORE = {
 };
 
 // =====================================================
-// PROPELLER WEIGHT TABLES  [diameter_mm, weight_kg]
-// Based on AS/AT lookup tables in sheet2
+// Initial weights for migration to the propeller database [diameter_mm, weight_kg].
+// Runtime shaft calculations use each model's editable weight.
 // =====================================================
 const PROP_WEIGHT = {
   'P.TURBINA': [
@@ -220,12 +220,8 @@ function calculateShaft() {
   const D2_str = document.getElementById('diam2').value;
   const D3_str = document.getElementById('diam3').value;
   const D4_str = document.getElementById('diam4').value;
-  const tipo1 = document.getElementById('tipo1').value;
-  const tipo2 = document.getElementById('tipo2').value;
-  const tipo3 = document.getElementById('tipo3').value;
-  const tipo4 = document.getElementById('tipo4').value;
 
-  const L     = parseFloat(L_str) || 0;
+  const L     = codParseNum(L_str);
   const Pmotor = parseFloat(P_str) || 0;   // kW
   const rpm   = parseFloat(rpm_str) || 0;
   const D1_mm = parseFloat(D1_str) || 0;
@@ -278,17 +274,20 @@ function calculateShaft() {
   const D49 = L * Wsol;
 
   // ── Propeller weights ─────────────────────────────
-  function propWeight(typeLabel, d_mm) {
-    const key = TYPE_TO_WEIGHT[typeLabel] || 'N.A.';
-    if (key === 'N.A.' || d_mm <= 0) return 0;
-    const tbl = PROP_WEIGHT[key] || PROP_WEIGHT['N.A.'];
-    return linInterp(tbl, d_mm);
+  function propWeight(n) {
+    const model = document.getElementById('modelo' + n).value;
+    if (model === 'N.A.') return 0;
+    const weight = PROPELLERS[model]?.peso;
+    if (!Number.isFinite(weight) || weight <= 0) {
+      throw new Error('Peso no definido para la propela ' + model + '. Revise la base técnica.');
+    }
+    return weight;
   }
 
-  const W1 = propWeight(tipo1, D1_mm);  // F7  – prop 1 (at shaft tip = full weight)
-  const W2 = propWeight(tipo2, D2_mm);  // F9  – prop 2  at distance L3
-  const W3 = propWeight(tipo3, D3_mm);  // F11 – prop 3  at distance L2
-  const W4 = propWeight(tipo4, D4_mm);  // F13 – prop 4  at distance L1
+  const W1 = propWeight(1);  // F7  – prop 1 (at shaft tip = full weight)
+  const W2 = propWeight(2);  // F9  – prop 2  at distance L3
+  const W3 = propWeight(3);  // F11 – prop 3  at distance L2
+  const W4 = propWeight(4);  // F13 – prop 4  at distance L1
 
   // Coupling (embone) weight: D24 = π/4 * d_bore² * coup_L * 8000
   const d_bore = COUPLING_BORE[coup_in] || COUPLING_BORE[3];
@@ -417,7 +416,7 @@ function calculateShaft() {
 // =====================================================
 
 function switchTab(n) {
-  [1, 2, 3, 4, 5, 6].forEach(i => {
+  [1, 2, 3, 4, 5, 6, 7].forEach(i => {
     document.getElementById('page' + i).classList.toggle('hidden', i !== n);
     document.getElementById('tabBtn' + i).classList.toggle('active', i === n);
   });

@@ -54,6 +54,29 @@ gestionará la repetición según su configuración de descargas.
 | `tag_tanque` | TAG del tanque |
 | `tag_agitador` | TAG del agitador |
 
+## Agitadores estándar y longitud real
+
+Al aplicar un estándar, `agitador` / `agitador_seleccionado` muestran su modelo
+comercial fijo (correspondiente a la longitud máxima del diseño).
+`codigo_agitador` sigue siendo el código técnico de la aplicación y utiliza
+la longitud real, expresada en decímetros conforme a la codificación existente.
+`modelo_estandar` identifica el estándar aplicado o queda vacío en una selección libre.
+`potencia_instalada` es un alias de `motor_cercano`: en un estándar representa
+su motor instalado, mientras `potencia_requerida` sigue siendo el resultado
+calculado para el tanque y fluido actuales.
+
+`longitud_eje` representa la longitud **real** para la aplicación: automática
+según tanque y distancia al fondo, o ajustada manualmente. El diagrama usa esa
+longitud y las separaciones por propela configuradas en la interfaz. El modelo,
+las cantidades del presupuesto del eje y el precio recomendado del estándar
+siguen correspondiendo a la longitud máxima; acortar el eje dentro del rango
+no cambia el producto comercial.
+
+Las consideraciones técnicas/comerciales para el cliente y el precio unitario
+final se toman de sus controles actuales, incluidos los ajustes de la cotización.
+La nota de precio recomendado y el rango interno no se agregan automáticamente
+al documento de oferta.
+
 ## Diagrama general como imagen
 
 Escriba **`{{diagrama_general}}`** en un párrafo propio, sin otro texto ni imágenes
@@ -159,12 +182,13 @@ Este cambio no agrega una variable Kp a la plantilla Word.
 
 | Variable | Descripción |
 |---|---|
-| `longitud_eje` | Longitud máxima del eje |
+| `longitud_eje` | Longitud real del eje, automática según tanque o ajustada manualmente |
 | `nivel_agitacion` | Nivel de agitación obtenido |
 | `estado_agitacion` | Estado respecto al rango recomendado |
 | `potencia_requerida` | Potencia requerida (kW) |
-| `motor_cercano` | Motor estándar más cercano (kW) |
-| `agitador` / `agitador_seleccionado` | Código del agitador seleccionado |
+| `motor_cercano` / `potencia_instalada` | Potencia instalada del estándar aplicado; sin estándar, motor comercial recomendado (kW) |
+| `agitador` / `agitador_seleccionado` | Modelo comercial del estándar aplicado; sin estándar, código del agitador seleccionado |
+| `modelo_estandar` | Modelo comercial del estándar aplicado; vacío sin estándar |
 | `motoreductor` / `motoreductor_seleccionado` | Motoreductor especificado |
 
 ## Codificación del agitador
@@ -261,7 +285,10 @@ la oferta**, identificada como **Valores para el cliente**. La moneda se elige
 con los botones de opción COP/USD; las etiquetas de ambos precios muestran la
 moneda activa. Los totales calculados del presupuesto permanecen fuera de ese bloque.
 
-El precio inicial proviene del unitario calculado en Costeo. Una edición manual
+Sin un estándar, el precio inicial proviene del unitario calculado en Costeo.
+Al aplicar un estándar, se inicializan su moneda y precio recomendado por equipo
+una sola vez por aplicación; volver a aplicarlo reinicializa ese valor.
+Una edición manual
 se conserva aunque cambien los costos, la cantidad o la tasa de cambio. Para volver
 al cálculo automático, pulse **Usar precio calculado**. Cambiar de moneda también
 restablece el precio calculado en la moneda elegida; no convierte el precio manual.

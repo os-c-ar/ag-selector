@@ -419,6 +419,7 @@ function useCalculatedOfferPrice() {
 }
 
 function _updateCosteoOfferPrice() {
+  if (typeof updateStandardOfferNote === 'function') updateStandardOfferNote();
   const currency = document.getElementById('cst_moneda_oferta').value;
   document.querySelectorAll('input[name="offerCurrency"]').forEach(radio => {
     radio.checked = radio.value === currency;
@@ -479,6 +480,7 @@ function getCosteoOfferData() {
 const _cstComputed = {};
 
 function calculateCosteo() {
+  if (typeof scaleStandardBudget === 'function') scaleStandardBudget();
   let subtotalMateriales = 0;
   _cstState.materiales.forEach(row => { subtotalMateriales += _refreshMatRowOutputs(row); });
 
@@ -589,9 +591,13 @@ function restoreCosteoFromRecord(fields) {
     if (!json) return fallback();
     try {
       const parsed = JSON.parse(json);
-      if (Array.isArray(parsed) && parsed.length) return parsed;
-    } catch (e) { /* fall through */ }
-    return fallback();
+      if (!Array.isArray(parsed)) throw new Error('Se esperaba una lista de filas.');
+      return parsed;
+    } catch (e) {
+      console.error('Presupuesto del registro inválido:', e);
+      alert('No se pudieron restaurar algunas filas del presupuesto. Se cargarán las filas predeterminadas; revise el costeo.\n' + e.message);
+      return fallback();
+    }
   };
 
   _cstState.materiales = parseRows(fields.cst_mat_rows_json, () => CST_DEFAULT_MATERIALES.map(r => ({ ...r, codigo: '', codigoManual: '', comentarios: '' })))

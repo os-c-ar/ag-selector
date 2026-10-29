@@ -2,7 +2,7 @@
    NFS – Centralized Database Link Panel
    Aggregates the file-link status of every independent
    database module (procesos, materiales, partes de costeo,
-   historial, clientes, personal) into:
+   historial, clientes, personal, propelas, agitadores estándar) into:
      1. A global header badge (N/N vinculadas)
      2. A single modal listing all databases + their status
      3. A "Vincular carpeta DATABASE…" bulk action that detects
@@ -15,6 +15,21 @@
 'use strict';
 
 const DB_LINK_REGISTRY = [
+  {
+    key: 'standards', handleKey: 'standards', icon: '⚙', label: 'Agitadores estándar',
+    filename: 'agitadores_estandar.json',
+    getModule: () => (typeof NFS_STANDARDS !== 'undefined' ? NFS_STANDARDS : null),
+    connectFn: 'standardsConnectFile', updateFn: 'updateStandardsFileStatus',
+    refreshUI() { renderStandards(); },
+  },
+  {
+    key: 'propellers', handleKey: 'propellers', icon: '⚙', label: 'Datos técnicos de propelas',
+    filename: 'propelas.json',
+    getModule: () => (typeof NFS_PROPELLERS !== 'undefined' ? NFS_PROPELLERS : null),
+    connectFn: 'propellersConnectFile', updateFn: 'updatePropellersFileStatus',
+    apply(mod, text) { mod.importObject(JSON.parse(text)); },
+    refreshUI() { renderPropellersTable(); },
+  },
   {
     key: 'database', handleKey: 'database', icon: '🗄', label: 'Procesos de agitación',
     filename: 'database.json',
@@ -207,6 +222,11 @@ async function linkAllDatabasesFromFolder() {
       if (!ok) { skipped.push(entry.label + ' (permiso denegado)'); continue; }
 
       const text = await (await fileHandle.getFile()).text();
+      if (entry.key === 'propellers' || entry.key === 'standards') {
+        await mod.connect(fileHandle);
+        linked++;
+        continue;
+      }
       try { entry.apply(mod, text); } catch (_) { /* archivo vacío o inválido: se vincula igual, conservando los datos actuales */ }
       if (typeof mod.markSynced === 'function') mod.markSynced(text);
 
@@ -216,7 +236,7 @@ async function linkAllDatabasesFromFolder() {
       if (typeof entry.refreshUI === 'function') entry.refreshUI();
       linked++;
     } catch (e) {
-      skipped.push(entry.label + ' (' + entry.filename + ' no encontrado en la carpeta)');
+      skipped.push(entry.label + ' (' + entry.filename + ': ' + e.message + ')');
     }
   }
 

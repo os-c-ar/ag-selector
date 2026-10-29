@@ -305,6 +305,9 @@ function _buildOfferPlaceholderMap(data) {
     estado_agitacion: data.estadoAgitacion,
     potencia_requerida: data.potenciaRequerida,
     motor_cercano: data.motorCercano,
+    potencia_instalada: data.motorCercano,
+    modelo_estandar: typeof getAppliedStandard === 'function' && getAppliedStandard()
+      ? getAppliedStandard().model : '',
   };
 
   // One variable per line typed under "CONSIDERACIONES TÉCNICAS PARTICULARES":

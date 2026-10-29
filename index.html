@@ -41,6 +41,7 @@
               <button class="btn-print" onclick="openClientsModal()">👥 Clientes</button>
               <button class="btn-print" onclick="generateOfferDraft()">🧾 Generar oferta</button>
               <button class="btn-database" onclick="openDbModal()">🗄 Base de datos</button>
+              <button class="btn-database" onclick="openPropellersModal()">Base técnica de propelas</button>
               <button class="btn-database" onclick="openCostPartsModal()">💲 Base partes costeo</button>
               <button class="btn-database" onclick="openMaterialsModal()">🧱 Materiales e insumos</button>
               <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
@@ -123,6 +124,7 @@
     <button class="tab-btn" onclick="switchTab(4)" id="tabBtn4" >③ Costeo Agitador</button>
     <button class="tab-btn" onclick="switchTab(5)" id="tabBtn5" style="display:none">④ Gradiente de Floculación</button>
     <button class="tab-btn" onclick="switchTab(6)" id="tabBtn6">④ Decodificador</button>
+    <button class="tab-btn" onclick="switchTab(7)" id="tabBtn7">⑤ AGITADORES ESTÁNDAR</button>
   </nav>
 
   <div id="page1" class="page-content">
@@ -294,7 +296,7 @@
           </div>
 
           <!-- Circulation parameter -->
-          <div class="form-row full-width">
+          <div class="form-row full-width hidden">
             <label class="field-label">Parámetro de circulación:</label>
             <div class="radio-group">
               <label class="radio-label">
@@ -488,6 +490,14 @@
         <section class="card card-diagram">
           <h2 class="section-title">DIAGRAMA GENERAL</h2>
           <div class="section-body diagram-body">
+            <p class="section-note">Separaciones verticales como porcentaje del diámetro de cada propela. En modo manual el conjunto se desplaza con el extremo del eje; la distancia al fondo indicada define el modo automático.</p>
+            <div class="propeller-position form-row"><label for="pctFondo">Fondo → propela 1 (% D1):</label><input type="number" id="pctFondo" value="90" min="0" step="any" class="input-value" /></div>
+            <div class="propeller-position form-row"><label for="pctSeparacion2">Propela 1 → 2 (% D2):</label><input type="number" id="pctSeparacion2" value="100" min="0" step="any" class="input-value" /></div>
+            <div class="propeller-position form-row"><label for="pctSeparacion3">Propela 2 → 3 (% D3):</label><input type="number" id="pctSeparacion3" value="100" min="0" step="any" class="input-value" /></div>
+            <div class="propeller-position form-row"><label for="pctSeparacion4">Propela 3 → 4 (% D4):</label><input type="number" id="pctSeparacion4" value="100" min="0" step="any" class="input-value" /></div>
+            <div class="form-row"><label for="shaftLengthMode">Longitud real del eje:</label><select id="shaftLengthMode" class="input-select"><option value="auto">Automática según tanque</option><option value="manual">Ajuste manual</option></select></div>
+            <div class="form-row"><label for="shaftLengthManual">Longitud manual (m):</label><input id="shaftLengthManual" type="number" min="0" step="any" class="input-value" disabled /></div>
+            <p id="geometryWarning" class="section-note rpm-warning-note hidden" role="status"></p>
             <svg id="tankDiagram" class="tank-svg" viewBox="0 0 580 440"
                  xmlns="http://www.w3.org/2000/svg"
                  aria-label="Diagrama del tanque y el agitador">
@@ -513,15 +523,12 @@
     <section class="card">
       <h2 class="section-title">4. RESULTADOS</h2>
       <div class="section-body">
+        <p id="standardSelectionNote" class="section-note rpm-warning-note hidden" role="status"></p>
+        <button type="button" id="detachStandardButton" class="btn-db hidden" onclick="detachStandard()">Desvincular estándar</button>
         <div class="form-grid">
 
           <div class="form-row">
-            <label class="field-label">5. Propela No.1 ubicación desde el fondo (%):</label>
-            <input type="number" id="pctFondo" value="90" step="1" min="0" max="100" class="input-value" />
-            <span class="unit">%</span>
-          </div>
-          <div class="form-row">
-            <label class="field-label">Longitud máxima del eje:</label>
+            <label class="field-label">Longitud real del eje:</label>
             <input type="text" id="longitudEje" class="input-calc" readonly />
             <span class="unit">m</span>
           </div>
@@ -546,7 +553,7 @@
           </div>
 
           <div class="form-row">
-            <label class="field-label">Motor más cercano (estándar):</label>
+            <label class="field-label" id="motorPowerLabel">Motor más cercano (tamaño comercial):</label>
             <input type="text" id="motorCercano" class="input-calc highlight-result" readonly />
             <span class="unit">kW</span>
           </div>
@@ -794,6 +801,7 @@
         </div><!-- end cod-form -->
 
         <!-- ── Code result ── -->
+        <p id="propellerCodingNote" class="section-note rpm-warning-note hidden" role="status"></p>
         <div class="cod-result-box">
           <div class="cod-result-label">CÓDIGO DEL AGITADOR</div>
           <div class="cod-code-wrap">
@@ -1485,6 +1493,7 @@
             <h3 id="offerPricesTitle">Precios finales de la oferta</h3>
             <span class="cst-offer-badge">Valores para el cliente</span>
           </div>
+          <p id="standardOfferNote" class="section-note hidden" role="status"></p>
           <div class="cst-offer-grid">
             <fieldset class="cst-offer-currency">
               <legend>Moneda de la oferta</legend>
@@ -1676,6 +1685,61 @@
 
   </div><!-- end main-content -->
   </div><!-- end page6 -->
+
+  <div id="page7" class="page-content hidden">
+    <div class="main-content">
+      <section class="card">
+        <h2 class="section-title">AGITADORES ESTÁNDAR</h2>
+        <div class="section-body">
+          <p class="section-note">Productos diseñados, sin datos de tanque, fluido, cliente ni cotización. Configure selección y costeo en sus pestañas y guárdelos aquí. Presupuesto por equipo, con eje a longitud máxima. Montaje vertical, como el selector actual.</p>
+          <div id="standardsFileStatus" class="db-file-status"></div>
+          <div class="form-row">
+            <label for="standardsFilter">Buscar modelo o descripción:</label>
+            <input id="standardsFilter" type="search" class="input-value wide" />
+            <label><input id="standardsShowInactive" type="checkbox" /> Mostrar inactivos</label>
+          </div>
+          <button type="button" class="btn-db-add" onclick="editStandard()">Guardar configuración actual como estándar</button>
+          <button type="button" class="btn-modal-io" onclick="standardsConnectFile()">Vincular JSON…</button>
+          <button type="button" class="btn-modal-io" onclick="standardsImportJSON()">Importar</button>
+          <button type="button" class="btn-modal-io" onclick="standardsExportJSON()">Exportar</button>
+          <div class="standards-table-wrap">
+            <table class="db-table">
+              <thead><tr><th>Modelo comercial (long. máxima)</th><th>Descripción</th><th>Propelas</th><th>Potencia / RPM</th><th>Rango eje (m)</th><th>Precio unitario recomendado</th><th>Estado</th><th>Acciones</th></tr></thead>
+              <tbody id="standardsTableBody"></tbody>
+            </table>
+          </div>
+          <p id="standardsEmpty" class="section-note">No hay estándares registrados. No se crean modelos ni precios de ejemplo.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <dialog id="standardEditor" aria-labelledby="standardEditorTitle">
+    <form id="standardForm">
+      <div class="modal-header"><h2 id="standardEditorTitle">Agitador estándar</h2></div>
+      <div class="modal-body">
+        <p id="standardEditorHelp" class="section-note"></p>
+        <div class="form-grid">
+          <label>Modelo comercial (identifique la longitud máxima)<input name="model" class="db-input" required /></label>
+          <label>Descripción<input name="description" class="db-input" /></label>
+          <label>Longitud mínima recomendada (m)<input name="minLength" type="number" step="any" min="0" class="db-input" required /></label>
+          <label>Longitud máxima del diseño/presupuesto (m)<input name="maxLength" type="number" step="any" min="0" class="db-input" required /></label>
+          <label>Potencia instalada (kW)<input name="power" type="number" min="0" step="any" class="db-input" required /></label>
+          <label>Construcción del eje<select name="construction" class="db-input"><option value="TUBULAR">Tubular</option><option value="MACIZO">Macizo</option></select></label>
+          <label>Diámetro nominal del eje (pulgadas)<select name="diameter" id="standardShaftDiameter" class="db-input"></select></label>
+          <label>Material del eje<select name="material" id="standardShaftMaterial" class="db-input"></select></label>
+          <label>Schedule (tubular)<select name="schedule" class="db-input"><option value="SCH40">SCH40</option><option value="SCH80">SCH80</option></select></label>
+          <label>Moneda<select name="currency" class="db-input"><option value="COP">COP</option><option value="USD">USD</option></select></label>
+          <label>Precio de venta recomendado por equipo<input name="price" type="number" min="0" step="0.01" class="db-input" required /></label>
+        </div>
+        <p class="section-note">La longitud real se ajusta al tanque dentro del rango; el precio y las cantidades del eje conservan el diseño máximo. Edite con criterio de ingeniería.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-modal-io" onclick="document.getElementById('standardEditor').close()">Cancelar</button>
+        <button type="submit" class="btn-modal-close" id="standardSaveButton">Guardar estándar</button>
+      </div>
+    </form>
+  </dialog>
 
   <footer class="page-footer">
     <p>NFS – Mezcladores &amp; Agitadores Industriales | Herramienta de Selección v1.0</p>
@@ -1889,6 +1953,58 @@
       </div>
     </div>
   </div>
+
+  <div id="propellersModal" class="modal-overlay hidden" onclick="if (event.target === this) closePropellersModal()">
+    <div class="modal-container modal-wide">
+      <div class="modal-header">
+        <div class="modal-header-title"><h2>Base técnica de propelas</h2></div>
+        <button type="button" class="modal-close" onclick="closePropellersModal()" aria-label="Cerrar base de propelas">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="propellersFileStatus" class="db-file-status"></div>
+        <p class="section-note">Datos técnicos usados en selección, cálculo del eje y codificación. El peso inicial conserva el cálculo anterior; verifique los datos con ingeniería antes de modificarlos. N.A. está reservado y no se edita.</p>
+        <label for="propellersFilter">Buscar modelo o tipo:</label>
+        <input id="propellersFilter" type="search" class="db-input" placeholder="Modelo o tipo" />
+        <button type="button" class="btn-db-add" onclick="editPropeller()">＋ Agregar propela</button>
+        <table class="db-table">
+          <thead><tr><th>Modelo</th><th>Tipo</th><th>Diámetro (mm)</th><th>RPM referencia</th><th>Kp (adim.)</th><th>Nq</th><th>Peso (kg)</th><th>Codificación</th><th>Acciones</th></tr></thead>
+          <tbody id="propellersTableBody"></tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <div class="modal-footer-left"><button type="button" class="btn-modal-io" onclick="propellersConnectFile()">Vincular propelas.json…</button></div>
+        <div class="modal-footer-right">
+          <button type="button" class="btn-modal-io" onclick="propellersImportJSON()">Importar JSON</button>
+          <button type="button" class="btn-modal-io" onclick="propellersExportJSON()">Exportar JSON</button>
+          <button type="button" class="btn-modal-close" onclick="closePropellersModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <dialog id="propellerEditor" aria-labelledby="propellerEditorTitle">
+    <form id="propellerForm">
+      <div class="modal-header"><h2 id="propellerEditorTitle">Agregar propela</h2></div>
+      <div class="modal-body">
+        <p class="section-note">El modelo identifica los registros guardados y no se puede renombrar. Puede ingresar un nuevo tipo. La categoría de codificación debe corresponder al diseño real de la propela.</p>
+        <div class="form-grid">
+          <label>Modelo <input name="modelo" class="db-input" required /></label>
+          <label>Tipo <input name="type" class="db-input" list="propellerTypes" required /></label>
+          <label>Diámetro (mm) <input name="D" type="number" step="any" min="0" class="db-input" required /></label>
+          <label>RPM de referencia <input name="rpm" type="number" step="any" min="0" class="db-input" required /></label>
+          <label>Kp (adimensional) <input name="Kp" type="number" step="any" min="0" class="db-input" required /></label>
+          <label>Nq <input name="Nq" type="number" step="any" min="0" class="db-input" required /></label>
+          <label>Peso (kg) <input name="peso" type="number" step="any" min="0" class="db-input" required /></label>
+          <label>Codificación <select name="codType" id="propellerCodType" class="db-input" required><option value="">Seleccione una categoría</option></select></label>
+        </div>
+        <datalist id="propellerTypes"></datalist>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-modal-io" onclick="document.getElementById('propellerEditor').close()">Cancelar</button>
+        <button type="submit" id="propellerSave" class="btn-modal-close">Guardar propela</button>
+      </div>
+    </form>
+  </dialog>
 
   <!-- ===== DB MODAL ===== -->
   <div id="dbModal" class="modal-overlay hidden" onclick="_dbModalOverlayClick(event)">
@@ -2138,10 +2254,13 @@
   <script src="costeo_db.js"></script>
   <script src="costeo.js"></script>
   <script src="calculator.js"></script>
+  <script src="agitator_geometry.js"></script>
   <script src="shaft.js"></script>
   <script src="og_shaft.js"></script>
+  <script src="propellers.js"></script>
   <script src="offer.js"></script>
   <script src="records.js"></script>
+  <script src="standard_agitators.js"></script>
   <script src="dblink.js"></script>
   <script src="gradient.js"></script>
   <script>
