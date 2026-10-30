@@ -1089,6 +1089,89 @@ La publicación solicitada tiene como destino `origin/main` del repositorio
 
 ---
 
+## 2026-10-30 09:49 — Organización del menú de opciones del encabezado
+
+**Solicitud:** reducir la cantidad de opciones del encabezado, agrupar las
+bases de datos con nombres y orden definidos, y trasladar la memoria de cálculo
+del eje a la pestaña **② Eje (OG)**.
+
+**Cambios:** se agruparon en el desplegable **Bases de datos**, en este orden:
+**Base Datos Clientes**, **Base Datos Aplicaciones**, **Base Datos Propelas**,
+**Base Datos Materiales Insumos**, **Base Datos Partes** e **Historial
+Selecciones**. Se quitaron sus accesos repetidos del nivel principal de
+**Opciones**. La memoria de cálculo se ubicó junto a la descripción inicial de
+la pestaña **② Eje (OG)**. Se conserva el acceso global a vinculación de bases
+del encabezado.
+
+**Validación:** navegador: orden y textos verificados, cada opción invoca la
+función existente correspondiente, el menú principal se cierra al elegir una
+opción y la memoria se ejecuta desde Eje (OG), no desde Opciones. Consola sin
+errores JavaScript; `git diff --check` sin errores.
+
+---
+
+## 2026-10-30 10:02 — Guardar una alternativa sin modificar la selección original
+
+**Solicitud:** al cargar una selección del historial y modificarla para una
+oferta o alternativa, permitir guardarla como nuevo registro sin sobrescribir
+la selección de origen.
+
+**Cambios:** al cargar un registro aparece **Guardar como nueva selección**,
+además de **Actualizar selección**. La nueva acción solicita una referencia
+obligatoria (por ejemplo, "Oferta revisada" o "Alternativa con otro motor");
+cancelar o dejarla vacía no guarda nada. Al confirmar, crea un registro nuevo,
+marca su relación con el registro activo y lo deja activo para que las
+actualizaciones posteriores afecten a la copia, no al original.
+
+El historial añade una columna **Referencia / versión**. Los registros
+anteriores se muestran como **Selección original** y las copias con su
+referencia. La referencia también se incluye al exportar a Excel. Se actualizó
+la explicación del flujo en el historial de selecciones.
+
+**Validación:** se comprobó la visibilidad condicional del botón, cancelar
+el diálogo, referencia vacía, creación de una sola copia, conservación íntegra
+del registro inicial, vínculo de origen, activación de la copia y actualización
+posterior de la copia únicamente. La referencia se presenta en el historial y
+se incluye en la exportación. Recarga del navegador sin errores JavaScript y
+`git diff --check` sin errores.
+
+---
+
+## 2026-10-30 10:15 — Actualización de materiales e insumos con Excel
+
+**Solicitud:** descargar la base actual de materiales/insumos en formato Excel,
+editarla en ese mismo formato y volver a cargar la información actualizada.
+
+**Cambios:** la base **Materiales e Insumos** incluye acciones **Descargar Excel**
+y **Cargar Excel actualizado**. La descarga genera `Base_Materiales_Insumos.xlsx`
+con hojas `Materiales` e `Instrucciones`; los encabezados, orden de columnas
+y autofiltro forman la plantilla. Incluye ID, categoría,
+material/servicio, unidad, valor unitario, proveedor, última cotización y peso
+unitario (incluido porque lo usan los cálculos de partes).
+
+La carga exige la hoja `Materiales` y los encabezados de la plantilla. Es una
+reposición completa: las filas retiradas del Excel se eliminan de la base al
+confirmar. Se conservan IDs existentes para no romper referencias; filas nuevas
+con ID vacío reciben un ID consecutivo superior a los IDs existentes. Se
+rechazan IDs duplicados, datos fuera de las columnas, fórmulas, filas
+incompletas y valores negativos o no numéricos. Se confirma la cantidad antes
+de reemplazar la base, se informa el resultado y se recalculan las partes que
+usan esos materiales. Importaciones canceladas o inválidas mantienen intacta
+la base actual. La importación/exportación JSON existente se conserva.
+
+**Validación:** generación y lectura de un libro XLSX con SheetJS, revisión de
+las dos hojas, columnas, encabezados, IDs y fila de datos. En navegador se
+probaron reposición completa, IDs existentes y nuevos, formatos numéricos
+colombianos, ceros, peso opcional, fechas, confirmación/cancelación y rechazo
+de duplicados, categoría/unidad ausente, precio negativo, columnas/encabezados
+alterados, hojas vacías y fórmulas. En todos los casos inválidos o cancelados
+se conservó la base anterior. Los 523 registros operativos se restauraron
+después de las pruebas; consola sin errores de ejecución y `git diff --check`
+sin errores. La biblioteca XLSX se carga bajo demanda desde el CDN ya utilizado
+por otras funciones de la aplicación.
+
+---
+
 ## Cómo se mantiene actualizado
 
 Este archivo **no se regenera automáticamente** (es un documento narrativo, no un reporte generado

@@ -117,6 +117,8 @@ function _setSaveButtonMode() {
   const btn = document.getElementById('btnSaveSelection');
   if (!btn) return;
   btn.textContent = _activeRecordId ? '✏ Actualizar selección' : '💾 Guardar selección';
+  const copyButton = document.getElementById('btnSaveAsNewSelection');
+  if (copyButton) copyButton.classList.toggle('hidden', !_activeRecordId);
 }
 
 function _setActiveRecord(idOrNull) {
@@ -401,6 +403,8 @@ function _buildExportRows(record) {
 
   push('SELECCION DE AGITADOR - NFS');
   push(`Registro: ${r.fechaRegistro || ''}`);
+  if (r.versionDescripcion) push(`Referencia / versión: ${r.versionDescripcion}`);
+  else if (r.derivadoDe) push('Referencia / versión: Alternativa');
   blank();
 
   section('INFORMACION GENERAL');
@@ -534,6 +538,8 @@ async function exportRecordToExcel(record) {
   const mainSheet = [
     row(cell('SELECCIÓN DE AGITADOR – NFS', 'title')),
     row(cell(`Registro: ${r.fechaRegistro || ''}`)),
+    ...(r.versionDescripcion ? [row(cell(`Referencia / versión: ${r.versionDescripcion}`))]
+      : r.derivadoDe ? [row(cell('Referencia / versión: Alternativa'))] : []),
     blankRow(),
 
     section('INFORMACIÓN GENERAL'),
@@ -799,6 +805,36 @@ function saveCurrentSelection() {
   _recRenderBadge();
 }
 
+function saveAsNewSelection() {
+  if (!_activeRecordId || !NFS_RECORDS.getById(_activeRecordId)) {
+    _setActiveRecord(null);
+    alert('Cargue una selección del historial antes de guardar una copia.');
+    return;
+  }
+  const versionDescripcion = prompt(
+    'Ingrese una referencia para identificar esta nueva selección.\n' +
+    'Ejemplos: Oferta revisada, Alternativa con otro motor.'
+  );
+  if (versionDescripcion === null) return;
+  const reference = versionDescripcion.trim();
+  if (!reference) {
+    alert('La referencia de la nueva selección es obligatoria.');
+    return;
+  }
+  const data = gatherSelectionData();
+  if (!data.cliente && !data.cotizacion && !data.nombreTanque) {
+    if (!confirm('No se ha ingresado cliente, cotización ni nombre de tanque.\n¿Guardar de todas formas?')) return;
+  }
+  const newId = NFS_RECORDS.add({
+    ...data,
+    versionDescripcion: reference,
+    derivadoDe: _activeRecordId,
+  });
+  _setActiveRecord(newId);
+  _showToast('✔ Nueva selección guardada como "' + reference + '". El registro original no se modificó.');
+  _recRenderBadge();
+}
+
 // =====================================================
 // RECORDS MODAL  – UI
 // =====================================================
@@ -818,13 +854,14 @@ function _recRenderTable() {
   const recs = NFS_RECORDS.getAll();
   if (!recs.length) {
     tbody.innerHTML =
-      '<tr><td colspan="6" class="rec-empty">No hay selecciones guardadas aún.</td></tr>';
+      '<tr><td colspan="7" class="rec-empty">No hay selecciones guardadas aún.</td></tr>';
     return;
   }
   recs.forEach(r => {
     const tr = document.createElement('tr');
     tr.innerHTML =
       `<td class="rec-td-date">${_e(r.fechaRegistro || '')}</td>` +
+      `<td>${_e(r.versionDescripcion || (r.derivadoDe ? 'Alternativa' : 'Selección original'))}</td>` +
       `<td>${_e(r.cliente || '–')}</td>` +
       `<td>${_e(r.cotizacion || '–')}</td>` +
       `<td>${_e(r.nombreTanque || '–')}</td>` +

@@ -32,20 +32,21 @@
           <details class="actions-menu" id="actionsMenu">
             <summary class="actions-trigger">☰ Opciones</summary>
             <div class="actions-menu-list">
-              <button class="btn-database" onclick="openDbLinkModal()">🔗 Vinculación de bases de datos</button>
+              <details class="actions-submenu">
+                <summary class="actions-submenu-trigger">🗄 Bases de datos <span aria-hidden="true">◀</span></summary>
+                <div class="actions-submenu-list">
+                  <button class="btn-database" onclick="openClientsModal()">Base Datos Clientes</button>
+                  <button class="btn-database" onclick="openDbModal()">Base Datos Aplicaciones</button>
+                  <button class="btn-database" onclick="openPropellersModal()">Base Datos Propelas</button>
+                  <button class="btn-database" onclick="openMaterialsModal()">Base Datos Materiales Insumos</button>
+                  <button class="btn-database" onclick="openCostPartsModal()">Base Datos Partes</button>
+                  <button class="btn-history" onclick="openRecordsModal()">Historial Selecciones <span id="recBadge" class="rec-badge" style="display:none"></span></button>
+                </div>
+              </details>
               <button id="btnSaveSelection" class="btn-save-sel" onclick="saveCurrentSelection()">💾 Guardar selección</button>
-              <button class="btn-history" onclick="openRecordsModal()">
-                📋 Historial
-                <span id="recBadge" class="rec-badge" style="display:none"></span>
-              </button>
-              <button class="btn-print" onclick="openClientsModal()">👥 Clientes</button>
+              <button id="btnSaveAsNewSelection" class="btn-save-copy hidden" onclick="saveAsNewSelection()" title="Guardar los cambios como un registro nuevo sin modificar el original">📑 Guardar como nueva selección</button>
               <button class="btn-print" onclick="generateOfferDraft()">🧾 Generar oferta</button>
-              <button class="btn-database" onclick="openDbModal()">🗄 Base de datos</button>
-              <button class="btn-database" onclick="openPropellersModal()">Base técnica de propelas</button>
-              <button class="btn-database" onclick="openCostPartsModal()">💲 Base partes costeo</button>
-              <button class="btn-database" onclick="openMaterialsModal()">🧱 Materiales e insumos</button>
               <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
-              <button class="btn-print" onclick="generarMemoriaEje()">📄 Memoria de cálculo (Eje)</button>
             </div>
           </details>
         </div>
@@ -1175,7 +1176,10 @@
   <div id="page3" class="page-content hidden">
   <div class="main-content">
 
-    <p class="section-note">Réplica del cálculo original "Cálculo del eje agitador_.xlsx" (hoja "Eje"). Los datos base se toman en primera instancia de la pestaña "① Selección de Agitador".</p>
+    <div class="og-page-toolbar">
+      <p class="section-note">Réplica del cálculo original "Cálculo del eje agitador_.xlsx" (hoja "Eje"). Los datos base se toman en primera instancia de la pestaña "① Selección de Agitador".</p>
+      <button type="button" class="btn-db-add" onclick="generarMemoriaEje()">📄 Memoria de cálculo (Eje)</button>
+    </div>
 
     <!-- Datos base -->
     <section class="card">
@@ -1822,7 +1826,7 @@
           <button class="btn-db-link" onclick="materialsConnectFile()">Vincular archivo JSON…</button>
           para persistencia permanente.
         </div>
-        <div class="modal-hint">Administre el precio unitario de materias primas, insumos y servicios (equivalente a la hoja "INSUMOS" del archivo origen). Actualice aquí un valor y se reflejará automáticamente en todas las partes que lo usen en su lista de materiales (BOM).</div>
+        <div class="modal-hint">Administre precios unitarios de materias primas, insumos y servicios (hoja "INSUMOS" del archivo origen); los cambios se reflejan en las partes que los usan. Descargue el Excel para actualizarlo y vuelva a cargarlo. La importación reemplaza la base completa: mantenga los ID, deje el ID vacío solo para filas nuevas y elimine la fila si desea retirar un material. No cambie los encabezados ni use fórmulas. La plantilla incluye peso unitario, usado en el cálculo de las partes.</div>
 
         <div class="form-row mb-10">
           <label class="field-label">Buscar:</label>
@@ -1861,6 +1865,8 @@
           <button class="btn-db-reset" onclick="resetMaterials()">↺ Restaurar predeterminados</button>
         </div>
         <div class="modal-footer-right">
+          <button class="btn-modal-io" onclick="exportMaterialsExcel()">⬇ Descargar Excel</button>
+          <button class="btn-modal-io" onclick="importMaterialsExcel()">⬆ Cargar Excel actualizado</button>
           <button class="btn-modal-io" onclick="importMaterialsJSON()">⬆ Importar</button>
           <button class="btn-modal-io" onclick="exportMaterialsJSON()">⬇ Exportar</button>
           <button class="btn-modal-close" onclick="closeMaterialsModal()">Cerrar</button>
@@ -2095,14 +2101,17 @@
         </div>
         <div class="modal-hint">
           Selecciones guardadas localmente en este navegador. Use <strong>📂 Cargar</strong> para
-          restaurar todos los datos de una selección anterior, o <strong>📊 Excel</strong> para
-          descargar el informe. El archivo Excel generado puede reimportarse con
-          <strong>⬆ Importar desde Excel</strong>.
+          restaurar todos los datos de una selección anterior. Al cargarla, puede usar
+          <strong>Guardar como nueva selección</strong> para crear una alternativa con referencia
+          propia sin modificar el original; <strong>Actualizar selección</strong> modifica el registro
+          cargado. Use <strong>📊 Excel</strong> para descargar el informe. El archivo Excel generado
+          puede reimportarse con <strong>⬆ Importar desde Excel</strong>.
         </div>
         <table class="db-table rec-table">
           <thead>
             <tr>
               <th class="rec-td-date">Guardado</th>
+              <th>Referencia / versión</th>
               <th>Cliente</th>
               <th>Cotización</th>
               <th>Tanque</th>

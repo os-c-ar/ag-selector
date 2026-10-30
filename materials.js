@@ -812,6 +812,194 @@ function importMaterialsJSON() {
   input.click();
 }
 
+const MATERIALS_EXCEL_HEADERS = [
+  'ID', 'Categoría', 'Material / Servicio', 'Unidad', 'Valor unitario',
+  'Proveedor', 'Última cotización', 'Peso unitario (kg)',
+];
+
+async function _ensureXLSXMaterialsLib() {
+  if (window.XLSX) return window.XLSX;
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+    script.async = true;
+    script.onload = () => {
+      if (window.XLSX) resolve(window.XLSX);
+      else reject(new Error('No se pudo inicializar la librería XLSX.'));
+    };
+    script.onerror = () => reject(new Error('No se pudo cargar la librería XLSX desde el CDN.'));
+    document.head.appendChild(script);
+  });
+}
+
+function _materialsExcelNumber(value, label, rowNumber, allowBlank = false) {
+  if (value === '' || value == null) {
+    if (allowBlank) return 0;
+    throw new Error('Fila ' + rowNumber + ': falta ' + label + '.');
+  }
+  let number = value;
+  if (typeof value === 'string') {
+    let text = value.trim().replace(/[$\s]/g, '');
+    if (!text) {
+      if (allowBlank) return 0;
+      throw new Error('Fila ' + rowNumber + ': falta ' + label + '.');
+    }
+    if (text.includes(',') && text.includes('.')) {
+      text = text.replace(/\./g, '').replace(',', '.');
+    } else if (text.includes(',')) {
+      text = text.replace(',', '.');
+    } else if (/^\d{1,3}(?:\.\d{3})+$/.test(text)) {
+      text = text.replace(/\./g, '');
+    }
+    number = Number(text);
+  }
+  if (typeof number !== 'number' || !Number.isFinite(number) || number < 0) {
+    throw new Error('Fila ' + rowNumber + ': ' + label + ' debe ser un número mayor o igual a cero.');
+  }
+  return number;
+}
+
+function _materialsExcelDate(value, XLSX) {
+  if (typeof value !== 'number') return String(value ?? '').trim();
+  if (!Number.isFinite(value) || value < 10000) return String(value);
+  const date = XLSX.SSF.parse_date_code(value);
+  if (!date) throw new Error('Fecha de cotización no válida.');
+  return [String(date.y).padStart(4, '0'), String(date.m).padStart(2, '0'),
+    String(date.d).padStart(2, '0')].join('-');
+}
+
+async function exportMaterialsExcel() {
+  try {
+    const XLSX = await _ensureXLSXMaterialsLib();
+    const items = NFS_MATERIALS.getAll();
+    const rows = [MATERIALS_EXCEL_HEADERS, ...items.map(item => [
+      item.id, item.categoria, item.nombre, item.unidad, item.valorUnitario,
+      item.proveedor, item.fecha, item.pesoUnitario,
+    ])];
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols'] = [
+      { wch: 10 }, { wch: 30 }, { wch: 42 }, { wch: 14 },
+      { wch: 20 }, { wch: 28 }, { wch: 22 }, { wch: 20 },
+    ];
+    ws['!autofilter'] = { ref: XLSX.utils.encode_range({
+      s: { r: 0, c: 0 }, e: { r: rows.length - 1, c: MATERIALS_EXCEL_HEADERS.length - 1 },
+    }) };
+    const guide = XLSX.utils.aoa_to_sheet([
+      ['ACTUALIZACIÓN DE LA BASE DE MATERIALES E INSUMOS'],
+      ['Edite la hoja Materiales y luego cargue este mismo archivo desde la aplicación.'],
+      ['La importación reemplaza la base completa: las filas eliminadas del archivo también se eliminan de la base.'],
+      ['No cambie los encabezados ni el orden de las columnas. No use fórmulas en las celdas de datos.'],
+      ['Conserve el ID de los materiales existentes para mantener las referencias de las listas de materiales.'],
+      ['Para agregar un material, agregue una fila y deje ID vacío; el sistema asignará un ID nuevo.'],
+      ['Para eliminar un material, elimine su fila de la hoja Materiales.'],
+      ['Valor unitario y peso unitario deben ser números iguales o mayores que cero.'],
+      ['Categoría, Material / Servicio y Unidad son obligatorios. Proveedor y Última cotización son opcionales.'],
+    ]);
+    guide['!cols'] = [{ wch: 115 }];
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, ws, 'Materiales');
+    XLSX.utils.book_append_sheet(workbook, guide, 'Instrucciones');
+    XLSX.writeFile(workbook, 'Base_Materiales_Insumos.xlsx', { compression: true });
+  } catch (e) {
+    console.error('Error exportando base de materiales a Excel:', e);
+    alert('No se pudo generar el Excel de materiales:\n' + e.message);
+  }
+}
+
+function _parseMaterialsExcelWorkbook(workbook, XLSX) {
+  const sheet = workbook.Sheets.Materiales;
+  if (!sheet) throw new Error('El archivo debe tener una hoja llamada "Materiales".');
+  const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, defval: '', blankrows: true });
+  if (!rows.length) throw new Error('La hoja "Materiales" está vacía.');
+  const normalizeHeader = value => String(value ?? '').normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
+  const expected = MATERIALS_EXCEL_HEADERS.map(normalizeHeader);
+  const actual = rows[0].map(normalizeHeader);
+  if (actual.length !== expected.length || expected.some((header, i) => actual[i] !== header)) {
+    throw new Error('Los encabezados no coinciden con la plantilla. Descargue la base actualizada y no cambie los títulos ni su orden.');
+  }
+  const range = XLSX.utils.decode_range(sheet['!ref'] || 'A1');
+  for (let row = 1; row <= range.e.r; row++) {
+    for (let col = 0; col < expected.length; col++) {
+      const cell = sheet[XLSX.utils.encode_cell({ r: row, c: col })];
+      if (cell?.f) throw new Error('No use fórmulas. Fila ' + (row + 1) + ', columna ' + MATERIALS_EXCEL_HEADERS[col] + '. Pegue valores calculados.');
+    }
+  }
+  const items = [];
+  const ids = new Set();
+  const currentMaxId = NFS_MATERIALS.getAll().reduce((max, item) => Math.max(max, Number(item.id) || 0), 0);
+  let maxId = currentMaxId;
+  let nextId;
+  rows.slice(1).forEach((row, index) => {
+    const rowNumber = index + 2;
+    if (row.every(value => value === '' || value == null)) return;
+    if (row.slice(expected.length).some(value => value !== '' && value != null)) {
+      throw new Error('Fila ' + rowNumber + ': hay datos fuera de las columnas de la plantilla.');
+    }
+    const [rawId, category, name, unit, price, supplier, date, weight] = row;
+    const id = rawId === '' || rawId == null ? null : _materialsExcelNumber(rawId, 'ID', rowNumber);
+    if (id !== null) {
+      if (!Number.isSafeInteger(id) || id < 1) throw new Error('Fila ' + rowNumber + ': el ID debe ser un entero positivo.');
+      if (ids.has(id)) throw new Error('Fila ' + rowNumber + ': ID duplicado ' + id + '.');
+      ids.add(id);
+      maxId = Math.max(maxId, id);
+    }
+    const categoria = String(category ?? '').trim().toUpperCase();
+    const nombre = String(name ?? '').trim();
+    const unidad = String(unit ?? '').trim();
+    if (!categoria) throw new Error('Fila ' + rowNumber + ': falta Categoría.');
+    if (!nombre) throw new Error('Fila ' + rowNumber + ': falta Material / Servicio.');
+    if (!unidad) throw new Error('Fila ' + rowNumber + ': falta Unidad.');
+    items.push({
+      id, categoria, nombre, unidad,
+      valorUnitario: _materialsExcelNumber(price, 'Valor unitario', rowNumber),
+      proveedor: String(supplier ?? '').trim(),
+      fecha: _materialsExcelDate(date, XLSX),
+      pesoUnitario: _materialsExcelNumber(weight, 'Peso unitario', rowNumber, true),
+    });
+  });
+  if (!items.length) throw new Error('No se encontraron materiales para importar.');
+  nextId = maxId + 1;
+  items.forEach(item => {
+    if (item.id !== null) return;
+    while (ids.has(nextId)) nextId++;
+    if (!Number.isSafeInteger(nextId)) throw new Error('No quedan IDs enteros disponibles para asignar.');
+    item.id = nextId;
+    ids.add(nextId++);
+  });
+  return items;
+}
+
+function importMaterialsExcel() {
+  const input = Object.assign(document.createElement('input'), {
+    type: 'file', accept: '.xlsx,.xlsm,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel',
+  });
+  input.onchange = async event => {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    try {
+      const XLSX = await _ensureXLSXMaterialsLib();
+      const workbook = XLSX.read(await file.arrayBuffer(), { type: 'array', cellDates: false });
+      const items = _parseMaterialsExcelWorkbook(workbook, XLSX);
+      const currentCount = NFS_MATERIALS.getAll().length;
+      if (!confirm(
+        'Se reemplazará la base completa por ' + items.length + ' materiales/servicios. ' +
+        'Los registros que no estén en el archivo se eliminarán de la base.\n\n' +
+        '¿Desea continuar?'
+      )) return;
+      NFS_MATERIALS.importJSON(JSON.stringify(items));
+      _renderMaterialsTable();
+      _populateMaterialCategoryDatalist();
+      if (typeof recalcCostPartsFromMaterials === 'function') recalcCostPartsFromMaterials();
+      alert('Base de materiales actualizada: ' + items.length + ' filas cargadas (antes: ' + currentCount + ').');
+    } catch (e) {
+      console.error('Error importando base Excel de materiales:', e);
+      alert('No se importó la base de materiales. La información actual se conserva.\n' + e.message);
+    }
+  };
+  input.click();
+}
+
 /* ── File System Access API – connect materials file ── */
 
 async function materialsConnectFile() {

@@ -284,6 +284,75 @@ body {
   white-space: nowrap;
 }
 
+.actions-submenu {
+  position: relative;
+}
+
+.actions-submenu-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 7px 14px;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: var(--radius);
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  cursor: pointer;
+  font: 600 12px var(--font);
+  list-style: none;
+  user-select: none;
+}
+
+.actions-submenu-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.actions-submenu-trigger:hover,
+.actions-submenu[open] .actions-submenu-trigger {
+  background: rgba(255,255,255,0.25);
+}
+
+.actions-submenu-list {
+  position: absolute;
+  top: 0;
+  right: calc(100% + 8px);
+  display: flex;
+  min-width: 250px;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: var(--radius);
+  background: var(--navy);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+  z-index: 1001;
+}
+
+.og-page-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.og-page-toolbar .section-note {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .actions-submenu-list {
+    right: 0;
+    top: calc(100% + 6px);
+  }
+
+  .og-page-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
 .btn-print {
   background: rgba(255,255,255,0.15);
   border: 1px solid rgba(255,255,255,0.35);
@@ -1504,6 +1573,20 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
   transition: background 0.15s;
 }
 .btn-save-sel:hover { background: rgba(26, 122, 60, 0.50); }
+
+.btn-save-copy {
+  background: rgba(37, 99, 235, 0.28);
+  border: 1px solid rgba(147, 197, 253, 0.65);
+  color: #fff;
+  padding: 7px 14px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 12px;
+  font-family: var(--font);
+  font-weight: 600;
+  transition: background 0.15s;
+}
+.btn-save-copy:hover { background: rgba(37, 99, 235, 0.5); }
 
 .btn-history {
   background: rgba(255, 255, 255, 0.12);
