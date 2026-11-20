@@ -123,9 +123,10 @@
     <button class="tab-btn" onclick="switchTab(2)" id="tabBtn2" style="display:none">② Diseño del Eje</button>
     <button class="tab-btn" onclick="switchTab(3)" id="tabBtn3" >② Eje  (OG)</button>
     <button class="tab-btn" onclick="switchTab(4)" id="tabBtn4" >③ Costeo Agitador</button>
-    <button class="tab-btn" onclick="switchTab(5)" id="tabBtn5" style="display:none">④ Gradiente de Floculación</button>
+    <button class="tab-btn" onclick="switchTab(5)" id="tabBtn5">④ Gradiente de Floculación</button>
     <button class="tab-btn" onclick="switchTab(6)" id="tabBtn6">④ Decodificador</button>
     <button class="tab-btn" onclick="switchTab(7)" id="tabBtn7">⑤ AGITADORES ESTÁNDAR</button>
+    <button class="tab-btn" onclick="switchTab(8)" id="tabBtn8">⑥ Codificación de partes</button>
   </nav>
 
   <div id="page1" class="page-content">
@@ -229,6 +230,37 @@
                 Rectangular
               </label>
             </div>
+          </div>
+
+          <div id="bottomTypeFields" class="form-row full-width">
+            <label class="field-label">Fondo del tanque:</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="fondoTanque" value="PLANO" id="fondoPlano" checked />
+                Plano
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="fondoTanque" value="CONICO" id="fondoConico" />
+                Cónico
+              </label>
+            </div>
+          </div>
+
+          <div id="coneDimensions" class="full-width hidden">
+            <div class="form-grid">
+              <div class="form-row">
+                <label class="field-label" for="alturaCono">Altura del cono:</label>
+                <input type="number" id="alturaCono" value="0.5" step="0.01" min="0" class="input-value" />
+                <span class="unit">m</span>
+              </div>
+              <div class="form-row">
+                <label class="field-label" for="diametroFondoCono">Diámetro del fondo del cono:</label>
+                <input type="number" id="diametroFondoCono" value="0.2" step="0.01" min="0" class="input-value" />
+                <span class="unit">m</span>
+              </div>
+            </div>
+            <p class="section-note">La altura del cono se mide desde el fondo y está incluida en la altura total y útil.</p>
+            <p id="coneDimensionsNote" class="section-note hidden" role="status"></p>
           </div>
 
           <!-- Circular inputs -->
@@ -492,12 +524,14 @@
           <h2 class="section-title">DIAGRAMA GENERAL</h2>
           <div class="section-body diagram-body">
             <p class="section-note">Separaciones verticales como porcentaje del diámetro de cada propela. En modo manual el conjunto se desplaza con el extremo del eje; la distancia al fondo indicada define el modo automático.</p>
-            <div class="propeller-position form-row"><label for="pctFondo">Fondo → propela 1 (% D1):</label><input type="number" id="pctFondo" value="90" min="0" step="any" class="input-value" /></div>
-            <div class="propeller-position form-row"><label for="pctSeparacion2">Propela 1 → 2 (% D2):</label><input type="number" id="pctSeparacion2" value="100" min="0" step="any" class="input-value" /></div>
-            <div class="propeller-position form-row"><label for="pctSeparacion3">Propela 2 → 3 (% D3):</label><input type="number" id="pctSeparacion3" value="100" min="0" step="any" class="input-value" /></div>
-            <div class="propeller-position form-row"><label for="pctSeparacion4">Propela 3 → 4 (% D4):</label><input type="number" id="pctSeparacion4" value="100" min="0" step="any" class="input-value" /></div>
-            <div class="form-row"><label for="shaftLengthMode">Longitud real del eje:</label><select id="shaftLengthMode" class="input-select"><option value="auto">Automática según tanque</option><option value="manual">Ajuste manual</option></select></div>
-            <div class="form-row"><label for="shaftLengthManual">Longitud manual (m):</label><input id="shaftLengthManual" type="number" min="0" step="any" class="input-value" disabled /></div>
+            <div class="diagram-controls">
+              <div class="propeller-position form-row"><label for="pctFondo">Fondo → propela 1 (% D1):</label><input type="number" id="pctFondo" value="90" min="0" step="any" class="input-value" /></div>
+              <div class="propeller-position form-row"><label for="pctSeparacion2">Propela 1 → 2 (% D2):</label><input type="number" id="pctSeparacion2" value="100" min="0" step="any" class="input-value" /></div>
+              <div class="propeller-position form-row"><label for="pctSeparacion3">Propela 2 → 3 (% D3):</label><input type="number" id="pctSeparacion3" value="100" min="0" step="any" class="input-value" /></div>
+              <div class="propeller-position form-row"><label for="pctSeparacion4">Propela 3 → 4 (% D4):</label><input type="number" id="pctSeparacion4" value="100" min="0" step="any" class="input-value" /></div>
+              <div class="form-row"><label for="shaftLengthMode">Longitud real del eje:</label><select id="shaftLengthMode" class="input-select"><option value="auto">Automática según tanque</option><option value="manual">Ajuste manual</option></select></div>
+              <div class="form-row"><label for="shaftLengthManual">Longitud manual (m):</label><input id="shaftLengthManual" type="number" min="0" step="any" class="input-value" disabled /></div>
+            </div>
             <p id="geometryWarning" class="section-note rpm-warning-note hidden" role="status"></p>
             <svg id="tankDiagram" class="tank-svg" viewBox="0 0 580 440"
                  xmlns="http://www.w3.org/2000/svg"
@@ -1718,6 +1752,99 @@
     </div>
   </div>
 
+  <div id="page8" class="page-content hidden">
+    <div class="main-content">
+      <section class="card parts-coding">
+        <h2 class="section-title">CODIFICACIÓN DE PARTES — LINTERNAS DE RODAMIENTOS</h2>
+        <div class="section-body">
+          <p class="parts-intro">Seleccione las características de la linterna para generar su código y descripción estandarizada. Las selecciones son independientes del agitador actual.</p>
+          <div class="parts-grid">
+            <div class="parts-field">
+              <label for="partFamily">Familia</label>
+              <select id="partFamily">
+                <option value="LIN" data-description="Linterna estándar">LIN — Linterna estándar</option>
+                <option value="LINS" data-description="Linterna con alojamiento para sello">LINS — Linterna con alojamiento para sello</option>
+              </select>
+            </div>
+            <div class="parts-field">
+              <label for="partShaftDiameter">Diámetro del eje (mm)</label>
+              <select id="partShaftDiameter">
+                <option>050</option><option>065</option><option>075</option><option>080</option>
+                <option>090</option><option>100</option><option>110</option><option>120</option>
+              </select>
+            </div>
+            <div class="parts-field">
+              <label for="partShaftMaterial">Material del eje</label>
+              <select id="partShaftMaterial">
+                <option value="CS" data-description="Acero al carbono">CS — Acero al carbono</option>
+                <option value="304" data-description="AISI 304">304 — AISI 304</option>
+                <option value="316" data-description="AISI 316L">316 — AISI 316L</option>
+                <option value="2205" data-description="Duplex 2205">2205 — Duplex 2205</option>
+              </select>
+            </div>
+            <div class="parts-field">
+              <label for="partReducerBrand">Marca del motorreductor</label>
+              <select id="partReducerBrand">
+                <option value="SEW">SEW</option>
+                <option value="NORD">NORD</option>
+              </select>
+            </div>
+            <div class="parts-field">
+              <label for="partReducer">Modelo del reductor</label>
+              <select id="partReducer">
+                <option>R57</option><option>R77</option><option>R87</option><option>F77</option>
+                <option>FA87</option><option>KF87</option><option>K97</option><option>KF97RM</option>
+              </select>
+            </div>
+            <div class="parts-field">
+              <label for="partFlange">Brida del tanque</label>
+              <select id="partFlange">
+                <option>DN150</option><option>DN200</option><option>DN250</option><option>DN300</option>
+                <option>A06</option><option>A08</option><option>A10</option><option>A12</option><option>SQ300</option>
+              </select>
+            </div>
+            <div class="parts-field">
+              <label for="partBearings">Arreglo de rodamientos</label>
+              <select id="partBearings">
+                <option value="00" data-description="Sin rodamientos">00 — Sin rodamientos</option>
+                <option value="1R" data-description="1 rígido de bolas">1R — 1 rígido de bolas</option>
+                <option value="2A" data-description="2 de contacto angular">2A — 2 de contacto angular</option>
+                <option value="1E" data-description="1 oscilante de rodillos">1E — 1 oscilante de rodillos</option>
+                <option value="2C" data-description="2 de rodillos cónicos">2C — 2 de rodillos cónicos</option>
+                <option value="1E1A" data-description="Arreglo mixto">1E1A — Arreglo mixto</option>
+              </select>
+            </div>
+            <div class="parts-field">
+              <label for="partHeight">Altura total (mm)</label>
+              <input id="partHeight" type="number" min="200" step="10" value="200" required aria-describedby="partHeightHelp partHeightError" />
+              <span id="partHeightHelp" class="parts-help">Mínimo 200 mm, en incrementos de 10 mm.</span>
+              <span id="partHeightError" class="parts-error hidden" role="alert"></span>
+            </div>
+            <div class="parts-field">
+              <label for="partMaterial">Material de la linterna</label>
+              <select id="partMaterial">
+                <option value="CS" data-description="Acero al carbono">CS — Acero al carbono</option>
+                <option value="304" data-description="Acero inoxidable 304">304 — Acero inoxidable 304</option>
+                <option value="316" data-description="Acero inoxidable 316L">316 — Acero inoxidable 316L</option>
+              </select>
+            </div>
+          </div>
+          <p id="partNordNote" class="parts-help parts-reducer-note hidden">Referencias de reductores coaxiales NORD. Verifique la ejecución, el montaje y las dimensiones de conexión antes de fabricar la linterna. Consulte el <a href="https://nordgearmotors.com/nord-helical-in-line-catalog/" target="_blank" rel="noopener noreferrer">catálogo de modelos</a> y la <a href="https://www.nord.com/en/products/geared-motors/helical-inline-geared-motors/nordbloc1-helical-in-line-geared-motor.jsp" target="_blank" rel="noopener noreferrer">serie NORDBLOC.1</a>.</p>
+          <div class="parts-result">
+            <h3>Código de ingeniería</h3>
+            <output id="partCode" class="parts-code" aria-live="polite"></output>
+            <button type="button" id="partCopy" class="parts-copy">Copiar código</button>
+            <p id="partCopyStatus" class="parts-copy-status" role="status"></p>
+          </div>
+          <div class="parts-description">
+            <h3>Descripción estandarizada</h3>
+            <p id="partDescription"></p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
   <dialog id="standardEditor" aria-labelledby="standardEditorTitle">
     <form id="standardForm">
       <div class="modal-header"><h2 id="standardEditorTitle">Agitador estándar</h2></div>
@@ -2258,6 +2385,7 @@
   <script src="staff.js"></script>
   <script src="diagram.js"></script>
   <script src="coding.js"></script>
+  <script src="parts_coding.js"></script>
   <script src="decoder.js"></script>
   <script src="materials.js"></script>
   <script src="costeo_db.js"></script>

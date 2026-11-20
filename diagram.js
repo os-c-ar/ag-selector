@@ -31,6 +31,13 @@ function _diagDefs() {
     <marker id="daBR" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto">
       <polygon points="8,0 0,4 8,8" fill="${_DIAG_BLUEMID}"/>
     </marker>
+    ${_DIAG_PROPCOLS.map((col, i) => `
+    <marker id="propDa${i}" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <polygon points="0,0 7,3.5 0,7" fill="${col}"/>
+    </marker>
+    <marker id="propDaR${i}" markerWidth="7" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <polygon points="7,0 0,3.5 7,7" fill="${col}"/>
+    </marker>`).join('')}
 
     <linearGradient id="liqGr" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%"   stop-color="#bfdbfe" stop-opacity="0.9"/>
@@ -82,13 +89,27 @@ function _diagRenderPanel(E, ctx) {
   const {
     tX, tW, tY, tBot, sc, cx, Y,
     alturaUtil, liquidY, bafles, bafRefDim,
-    props, propH, D1_m, clearance,
+    props, propH, clearance,
     mTop, mH, mW,
-    widthLabel, showHb, showTitle,
+    widthLabel, showPositions, showTitle,
+    fondoConico, alturaCono, diametroFondoCono,
   } = ctx;
 
   const bafW = Math.max(bafRefDim * 0.08 * sc, 5);
   const tf = `font-family="Segoe UI,sans-serif" font-size="13" fill="${_DIAG_DIM}"`;
+  const coneTopY = fondoConico ? Y(alturaCono) : tBot;
+  const coneBottomHalf = fondoConico ? diametroFondoCono * sc / 2 : 0;
+  const tankPath = fondoConico
+    ? `M ${tX} ${tY} L ${tX + tW} ${tY} L ${tX + tW} ${coneTopY} L ${cx + coneBottomHalf} ${tBot} L ${cx - coneBottomHalf} ${tBot} L ${tX} ${coneTopY} Z`
+    : null;
+  const diameterAtHeight = height => fondoConico && height < alturaCono
+    ? diametroFondoCono + (bafRefDim - diametroFondoCono) * Math.max(0, height) / alturaCono
+    : bafRefDim;
+  const liquidHalfWidth = diameterAtHeight(alturaUtil) * sc / 2;
+
+  if (fondoConico) {
+    E.push(`<defs><clipPath id="tankInteriorClip"><path d="${tankPath}"/></clipPath></defs>`);
+  }
 
   if (showTitle) {
     E.push(`<text x="${cx}" y="${tY - 26}" text-anchor="middle"
@@ -100,20 +121,20 @@ function _diagRenderPanel(E, ctx) {
   const airH = liquidY - tY;
   if (airH > 1) {
     E.push(`<rect x="${tX + 2}" y="${tY + 2}" width="${tW - 4}" height="${airH - 2}"
-      fill="url(#airPat)"/>`);
+      fill="url(#airPat)"${fondoConico ? ' clip-path="url(#tankInteriorClip)"' : ''}/>`);
   }
 
   /* Liquid fill */
   E.push(`<rect x="${tX + 2}" y="${liquidY}" width="${tW - 4}"
-    height="${tBot - liquidY - 2}" fill="url(#liqGr)"/>`);
+    height="${tBot - liquidY - 2}" fill="url(#liqGr)"${fondoConico ? ' clip-path="url(#tankInteriorClip)"' : ''}/>`);
 
   /* Baffles */
   if (bafles && alturaUtil > 0) {
     const bfH = tBot - liquidY;
     E.push(`<rect x="${tX + 2}"          y="${liquidY}" width="${bafW}" height="${bfH}"
-      fill="#94a3b8" rx="2"/>`);
+      fill="#94a3b8" rx="2"${fondoConico ? ' clip-path="url(#tankInteriorClip)"' : ''}/>`);
     E.push(`<rect x="${tX + tW - bafW - 2}" y="${liquidY}" width="${bafW}" height="${bfH}"
-      fill="#94a3b8" rx="2"/>`);
+      fill="#94a3b8" rx="2"${fondoConico ? ' clip-path="url(#tankInteriorClip)"' : ''}/>`);
   }
 
   /* Shaft */
@@ -148,13 +169,25 @@ function _diagRenderPanel(E, ctx) {
   });
 
   /* Tank outline */
-  E.push(`<rect x="${tX}" y="${tY}" width="${tW}" height="${tBot - tY}"
-    fill="none" stroke="${_DIAG_NAVY}" stroke-width="2.5"/>`);
-  E.push(`<line x1="${tX}" y1="${tBot}" x2="${tX + tW}" y2="${tBot}"
-    stroke="${_DIAG_NAVY}" stroke-width="4.5" stroke-linecap="square"/>`);
+  if (fondoConico) {
+    E.push(`<path d="${tankPath}" fill="none" stroke="${_DIAG_NAVY}" stroke-width="2.5"/>`);
+    E.push(`<line x1="${cx - coneBottomHalf}" y1="${tBot}" x2="${cx + coneBottomHalf}" y2="${tBot}"
+      stroke="${_DIAG_NAVY}" stroke-width="4.5" stroke-linecap="square"/>`);
+    E.push(`<text x="${cx}" y="${Y(alturaCono / 2) + 4}" text-anchor="middle"
+      font-family="Segoe UI,sans-serif" font-size="10" font-weight="700" fill="${_DIAG_NAVY}">
+      Hc ${alturaCono.toFixed(2)} m</text>`);
+    E.push(`<text x="${cx}" y="${tBot - 5}" text-anchor="middle"
+      font-family="Segoe UI,sans-serif" font-size="9" fill="${_DIAG_NAVY}">
+      Øf ${diametroFondoCono.toFixed(2)} m</text>`);
+  } else {
+    E.push(`<rect x="${tX}" y="${tY}" width="${tW}" height="${tBot - tY}"
+      fill="none" stroke="${_DIAG_NAVY}" stroke-width="2.5"/>`);
+    E.push(`<line x1="${tX}" y1="${tBot}" x2="${tX + tW}" y2="${tBot}"
+      stroke="${_DIAG_NAVY}" stroke-width="4.5" stroke-linecap="square"/>`);
+  }
 
   /* Liquid level line */
-  E.push(`<line x1="${tX}" y1="${liquidY}" x2="${tX + tW}" y2="${liquidY}"
+  E.push(`<line x1="${cx - liquidHalfWidth}" y1="${liquidY}" x2="${cx + liquidHalfWidth}" y2="${liquidY}"
     stroke="${_DIAG_BLUEMID}" stroke-width="1.5" stroke-dasharray="8,4"/>`);
 
   /* Motor block */
@@ -171,19 +204,38 @@ function _diagRenderPanel(E, ctx) {
     marker-start="url(#daR)" marker-end="url(#da)"/>`);
   E.push(`<text x="${cx}" y="${botArrY + 14}" ${tf} text-anchor="middle">${widthLabel}</text>`);
 
-  /* Clearance Hb – left side (P1 to bottom) */
-  if (showHb && propH[0] !== null && propH[0] !== undefined && D1_m > 0) {
-    const py0 = Y(propH[0]);
-    const lx  = tX - 18;
-    const mid = (py0 + tBot) / 2;
-    E.push(`<line x1="${lx}" y1="${py0}" x2="${lx}" y2="${tBot}"
-      stroke="${_DIAG_DIM}" stroke-width="1"
-      marker-start="url(#daR)" marker-end="url(#da)"/>`);
-    E.push(`<text x="${lx - 6}" y="${mid - 8}"
-      ${tf} text-anchor="end" font-style="italic">Hb</text>`);
-    E.push(`<text x="${lx - 6}" y="${mid + 6}"
-      ${tf} text-anchor="end">${clearance.toFixed(3)} m</text>`);
+  if (showPositions) {
+    const bottomEdge = fondoConico ? cx - coneBottomHalf : tX;
+    props.forEach((pp, i) => {
+      const h = propH[i];
+      if (!pp.active || h === null || h === undefined) return;
+      const py = Y(h);
+      const lx = tX - 18 - i * 14;
+      const propEdge = cx - diameterAtHeight(h) * sc / 2;
+      const col = _DIAG_PROPCOLS[i];
+      E.push(`<line x1="${lx - 3}" y1="${py}" x2="${propEdge}" y2="${py}"
+        stroke="${col}" stroke-width="1" stroke-dasharray="3,3"/>`);
+      E.push(`<line x1="${lx - 3}" y1="${tBot}" x2="${bottomEdge}" y2="${tBot}"
+        stroke="${col}" stroke-width="1" stroke-dasharray="3,3"/>`);
+      if (h > 0) {
+        E.push(`<line x1="${lx}" y1="${py}" x2="${lx}" y2="${tBot}"
+          stroke="${col}" stroke-width="1"
+          marker-start="url(#propDaR${i})" marker-end="url(#propDa${i})"/>`);
+      }
+    });
   }
+}
+
+function _diagPositionLabels(E, props, propH, W, H) {
+  const positions = props.map((pp, i) => ({ active: pp.active, h: propH[i], i }))
+    .filter(p => p.active && p.h !== null && p.h !== undefined);
+  positions.forEach((p, index) => {
+    const x = W / 4 + (index % 2) * W / 2;
+    const y = H + 16 + Math.floor(index / 2) * 18;
+    E.push(`<text x="${x}" y="${y}" text-anchor="middle" font-size="13"
+      font-family="Segoe UI,sans-serif" fill="${_DIAG_PROPCOLS[p.i]}">P${p.i + 1} - fondo: ${p.h.toFixed(3)} m</text>`);
+  });
+  return positions.length ? Math.ceil(positions.length / 2) * 18 + 5 : 0;
 }
 
 function _diagHeightAnnotations(E, tX, tW, tY, tBot, liquidY, alturaUtil, alturaTotal) {
@@ -215,6 +267,10 @@ function drawTankDiagram() {
   const alturaUtil  = parseFloat(document.getElementById('alturaUtil').value)  || 0;
   const alturaTotal = parseFloat(document.getElementById('alturaTotal').value) || 0;
   const bafles      = document.querySelector('input[name="bafles"]:checked')?.value === 'SI';
+  const fondoConico = tipoTanque === 'CIRCULAR' &&
+    document.querySelector('input[name="fondoTanque"]:checked')?.value === 'CONICO';
+  const alturaCono = parseFloat(document.getElementById('alturaCono').value);
+  const diametroFondoCono = parseFloat(document.getElementById('diametroFondoCono').value);
 
   /* Propeller data [0]=P1 (bottom) … [3]=P4 (top) */
   const props = [1, 2, 3, 4].map(n => {
@@ -222,7 +278,6 @@ function drawTankDiagram() {
     const D_mm = parseFloat(document.getElementById('diam' + n)?.value) || 0;
     return { active: tipo !== 'N.A.' && D_mm > 0, D_m: D_mm / 1000 };
   });
-  const D1_m = props[0].D_m;
   const geometry = getAgitatorGeometry();
   if (!Number.isFinite(geometry.length) || !Number.isFinite(geometry.clearance)) {
     _diagEmpty(svg);
@@ -233,15 +288,23 @@ function drawTankDiagram() {
     h !== null && Number.isFinite(h) && h >= 0 && h <= alturaTotal + 0.001 ? h : null);
   const activePropNames = props.map((p, i) => p.active ? `P${i + 1}` : null).filter(Boolean);
 
+  if (alturaUtil > alturaTotal) {
+    _diagEmpty(svg);
+    return;
+  }
+
   if (tipoTanque === 'CIRCULAR') {
     const tankDiam = parseFloat(document.getElementById('diametro').value) || 0;
-    if (alturaUtil <= 0 || alturaTotal <= 0 || tankDiam <= 0) {
+    if (alturaUtil <= 0 || alturaTotal <= 0 || tankDiam <= 0 ||
+        (fondoConico && !(alturaCono > 0 && alturaCono <= alturaTotal &&
+          alturaUtil <= alturaTotal &&
+          diametroFondoCono >= 0 && diametroFondoCono < tankDiam))) {
       _diagEmpty(svg);
       return;
     }
     _drawCircularDiagram(svg, {
-      alturaUtil, alturaTotal, bafles, props, D1_m, clearance, propH,
-      activePropNames, tankDiam,
+      alturaUtil, alturaTotal, bafles, props, clearance, propH,
+      activePropNames, tankDiam, fondoConico, alturaCono, diametroFondoCono,
     });
     return;
   }
@@ -254,7 +317,7 @@ function drawTankDiagram() {
     return;
   }
   _drawRectangularDiagram(svg, {
-    alturaUtil, alturaTotal, bafles, props, D1_m, clearance, propH,
+    alturaUtil, alturaTotal, bafles, props, clearance, propH,
     activePropNames, ancho, longitud,
   });
 }
@@ -269,7 +332,10 @@ function _diagEmpty(svg) {
 }
 
 function _drawCircularDiagram(svg, p) {
-  const { alturaUtil, alturaTotal, bafles, props, D1_m, clearance, propH, activePropNames, tankDiam } = p;
+  const {
+    alturaUtil, alturaTotal, bafles, props, clearance, propH,
+    activePropNames, tankDiam, fondoConico = false, alturaCono = 0, diametroFondoCono = 0,
+  } = p;
 
   const W = 580, H = 440;
   const ML = 90, MR = 150, MT = 55, MB = 62;
@@ -287,23 +353,23 @@ function _drawCircularDiagram(svg, p) {
   const mH = 20, mW = Math.min(Math.max(tW * 0.3, 32), 52);
   const mTop = tY - mH - 4;
 
-  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
   const E = [_diagDefs()];
 
   _diagRenderPanel(E, {
     tX, tW, tY, tBot, sc, cx, Y,
     alturaUtil, liquidY, bafles, bafRefDim: tankDiam,
-    props, propH, D1_m, clearance,
+    props, propH, clearance,
     mTop, mH, mW,
     widthLabel: `Ø ${tankDiam.toFixed(2)} m`,
-    showHb: true, showTitle: null,
+    showPositions: true, showTitle: null,
+    fondoConico, alturaCono, diametroFondoCono,
   });
 
   _diagHeightAnnotations(E, tX, tW, tY, tBot, liquidY, alturaUtil, alturaTotal);
 
   E.push(`<text x="${cx}" y="${tBot + 52}"
     text-anchor="middle" font-size="13" fill="${_DIAG_NAVY}" font-weight="600"
-    font-family="Segoe UI,sans-serif">Tanque cilíndrico</text>`);
+    font-family="Segoe UI,sans-serif">${fondoConico ? 'Tanque cilíndrico con fondo cónico' : 'Tanque cilíndrico'}</text>`);
 
   _diagLegend(E, W - MR + 12, MT, props, activePropNames);
 
@@ -313,11 +379,12 @@ function _drawCircularDiagram(svg, p) {
     Vista de elevación – escala aproximada – posición de propelas estimada
   </text>`);
 
+  svg.setAttribute('viewBox', `0 0 ${W} ${H + _diagPositionLabels(E, props, propH, W, H)}`);
   svg.innerHTML = E.join('\n');
 }
 
 function _drawSquareDiagram(svg, p) {
-  const { alturaUtil, alturaTotal, bafles, props, D1_m, clearance, propH, activePropNames, ancho } = p;
+  const { alturaUtil, alturaTotal, bafles, props, clearance, propH, activePropNames, ancho } = p;
 
   const W = 580, H = 440;
   const ML = 90, MR = 150, MT = 55, MB = 62;
@@ -335,16 +402,15 @@ function _drawSquareDiagram(svg, p) {
   const mH = 20, mW = Math.min(Math.max(tW * 0.3, 32), 52);
   const mTop = tY - mH - 4;
 
-  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
   const E = [_diagDefs()];
 
   _diagRenderPanel(E, {
     tX, tW, tY, tBot, sc, cx, Y,
     alturaUtil, liquidY, bafles, bafRefDim: ancho,
-    props, propH, D1_m, clearance,
+    props, propH, clearance,
     mTop, mH, mW,
     widthLabel: `Ancho = Longitud = ${ancho.toFixed(2)} m`,
-    showHb: true, showTitle: null,
+    showPositions: true, showTitle: null,
   });
 
   _diagHeightAnnotations(E, tX, tW, tY, tBot, liquidY, alturaUtil, alturaTotal);
@@ -361,11 +427,12 @@ function _drawSquareDiagram(svg, p) {
     Vista de elevación – escala aproximada – posición de propelas estimada
   </text>`);
 
+  svg.setAttribute('viewBox', `0 0 ${W} ${H + _diagPositionLabels(E, props, propH, W, H)}`);
   svg.innerHTML = E.join('\n');
 }
 
 function _drawRectangularDiagram(svg, p) {
-  const { alturaUtil, alturaTotal, bafles, props, D1_m, clearance, propH, activePropNames, ancho, longitud } = p;
+  const { alturaUtil, alturaTotal, bafles, props, clearance, propH, activePropNames, ancho, longitud } = p;
 
   /* Square tank (ancho === longitud): a single view is enough */
   if (Math.abs(ancho - longitud) < 0.005) {
@@ -376,7 +443,7 @@ function _drawRectangularDiagram(svg, p) {
   const W = 900, H = 460;
   const MR = 150, MT = 80, MB = 62;
   const GAP = 60;                         // space between the two panels (height dimension lives here)
-  const ML = 60;
+  const ML = 100;
   const drawW = W - ML - MR - GAP;
   const drawH = H - MT - MB;
   const panelMaxW = drawW / 2;
@@ -404,25 +471,24 @@ function _drawRectangularDiagram(svg, p) {
   const mW2 = Math.min(Math.max(t2W * 0.3, 32), 52);
   const mTop = tY - mH - 4;
 
-  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
   const E = [_diagDefs()];
 
   _diagRenderPanel(E, {
     tX: t1X, tW: t1W, tY, tBot, sc, cx: cx1, Y,
     alturaUtil, liquidY, bafles, bafRefDim: ancho,
-    props, propH, D1_m, clearance,
+    props, propH, clearance,
     mTop, mH, mW: mW1,
     widthLabel: `Ancho = ${ancho.toFixed(2)} m`,
-    showHb: true, showTitle: 'VISTA FRONTAL (ANCHO)',
+    showPositions: true, showTitle: 'VISTA FRONTAL (ANCHO)',
   });
 
   _diagRenderPanel(E, {
     tX: t2X, tW: t2W, tY, tBot, sc, cx: cx2, Y,
     alturaUtil, liquidY, bafles, bafRefDim: longitud,
-    props, propH, D1_m, clearance,
+    props, propH, clearance,
     mTop, mH, mW: mW2,
     widthLabel: `Longitud = ${longitud.toFixed(2)} m`,
-    showHb: false, showTitle: 'VISTA LATERAL (LONGITUD)',
+    showPositions: false, showTitle: 'VISTA LATERAL (LONGITUD)',
   });
 
   /* Shared height dimension, anchored to the right edge of panel 2 */
@@ -440,6 +506,7 @@ function _drawRectangularDiagram(svg, p) {
     Vistas de elevación ortogonales a escala – misma posición de propelas en ambas
   </text>`);
 
+  svg.setAttribute('viewBox', `0 0 ${W} ${H + _diagPositionLabels(E, props, propH, W, H)}`);
   svg.innerHTML = E.join('\n');
 }
 
@@ -461,7 +528,7 @@ function _diagElevationScale(tipoTanque, alturaTotal, tankDiam, ancho, longitud)
     const drawW = 580 - 90 - 150, drawH = 440 - 55 - 62;
     return Math.min(drawH / alturaTotal, drawW / (ancho * 1.9));
   }
-  const drawW = 900 - 60 - 150 - 60, drawH = 460 - 80 - 62;
+  const drawW = 900 - 100 - 150 - 60, drawH = 460 - 80 - 62;
   const panelMaxW = drawW / 2;
   return Math.min(drawH / alturaTotal, panelMaxW / Math.max(ancho, longitud));
 }

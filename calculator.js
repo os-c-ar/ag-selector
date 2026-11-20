@@ -258,10 +258,37 @@ function calculate() {
   let areaSuperficial, volumenUtil;
   const alturaUtil  = parseFloat(document.getElementById('alturaUtil').value)  || 0;
   const alturaTotal = parseFloat(document.getElementById('alturaTotal').value) || 0;
+  const fondoConico = tankType === 'CIRCULAR' && document.getElementById('fondoConico').checked;
 
   if (tankType === 'CIRCULAR') {
     tankDiameter = parseFloat(document.getElementById('diametro').value) || 0;
     areaSuperficial = Math.pow(tankDiameter, 2) * 0.7854;          // π/4 * D²
+    volumenUtil = areaSuperficial * alturaUtil;
+    if (fondoConico) {
+      const alturaCono = parseFloat(document.getElementById('alturaCono').value);
+      const diametroFondoCono = parseFloat(document.getElementById('diametroFondoCono').value);
+      const validCone = alturaCono > 0 && alturaCono <= alturaTotal &&
+        alturaUtil <= alturaTotal &&
+        diametroFondoCono >= 0 && diametroFondoCono < tankDiameter;
+      const note = document.getElementById('coneDimensionsNote');
+      note.classList.toggle('hidden', validCone);
+      if (validCone) {
+        const coneFillHeight = Math.min(alturaUtil, alturaCono);
+        const liquidDiameterAtConeLevel = diametroFondoCono +
+          (tankDiameter - diametroFondoCono) * coneFillHeight / alturaCono;
+        const coneVolume = Math.PI * coneFillHeight / 12 *
+          (diametroFondoCono ** 2 +
+            diametroFondoCono * liquidDiameterAtConeLevel +
+            liquidDiameterAtConeLevel ** 2);
+        volumenUtil = coneVolume + areaSuperficial * Math.max(0, alturaUtil - alturaCono);
+        note.textContent = '';
+      } else {
+        volumenUtil = NaN;
+        note.textContent = 'Revise las dimensiones: la altura del cono debe ser mayor que 0 y no superar la altura total, la altura útil no puede superar la altura total y el diámetro del fondo debe ser menor que el diámetro del tanque.';
+      }
+    } else {
+      document.getElementById('coneDimensionsNote').classList.add('hidden');
+    }
   } else {
     const ancho   = parseFloat(document.getElementById('ancho').value)   || 0;
     const longitud = parseFloat(document.getElementById('longitud').value) || 0;
@@ -269,8 +296,8 @@ function calculate() {
     tankDiameter  = dEquiv;
     areaSuperficial = ancho * longitud;                                   // actual rectangular area
     document.getElementById('diametroEquiv').value = fmt(dEquiv, 3);
+    volumenUtil = areaSuperficial * alturaUtil;
   }
-  volumenUtil = areaSuperficial * alturaUtil;
 
   document.getElementById('areaSuperficial').value = fmt(areaSuperficial, 4);
   document.getElementById('volumenUtil').value      = fmt(volumenUtil, 4);
@@ -517,8 +544,9 @@ function attachListeners() {
   document.getElementById('proceso').addEventListener('change', applyProcessRecommendations);
   const ids = [
     'tipoCircular', 'tipoRectangular',
+    'fondoPlano', 'fondoConico',
     'diametro', 'ancho', 'longitud',
-    'alturaUtil', 'alturaTotal',
+    'alturaUtil', 'alturaTotal', 'alturaCono', 'diametroFondoCono',
     'baflesSi', 'baflesNo',
     'proceso',
     'viscosidad', 'densidad',
@@ -534,8 +562,17 @@ function attachListeners() {
   document.querySelectorAll('input[name="tipoTanque"]').forEach(el => {
     el.addEventListener('change', () => {
       const isRect = document.getElementById('tipoRectangular').checked;
+      if (isRect) document.getElementById('fondoPlano').checked = true;
       document.getElementById('inputsCircular').classList.toggle('hidden', isRect);
       document.getElementById('inputsRectangular').classList.toggle('hidden', !isRect);
+      document.getElementById('bottomTypeFields').classList.toggle('hidden', isRect);
+      document.getElementById('coneDimensions').classList.toggle('hidden', isRect || !document.getElementById('fondoConico').checked);
+      calculate();
+    });
+  });
+  document.querySelectorAll('input[name="fondoTanque"]').forEach(el => {
+    el.addEventListener('change', () => {
+      document.getElementById('coneDimensions').classList.toggle('hidden', !document.getElementById('fondoConico').checked);
       calculate();
     });
   });

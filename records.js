@@ -167,6 +167,9 @@ function gatherSelectionData() {
     diametro:         v('diametro'),
     ancho:            v('ancho'),
     longitud:         v('longitud'),
+    fondoTanque:      rb('fondoTanque'),
+    alturaCono:       v('alturaCono'),
+    diametroFondoCono: v('diametroFondoCono'),
     alturaUtil:       v('alturaUtil'),
     alturaTotal:      v('alturaTotal'),
     bafles:           rb('bafles'),
@@ -285,11 +288,18 @@ function restoreSelectionData(rec) {
   const isRect = rec.tipoTanque === 'RECTANGULAR';
   const circ = document.getElementById('inputsCircular');
   const rect = document.getElementById('inputsRectangular');
+  const bottomTypeFields = document.getElementById('bottomTypeFields');
   if (circ) circ.classList.toggle('hidden', isRect);
   if (rect) rect.classList.toggle('hidden', !isRect);
+  if (bottomTypeFields) bottomTypeFields.classList.toggle('hidden', isRect);
+  const fondoTanque = !isRect && rec.fondoTanque === 'CONICO' ? 'CONICO' : 'PLANO';
+  sr('fondoTanque', fondoTanque);
+  document.getElementById('coneDimensions').classList.toggle('hidden', fondoTanque !== 'CONICO');
   sv('diametro',    rec.diametro);
   sv('ancho',       rec.ancho);
   sv('longitud',    rec.longitud);
+  sv('alturaCono', rec.alturaCono);
+  sv('diametroFondoCono', rec.diametroFondoCono);
   sv('alturaUtil',  rec.alturaUtil);
   sv('alturaTotal', rec.alturaTotal);
   sr('bafles',           rec.bafles);
@@ -423,6 +433,12 @@ function _buildExportRows(record) {
   lv('Tipo de tanque', r.tipoTanque);
   if (r.tipoTanque === 'CIRCULAR') lv('Diametro (m)', r.diametro);
   else lv('Ancho (m)', r.ancho, 'Longitud (m)', r.longitud);
+  if (r.fondoTanque === 'CONICO') {
+    lv('Fondo del tanque', 'Cónico', 'Altura del cono (m)', r.alturaCono);
+    lv('Diámetro del fondo del cono (m)', r.diametroFondoCono);
+  } else if (r.tipoTanque === 'CIRCULAR') {
+    lv('Fondo del tanque', 'Plano');
+  }
   if (res.diametroEquiv) lv('Diametro equivalente (m)', res.diametroEquiv);
   lv('Altura util (m)', r.alturaUtil, 'Altura total (m)', r.alturaTotal);
   lv('Lleva bafles?', r.bafles, 'Area superficial (m2)', res.areaSuperficial);
@@ -556,6 +572,10 @@ async function exportRecordToExcel(record) {
     r.tipoTanque === 'CIRCULAR'
       ? lv('Diámetro (m)', r.diametro)
       : lv('Ancho (m)', r.ancho, 'Longitud (m)', r.longitud),
+    r.fondoTanque === 'CONICO'
+      ? lv('Fondo del tanque', 'Cónico', 'Altura del cono (m)', r.alturaCono)
+      : r.tipoTanque === 'CIRCULAR' ? lv('Fondo del tanque', 'Plano') : '',
+    r.fondoTanque === 'CONICO' ? lv('Diámetro del fondo del cono (m)', r.diametroFondoCono) : '',
     res.diametroEquiv ? lv('Diámetro equivalente (m)', res.diametroEquiv) : '',
     lv('Altura útil (m)', r.alturaUtil,      'Altura total (m)', r.alturaTotal),
     lv('¿Lleva bafles?',  r.bafles,          'Área superficial (m²)', res.areaSuperficial),

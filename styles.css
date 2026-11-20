@@ -51,6 +51,7 @@ body {
 .tab-nav {
   background: var(--navy);
   display: flex;
+  overflow-x: auto;
   gap: 0;
   padding: 0 24px;
   border-bottom: 3px solid var(--blue-mid);
@@ -69,6 +70,7 @@ body {
   letter-spacing: 0.3px;
   margin-bottom: -3px;
   transition: color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
 }
 .tab-btn:hover { color: rgba(255,255,255,0.9); }
 .tab-btn.active {
@@ -975,8 +977,32 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: 16px 20px 20px;
+  gap: 8px;
+  padding: 12px 20px 20px;
+}
+
+.diagram-body .section-note {
+  margin: 0;
+}
+
+.diagram-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: 6px 12px;
+  width: 100%;
+}
+
+.diagram-controls .form-row {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  min-width: 0;
+}
+
+.diagram-controls input,
+.diagram-controls select {
+  width: 100%;
+  min-width: 0;
 }
 
 .tank-svg {
@@ -1061,7 +1087,6 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
 #standardEditor .db-input { display: block; margin-top: 6px; }
 .standards-table-wrap { overflow: auto; margin-top: 16px; }
 .standards-table-wrap table { min-width: 1150px; }
-.diagram-body .form-row { flex-wrap: wrap; margin-bottom: 8px; }
 #propellerEditor .db-input { display: block; margin-top: 6px; }
 #processRecommendationsDialog {
   margin: auto;
@@ -1348,6 +1373,79 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
   transition: background 0.15s;
 }
 .btn-modal-close:hover { background: var(--blue); }
+
+/* =====================================================
+   PARTS CODING
+   ===================================================== */
+.parts-coding { max-width: 1050px; margin: 0 auto; }
+.parts-coding .section-body { padding: 24px; }
+.parts-intro { color: var(--gray-600); line-height: 1.5; margin-bottom: 20px; }
+.parts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 18px;
+}
+.parts-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.parts-field label { color: #003366; font-weight: 700; }
+.parts-field select,
+.parts-field input[type="number"] {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: white;
+  color: var(--gray-800);
+  font: inherit;
+}
+.parts-field select:focus,
+.parts-field input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; }
+.parts-field input[aria-invalid="true"] { border-color: var(--red); }
+.parts-help { color: var(--gray-600); font-size: 11px; }
+.parts-reducer-note { margin-top: 14px; line-height: 1.5; }
+.parts-reducer-note a { color: var(--blue); }
+.parts-error { color: var(--red); font-size: 12px; }
+.parts-result {
+  margin-top: 24px;
+  padding: 20px;
+  border-radius: var(--radius);
+  background: #003366;
+  color: white;
+  text-align: center;
+}
+.parts-result h3 { font-size: 12px; letter-spacing: 0.6px; text-transform: uppercase; }
+.parts-code {
+  display: block;
+  margin: 14px 0;
+  color: #fff;
+  font: 700 clamp(16px, 2.2vw, 24px) 'Courier New', monospace;
+  overflow-wrap: anywhere;
+}
+.parts-copy {
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 5px;
+  background: var(--green);
+  color: white;
+  font: 700 13px var(--font);
+  cursor: pointer;
+}
+.parts-copy:hover:not(:disabled) { background: #146331; }
+.parts-copy:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+.parts-copy:disabled { opacity: 0.55; cursor: not-allowed; }
+.parts-copy-status { min-height: 1.4em; margin-top: 8px; }
+.parts-description { margin-top: 20px; padding: 16px; border-left: 4px solid var(--orange); background: var(--gray-100); }
+.parts-description h3 { margin-bottom: 8px; color: #003366; font-size: 13px; }
+.parts-description p { line-height: 1.6; }
+@media (max-width: 700px) {
+  body.parts-page-active { min-width: 0; }
+  .parts-page-active .page-header { padding: 14px; }
+  .parts-page-active .header-controls { flex-wrap: wrap; width: 100%; min-width: 0; }
+  .parts-page-active .header-meta { min-width: 0; max-width: 100%; }
+  .parts-page-active .tab-nav { padding: 0 8px; }
+  .parts-page-active .main-content { padding: 0 12px 30px; }
+  .parts-coding .section-body { padding: 16px; }
+}
 
 /* =====================================================
    CODING SECTION

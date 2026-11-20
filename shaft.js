@@ -416,10 +416,11 @@ function calculateShaft() {
 // =====================================================
 
 function switchTab(n) {
-  [1, 2, 3, 4, 5, 6, 7].forEach(i => {
+  [1, 2, 3, 4, 5, 6, 7, 8].forEach(i => {
     document.getElementById('page' + i).classList.toggle('hidden', i !== n);
     document.getElementById('tabBtn' + i).classList.toggle('active', i === n);
   });
+  document.body.classList.toggle('parts-page-active', n === 8);
   if (n === 2) calculateShaft();
   if (n === 3 && typeof calculateOG === 'function') calculateOG();
   if (n === 4 && typeof calculateCosteo === 'function') calculateCosteo();
