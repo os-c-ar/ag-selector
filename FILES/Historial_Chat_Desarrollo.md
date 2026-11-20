@@ -1172,6 +1172,46 @@ por otras funciones de la aplicación.
 
 ---
 
+## 2026-11-20 17:47 — Rama `dev` para trabajar desde otro PC sin desplegar en GitHub Pages
+
+**Solicitud:** poder seguir trabajando en el proyecto desde otro computador con la misma cuenta de
+GitHub, sin que esos cambios se publiquen automáticamente en la página de prueba
+`https://os-c-ar.github.io/ag-selector/`.
+
+**Análisis realizado:** se confirmó que GitHub Pages está configurado para desplegar directamente
+desde la rama `main` (no existe workflow de GitHub Actions ni rama `gh-pages`), por lo que cualquier
+`git push` a `main` publica el sitio de inmediato. Se plantearon tres alternativas (rama de
+desarrollo separada, cambiar la fuente de Pages a otra rama, o despliegue manual vía Actions); se
+eligió la primera por ser la más simple y reversible.
+
+**Cambios implementados:**
+- Se creó la rama **`dev`** a partir del estado de `main`.
+- Los cambios locales pendientes sin commitear (`calculator.js`, `diagram.js`, `index.html`,
+  `offer.js`, `records.js`, `shaft.js`, `styles.css`, y los archivos nuevos `FILES/registros.json`
+  y `parts_coding.js`) se confirmaron en `dev` con el commit `"WIP: trabajo en progreso"`.
+- Se publicó `dev` en el remoto (`git push -u origin dev`). `main` no se modificó ni se le hizo
+  push, por lo que la web de prueba sigue sirviendo el despliegue anterior sin cambios.
+
+**Flujo adoptado para trabajar desde varios equipos:**
+- Sincronizar (`git pull` / `git push`) sobre la rama `dev` desde cualquier PC mientras el trabajo
+  esté en progreso.
+- Solo cuando `dev` esté lista para publicarse: `git checkout main && git pull origin main &&
+  git merge dev && git push origin main`. Ese último `push` a `main` es el único paso que dispara
+  el despliegue en GitHub Pages.
+
+**Nota sobre continuidad del chat:** esta conversación de Copilot está asociada a este equipo/sesión
+y no se sincroniza automáticamente a otro PC solo por iniciar sesión con la misma cuenta de GitHub.
+Para continuar el trabajo desde otro equipo se recomienda abrir un chat nuevo ahí y pedir
+explícitamente que lea este archivo (`FILES/Historial_Chat_Desarrollo.md`) como contexto, tal como
+ya indica la sección "Cómo se mantiene actualizado" más abajo.
+
+**Validación:** `git status` confirmó el working tree limpio tras el commit; `git log --oneline`
+verificó que `main` conserva su último commit (`83ff6a0`) sin cambios y que `dev` lo extiende con el
+nuevo commit (`01239d1`); la salida de `git push` confirmó la creación de la rama remota
+`origin/dev`.
+
+---
+
 ## Cómo se mantiene actualizado
 
 Este archivo **no se regenera automáticamente** (es un documento narrativo, no un reporte generado
