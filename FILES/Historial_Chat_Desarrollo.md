@@ -1315,6 +1315,134 @@ verificará después de publicar. No se ejecutarán pruebas funcionales nuevas e
 
 ---
 
+## 2026-11-25 11:55 — Auditoría crítica profunda por dimensiones (arquitectura, prácticas, funcionalidad y estética)
+
+**Solicitud:** repetir la auditoría global con un nivel de profundidad sustancialmente mayor en los cuatro ejes (arquitectura, prácticas de programación, funcionalidad y estética), sin modificar el código de la aplicación; generar un listado exhaustivo y accionable de recomendaciones por aspecto para construir después un plan de mejoras; actualizar este historial y publicar en `origin/dev` para continuar desde otro computador.
+
+**Metodología aplicada:** inspección estática línea por línea de los 19 módulos JavaScript, `index.html` (2.238 líneas), `styles.css` (1.928 líneas), `.gitignore`, `FILES/Variables_Plantilla_Cotizacion.md` y el estado interno del repositorio Git (`.git/refs` e índice). No se alteró ningún archivo de código ni de estilos.
+
+### 1. Arquitectura y gestión de datos / repositorio
+
+**Hallazgos críticos y estructurales:**
+- **Higiene crítica del repositorio Git:**
+  1. Existen archivos ocultos `desktop.ini` generados por sincronización de escritorio (Google Drive / Windows Explorer) **dentro de `.git/refs/`** (`refs/heads/desktop.ini`, `refs/remotes/origin/desktop.ini`, `refs/tags/desktop.ini` y 30 rutas bajo `refs/agents/...`). Esto provoca errores fatales en `git fetch` (`fatal: bad object refs/.../desktop.ini`).
+  2. Aunque `.gitignore` incluye `desktop.ini`, `.tmp_docx_out/` y `.tmp_docx_template/`, **siguen versionados en el índice de Git** 86 archivos de esas rutas porque fueron confirmados antes de añadirse las reglas de exclusión.
+  3. `FILES/registros.json` (raíz de `FILES/`) está versionado en Git (confirmado en `01239d1`), exponiendo datos operativos en el repositorio y generando confusión frente a la ubicación oficial `FILES/DATABASE/registros.json`.
+- **DOM como bus de estado y acoplamiento en cascada:** no existe un modelo numérico central de la selección actual. `calculator.js` formatea resultados con `toLocaleString('es-CO')` y los escribe en `<input>` del DOM; acto seguido, `shaft.js`, `og_shaft.js`, `coding.js`, `gradient.js` y `offer.js` releen esos textos formateados desde el DOM y los vuelven a parsear con 5 funciones distintas (`codParseNum`, `ogParseNum`, `gradReadNumEsCO`, `_num`, `parseFloat`). Esto introduce redondeos intermedios (p. ej. `potenciaRequerida` redondeada a 2 decimales antes de alimentar `gradient.js`) y fragilidad por formato regional.
+- **Divergencia de reconexión al inicio (bug de datos obsoletos en equipo compartido):** al recargar la página (`DOMContentLoaded`), solo `propellers.js` y `standard_agitators.js` releen el JSON vinculado en disco y actualizan memoria/`localStorage`. Los otros **6 módulos** (`database.js`, `materials.js`, `costeo_db.js`, `records.js`, `clients.js`, `staff.js`) ejecutan `TryAutoReconnect()` haciendo únicamente `setFileHandle(handle)` y `markSynced(await readText(handle))`, **sin cargar el contenido del archivo en memoria**. Resultado: si otro usuario actualizó `clientes.json` o `registros.json` en Google Drive mientras esta pestaña estaba cerrada, la aplicación arranca mostrando datos viejos de `localStorage`, pero marca como `lastSyncedText` el texto nuevo del disco, **anulando la guardia de conflicto** y sobrescribiendo silenciosamente los cambios ajenos en el siguiente guardado.
+- **Asimetría de madurez entre los 8 módulos de bases de datos:**
+  - *Estándar alto (`propellers.js`, `standard_agitators.js`):* cola de promesas (`enqueue`) que serializa escrituras concurrentes, `checkConflict(..., requireRead = true)`, validación estricta de esquema con `version: 1`, y preservación del `handle` + mensaje visible si falla una escritura.
+  - *Estándar legado (los otros 6 módulos):* escrituras `_writeFile()` tipo *fire-and-forget* sin cola (dos ediciones rápidas pueden entrelazar `createWritable()`), `requireRead = false`, estructuras heterogéneas (`registros.json`, `materiales.json` y `partes_costeo.json` guardan arrays crudos sin `version`, mientras `database`, `clients` y `staff` usan objetos `{ version: 1, ... }`), y en caso de error de E/S hacen `_fileHandle = null` silenciosamente sin avisar al usuario.
+- **Carga global por orden estricto de 19 `<script>`:** sin namespaces ni módulos ES; el orden en `index.html` es frágil (p. ej. `propellers.js` ejecuta `NFS_PROPELLERS.load()` en el nivel superior durante la carga y depende de que `PROPELLERS`, `PROP_WEIGHT`, `TYPE_TO_WEIGHT`, `APP_TO_COD` y `COD` ya existan en `window`).
+- **Dependencias externas por CDN sin fijación de integridad ni respaldo offline:** `ExcelJS` (`costeo.js`), `SheetJS/xlsx` (`records.js`, `materials.js`, `costeo_db.js` — con 3 cargadores duplicados `_ensureXLSX*`) y `PizZip` (`offer.js`) se descargan bajo demanda desde `cdn.jsdelivr.net` sin atributo `integrity` (SRI) ni copia local para trabajo en planta sin internet.
+
+**Recomendaciones de Arquitectura:**
+- **R-ARQ-01 (P0):** Limpiar el repositorio en `dev`: `git rm --cached -r .tmp_docx_out .tmp_docx_template desktop.ini FILES/desktop.ini FILES/registros.json`, eliminar los `desktop.ini` dentro de `.git/refs/` y documentar cómo excluir `.git/` de la indexación/personalización de carpetas de Windows/Drive.
+- **R-ARQ-02 (P0):** Corregir la reconexión automática en los 6 módulos legados para que, al reconectar un `handle` con permiso en el arranque, **lean, validen e hidraten en memoria + `localStorage`** el contenido actual del archivo en disco antes de fijar `markSynced`.
+- **R-ARQ-03 (P0):** Extraer en `persist.js` un adaptador único de repositorio (`createSyncedStore({ key, schemaVersion, validate, serialize, defaults })`) que unifique para las 8 bases: cola de escritura serializada, `checkConflict` estricto, manejo visible de errores sin desconectar en silencio y reconexión consistente.
+- **R-ARQ-04 (P1):** Introducir un objeto de estado numérico calculado en memoria (similar a `_cstComputed` en `costeo.js`, p. ej. `NFS_CALC_STATE`) como fuente única de verdad entre Selección, Geometría, Eje, Gradiente, Codificación y Oferta, dejando el DOM exclusivamente para presentación.
+- **R-ARQ-05 (P1):** Unificar el envoltorio de esquema `{ version: 1, updatedAt, items: [...] }` en los 3 JSON que aún usan arrays en raíz (`registros`, `materiales`, `partes_costeo`), manteniendo lectura retrocompatible con arrays legados.
+- **R-ARQ-06 (P2):** Centralizar un único cargador de librerías externas con SRI y copia local en `FILES/VENDOR/` (o `vendor/`) como *fallback* automático cuando no haya conexión a internet en visitas a planta.
+
+---
+
+### 2. Prácticas de programación, calidad de código y seguridad
+
+**Hallazgos específicos en el código:**
+- **Bugs latentes de conversión numérica y localización (`parseFloat` vs `es-CO`):**
+  - En `shaft.js` (línea 196): `const Pmotor = parseFloat(P_str) || 0;` lee `#motorCercano` (que usa punto decimal con `.toFixed(2)`), pero `sh_L1/L2/L3` usan `parseFloat` mientras `L` usa `codParseNum(L_str)`. Si algún campo pasa a formatearse con `fmt()`, `parseFloat("1,50")` truncará silenciosamente a `1`.
+  - En `calculator.js` (líneas 247-248, 260, 274): `parseFloat(el.value) || 0` (y `viscosidad || 1`, `densidad || 1`, `_num('cst_dolar') || 1`, `_num('cst_cantidad') || 1`) convierte entradas vacías, `0` o errores de tipeo en valores por defecto silenciosos (`1`), ocultando entradas inválidas en lugar de señalizarlas.
+- **Excepción no capturada que interrumpe la cascada de cálculo:** en `shaft.js` (línea 239), `propWeight(n)` lanza `throw new Error(...)` si una propela tiene peso inválido; como `calculate()` invoca `calculateShaft()` antes que `calculateOG()` sin `try/catch`, un fallo ahí aborta `calculateOG()`.
+- **Vulnerabilidad XSS / rotura de documento en ventana emergente (`generarMemoriaEje` en `og_shaft.js`, líneas 224-311):** los campos `nombreTanque`, `tagAgitador`, `fecha` y `cliente` se interpolan **sin escapar HTML** dentro de `w.document.write(html)`. Un cliente o tanque con caracteres `<`, `>` o `"` (frecuente para pulgadas, p. ej. `Tanque 3" <A>`) rompe el marcado HTML del reporte imprimible o inyecta scripts. También en `calculator.js` (`buildReferenceTable`, línea 424) `p.label` y `p.intensidad` se insertan con `innerHTML` sin escapar.
+- **Colisión y polución del espacio global (`window`):** decenas de funciones auxiliares cortas (`fmt`, `fmtS`, `setPass`, `_e`, `_esc`, `_num`, `_set`) viven en el ámbito global. Por ejemplo, `og_shaft.js` depende implícitamente de `fmt()` (definida en `calculator.js`) y de `setPass()` y `TUBE_SCH40/80` + `SIGMA_Y` (definidas en `shaft.js`), sin declararlo ni validarlo.
+- **Código muerto / referencias huérfanas:**
+  - `costeo_db.js` llama en dos sitios (`closeCostPartsModal` línea 887 e `importCostPartsFromExcel` línea 1044) a `if (typeof refreshCosteoCatalogSelectors === 'function') refreshCosteoCatalogSelectors()`, pero **esa función no existe en todo el proyecto**; al cerrar el modal de Partes o importar desde Excel, los `<select data-field="codigo">` de las filas actuales de Costeo **no se reconstruyen** hasta que el usuario cambie manualmente la categoría.
+  - `dblink.js` (líneas 221-225) captura con `catch (_) {}` cualquier JSON inválido al vincular por carpeta y **aun así vincula el archivo y hace `markSynced(text)`**, de modo que el siguiente cambio local sobrescribirá un archivo externo corrupto o de otra estructura sin haber avisado jamás.
+  - En `costeo_db.js` (`exportCostPartsJSON`, línea 975), el archivo descargado se llama `costeo_partes.json`, mientras que `dblink.js` y `FILES/DATABASE/` esperan el nombre **`partes_costeo.json`**, causando desconexión si se exporta y copia a `DATABASE`.
+- **Ausencia total de pruebas automatizadas y linters:** cálculos críticos de ingeniería (potencia, caudal, geometría cónica, esfuerzos de eje macizo/tubular, velocidades críticas, fórmulas de presupuesto y normalizador XML de Word) carecen de pruebas unitarias repetibles.
+
+**Recomendaciones de Prácticas de Programación:**
+- **R-PRG-01 (P0):** Crear una suite ligera de pruebas automatizadas sin dependencias pesadas (usando el runner nativo `node --test` de Node.js) que valide las funciones puras de cálculo contra casos patrón de las hojas Excel de referencia (`SELECCION DE AG`, `Cálculo del eje agitador_.xlsx`, `CA_NNN_26_PRESUPUESTO.xlsx` y `CODIGO AGITADOR 2.xlsx`).
+- **R-PRG-02 (P0):** Corregir los 3 defectos puntuales detectados en la revisión estática: (a) implementar `refreshCosteoCatalogSelectors()` en `costeo.js` (llamando a `renderMatRows()`), (b) corregir el nombre de exportación `costeo_partes.json` → `partes_costeo.json` en `costeo_db.js`, y (c) no silenciar errores de JSON al vincular archivos en `dblink.js`, `materials.js` y `costeo_db.js`.
+- **R-PRG-03 (P0):** Escapar todas las interpolaciones HTML restantes (`generarMemoriaEje` en `og_shaft.js` y `buildReferenceTable` en `calculator.js`) centralizando una única utilidad `NFS_UTIL.escapeHtml()` y `NFS_UTIL.parseNumber()` / `NFS_UTIL.formatNumber()`.
+- **R-PRG-04 (P1):** Reemplazar los *fallbacks* silenciosos (`|| 0`, `|| 1`) en entradas numéricas por validación explícita con `valueAsNumber` y `Number.isFinite()`, propagando `NaN` de forma controlada hacia la UI (`–` + mensaje de campo inválido) en vez de calcular con `1` implícito.
+- **R-PRG-05 (P1):** Añadir configuración mínima de ESLint (`eslint.config.js`) para navegador con declaración explícita de globales compartidos, detectando variables no definidas, funciones huérfanas y sombras de nombres antes de cada commit.
+
+---
+
+### 3. Funcionalidad, cálculos de ingeniería y flujos de negocio
+
+**Hallazgos funcionales y de dominio:**
+- **Persistencia incompleta en el Historial de Selecciones (`records.js`):**
+  - `gatherSelectionData()` guarda datos de Selección (pestaña ①), Codificación y Costeo (`[id^="cst_"]`), y guarda `STANDARD_PRODUCT_FIELDS` (que cubre parte de Eje/OG), pero `restoreSelectionData()` **solo restaura `agitatorProductFields` cuando `!rec.standardApplication`** y **nunca llama a `ogOnMaterialChange()` ni sincroniza la pestaña ④ Gradiente (`grad1_mu`, `grad2_*`) ni la pestaña ⑥ Codificación de partes**. Más aún: si se cambia `og_material` al restaurar, `restoreSelectionData` asigna el `<select>` pero hay que verificar que `og_sigmaS`/`og_sigmaT` editados manualmente se preserven y que `calculateOG()` y `calculateShaft()` se ejecuten al restaurar.
+  - La exportación de un registro a Excel (`exportRecordToExcel` en `records.js`) **no incluye** las secciones nuevas añadidas posteriormente: ni el resumen del presupuesto/precio comercial de Costeo, ni las consideraciones técnicas/comerciales separadas (internas vs. cliente), ni las separaciones individuales `%D2/%D3/%D4`, ni el modo manual de longitud de eje, ni el modelo estándar aplicado (aunque sí viajan ocultos en el JSON de `NFS_DATA`).
+- **Coexistencia confusa de dos motores de cálculo de eje (`page2` oculta vs `page3` visible):**
+  - La pestaña `② Diseño del Eje` (`page2`, `shaft.js`) está oculta con `style="display:none"` en la barra de navegación, mientras `② Eje (OG)` (`page3`, `og_shaft.js`) está visible. Sin embargo, **`shaft.js` se sigue ejecutando en cada `calculate()`**, y el módulo de **Agitadores Estándar** (`standard_agitators.js`) toma sus campos constructivos (`sh_diam_in`, `sh_material`, `sh_schedule`, `sh_FS`, etc.) de `page2` (que el usuario no puede ver ni editar en interfaz salvo a través del modal de estándares). Además, `shaft.js` incluye verificación de velocidad crítica (`0.9 * Ncr >= RPM`) y carga radial del motorreductor que `og_shaft.js` **no calcula**, dejando al ingeniero sin visibilidad de velocidad crítica en la pestaña activa.
+- **Inconsistencia en porcentajes de la pestaña Costeo (`page4`):**
+  - `cst_margen_materiales_pct` y `cst_margen_ingenieria_pct` se ingresan en porcentaje entero (`30` = 30 %), pero justo debajo `cst_imprevistos_pct` (`0.05`), `cst_financiero_pct` (`0.011`), `cst_administrativos_pct` (`0.02`), `cst_comision_pct` (`0.02`) y `cst_polizas_pct` (`0`) llevan la etiqueta **`(%)` pero exigen decimales fraccionarios (`0` a `0.99`)**. Si un usuario escribe `5` creyendo poner `5 %` (como hizo arriba con `30 %`), el formulario queda inválido (`max="0.99"`) o, si escribe `0.5`, aplica **50 %** en lugar de **0,5 %**. Es un riesgo alto de error en cotizaciones reales.
+- **Desconexión de viscosidad y actualización en pestaña Gradiente (`gradient.js`):**
+  - `calculateGradientTab1()` solo se recalcula al cambiar de pestaña hacia `page5` o al editar `grad1_mu`, pero no al final de `calculate()` si el usuario imprime todas las pestañas. Además, usa por defecto `μ = 0.001 Pa·s` (agua) sin ofrecer un botón o sincronización opcional con la viscosidad en `cps` de la pestaña ① (`1 cP = 0.001 Pa·s`), lo que puede llevar a calcular `G` con viscosidad de agua para un fluido distinto.
+- **Desincronización entre encabezado principal y encabezado de Costeo:**
+  - `updateCostingFromSelection()` copia `cotizacion` → `cst_cotizacion_no` y `agitadorSeleccionado` → `cst_codigo_equipo` **solo cuando el destino está vacío (`if (el && !el.value)`)**, y **nunca sincroniza `tagAgitador` → `cst_tag` ni `proceso` → `cst_aplicacion`**. Si el usuario corrige el número de cotización o cambia de agitador después del primer cálculo, `cst_cotizacion_no` y `cst_codigo_equipo` quedan congelados con el valor viejo, provocando discrepancias entre el `.xlsx` de Presupuesto y el `.docx` de Oferta.
+- **Generación de oferta Word (`offer.js`) y validaciones previas:**
+  - En `_offerCurrentData()`, existen dos propiedades muertas/engañosas (`monedaOferta: 'COP (Pesos colombianos)'` y `sitioEntrega: 'En sus instalaciones...'`) que luego son sobrescritas por `Object.assign(map, data.costeoOferta)` en `_buildOfferPlaceholderMap()`.
+  - `generateOfferDraft()` permite exportar una oferta Word incluso cuando hay **advertencias críticas activas** en la selección: dimensiones de cono inválidas (`volumenUtil = NaN` → `–` en Word), propelas fuera de la altura del tanque (`geometryWarning`), nivel de agitación fuera del rango recomendado, o potencia requerida superior a la instalada en un estándar, sin pedir confirmación explícita al ingeniero.
+  - Solo reemplaza variables en `word/document.xml`, pero **no procesa encabezados ni pies de página** (`word/header1.xml`, `word/footer1.xml`), donde las plantillas corporativas suelen colocar `{{cotizacion}}`, `{{fecha}}` o `{{cliente}}`.
+- **Escalabilidad y gestión del Historial y Catálogos:**
+  - El modal de Historial (`records.js`) carece de **buscador/filtro** por cliente, cotización, código o fecha; con decenas o cientos de cotizaciones compartidas en equipo será difícil localizar un registro.
+  - No existe indicador de **"cambios sin guardar"** (*dirty state*) ni advertencia `beforeunload`: si se carga un registro o se edita un presupuesto largo y se cierra la pestaña o se carga otro registro accidentalmente, se pierde el trabajo.
+  - En `materials.js` la edición en tabla (`_editMaterial`) no expone la columna `pesoUnitario` (solo se edita vía Excel), aunque sí existe en el modelo de datos.
+
+**Recomendaciones de Funcionalidad:**
+- **R-FUN-01 (P0):** Unificar la convención de entrada de **todos** los campos porcentuales de Costeo (`imprevistos`, `financiero`, `administrativos`, `comisión`, `pólizas`) al mismo formato humano (`5` = 5 %) ya usado en los márgenes, con migración automática de registros antiguos igual a `cst_margenes_formato`.
+- **R-FUN-02 (P0):** Implementar compuerta de validación previa a exportar Oferta Word y Presupuesto Excel: bloquear si hay datos geométricos/numéricos inválidos (`NaN`) y mostrar un resumen de advertencias de ingeniería activas (RPM > máx, nivel fuera de rango, potencia > motor estándar, eje fuera de rango) exigiendo confirmación consciente antes de emitir el documento.
+- **R-FUN-03 (P0):** Extender `offer.js` para reemplazar variables también en `word/header*.xml` y `word/footer*.xml` del `.docx`, y documentar en `FILES/Variables_Plantilla_Cotizacion.md` las variables de tanque cónico (`fondo_tanque`, `altura_cono`, `diametro_fondo_cono`) que ya existen en código pero faltaban en la tabla de la guía.
+- **R-FUN-04 (P1):** Resolver la dualidad `shaft.js` vs `og_shaft.js` con criterio de ingeniería: definir si la verificación de velocidad crítica y los parámetros guardados por `standard_agitators.js` deben integrarse/mostrarse en la pestaña activa `② Eje (OG)` o si `Diseño del Eje` debe rehabilitarse como subvista avanzada.
+- **R-FUN-05 (P1):** Sincronizar de forma reactiva (salvo edición manual explícita) `cotizacion`, `tagAgitador`, `proceso` y `agitadorSeleccionado` con los campos de encabezado de Costeo; añadir buscador en Historial de Selecciones y en Partes de Costeo (`costPartsModal`, que hoy lista cientos de partes sin filtro).
+- **R-FUN-06 (P1):** Añadir control de cambios sin guardar (*dirty state* + aviso `beforeunload` + botón **"Nueva selección / Limpiar formulario"** para salir limpiamente del modo `Actualizar selección` sin recargar el navegador).
+
+---
+
+### 4. Estética, experiencia de usuario (UX), accesibilidad e impresión
+
+**Hallazgos visuales y de interfaz:**
+- **Numeración rota en la barra de pestañas (`index.html`, líneas 156-165):** al haberse ocultado `tabBtn2`, las pestañas visibles muestran: `① Selección de Agitador`, `② Eje (OG)`, `③ Costeo Agitador`, **`④ Gradiente de Floculación`**, **`④ Decodificador`** (número ④ duplicado), `⑤ AGITADORES ESTÁNDAR` (única en MAYÚSCULAS sostenidas) y `⑥ Codificación de partes`.
+- **Numeración heredada inconexa en Sección 4 Resultados (`index.html`, líneas 534-589):** dentro de `"4. RESULTADOS"`, los campos saltan a `"6. Nivel de agitación obtenido"`, `"7. Potencia requerida"`, `"8. Agitador seleccionado"`, `"9. Motoreductor seleccionado"` y tarjetas `"10..13"` (vestigio de la numeración de filas del Excel original, sin ítems 5).
+- **Colisión visual del botón flotante (`#btnFloatingSaveSelection`) y z-index:**
+  - Ubicado fijo en `right: 24px; bottom: 24px; z-index: 1500`. Como `.modal-overlay` tiene `z-index: 1000`, **el botón flotante "Guardar selección" permanece visible y clicable ENCIMA del fondo oscuro y encima de los botones "Cerrar / Exportar" del pie de los 7 modales** (`dbModal`, `recModal`, `clientsModal`, `staffModal`, `materialsModal`, `costPartsModal`, `dbLinkModal`). Además, en las páginas principales cubre los últimos controles inferiores derechos si no hay `padding-bottom` suficiente.
+- **Inconsistencia entre dos sistemas de modales distintos:** 7 ventanas usan `<div class="modal-overlay hidden">` (que **no atrapan el foco del teclado, no se cierran con la tecla `Escape`** y permiten hacer tabulación hacia el formulario de atrás), mientras que 3 editores recientes (`#propellerEditor`, `#standardEditor`, `#processRecommendationsDialog`) usan `<dialog>` nativo con `showModal()`.
+- **Accesibilidad (a11y) y usabilidad de formularios:**
+  - La mayoría de los `<label class="field-label">` en `page1`, `page2`, `page3` y `page4` **no tienen atributo `for="..."`** vinculado al `id` del `<input>`/`<select>`, impidiendo hacer clic en la etiqueta para enfocar el campo y dejando a lectores de pantalla sin nombre accesible.
+  - Uso intensivo de diálogos bloqueantes nativos `alert()`, `confirm()` y `prompt()` (más de 45 ocurrencias) para validaciones, errores y confirmaciones, rompiendo la estética institucional y bloqueando el hilo principal.
+  - La barra `.tab-nav` carece de semántica `role="tablist"` / `role="tab"` / `aria-selected`.
+- **Rigidez de diseño (`min-width: 900px` en `body`) y desbordamiento en ventanas divididas:**
+  - `body { min-width: 900px; }` fuerza scroll horizontal global en portátiles con pantalla dividida (50 % de 1366 px o 1536 px), salvo en la pestaña 8 donde se parcheó con `body.parts-page-active { min-width: 0; }`.
+  - En `.two-col-layout`, la columna derecha del diagrama es fija de `480px` sin `@media` query para apilarse bajo `1150px`, comprimiendo en exceso la tabla de 8 columnas de propelas (`.prop-row` suma ~700 px rígidos en CSS Grid).
+- **Defecto grave al imprimir (`@media print` en `styles.css`, línea 2088):**
+  - `.page-content.hidden { display: block !important; }` fuerza a que al pulsar **"🖨 Imprimir"** se impriman simultáneamente **las 8 pestañas completas** —incluyendo la pestaña oculta `page2` (Diseño del Eje), el Decodificador vacío, el catálogo completo de Agitadores Estándar, la tabla de precios internos/márgenes de Costeo y el codificador de linternas—, exponiendo información interna o generando decenas de páginas no deseadas.
+
+**Recomendaciones de Estética y UX:**
+- **R-UX-01 (P0):** Corregir `z-index` del botón flotante (`< 1000` u ocultarlo cuando haya cualquier modal/diálogo abierto), añadir espacio inferior de seguridad en `.main-content` (`padding-bottom: 88px`) y corregir la secuencia numérica y capitalización de las pestañas (`①` a `⑦`) y de los ítems de `"4. RESULTADOS"`.
+- **R-UX-02 (P1):** Rediseñar `@media print` para que imprima únicamente la pestaña activa (o un modo de "Ficha técnica de selección" limpio sin pestañas administrativas ni márgenes internos de costeo).
+- **R-UX-03 (P1):** Migrar progresivamente los `<div class="modal-overlay">` al elemento nativo `<dialog>` (o añadirles cierre con `Escape` y gestión de foco) y sustituir los `alert`/`prompt` más frecuentes por modales propios y notificaciones tipo *toast* diferenciadas por severidad (éxito, advertencia, error persistente).
+- **R-UX-04 (P2):** Eliminar `min-width: 900px` del `body`, añadir *breakpoints* responsivos (`@media (max-width: 1200px)` para apilar `.two-col-layout` y permitir scroll horizontal local en `.propeller-table`), y asociar todos los `<label for="...">` con sus controles.
+
+---
+
+### Síntesis para el próximo paso (construcción del Plan de Mejoras en el otro PC)
+
+Se recomienda estructurar el Plan de Mejoras en **4 fases incrementales sobre la rama `dev`** (sin tocar `main` hasta cerrar Fase 2):
+1. **Fase 0 — Saneamiento de repositorio y bugs inmediatos (rápida, bajo riesgo):** R-ARQ-01 (limpieza de Git y `.git/refs`), R-PRG-02 (`refreshCosteoCatalogSelectors`, nombre `partes_costeo.json`, validación JSON al vincular), R-PRG-03 (escape XSS en memoria de eje) y R-UX-01 (numeración de pestañas y `z-index` del botón flotante).
+2. **Fase 1 — Integridad de datos compartidos y red de seguridad de cálculos (bloqueante para beta):** R-ARQ-02 + R-ARQ-03 (reconexión real desde disco + adaptador único `createSyncedStore` con cola de escritura) y R-PRG-01 (suite `node --test` contra casos patrón de los Excel originales).
+3. **Fase 2 — Coherencia funcional y compuertas de ingeniería (bloqueante para beta):** R-FUN-01 (porcentajes unificados en Costeo), R-FUN-02 (validaciones previas a exportar Word/Excel), R-FUN-03 (headers/footers en `.docx` + guía de variables), R-FUN-04 (definición `shaft.js` vs `og_shaft.js`) y R-UX-02 (impresión controlada).
+4. **Fase 3 — Desacoplamiento interno, ergonomía y trabajo offline (mejora continua):** R-ARQ-04 (estado numérico central), R-ARQ-05 (versionado uniforme de JSON), R-ARQ-06 (librerías locales offline), R-FUN-05/06 (buscadores en Historial/Partes, *dirty state*, botón "Nueva selección") y R-UX-03/04 (modales `<dialog>`, etiquetas `for`, diseño adaptable).
+
+**Estado de código y validación:**
+- Cero líneas de código de la aplicación modificadas (`*.js`, `index.html`, `styles.css` intactos).
+- Único archivo editado: `FILES/Historial_Chat_Desarrollo.md`, verificado con `git diff --check` y publicado en `origin/dev` (`main` permanece intacta).
+
+---
+
 ## Cómo se mantiene actualizado
 
 Este archivo **no se regenera automáticamente** (es un documento narrativo, no un reporte generado
