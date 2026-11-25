@@ -1672,6 +1672,37 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
 }
 .btn-save-sel:hover { background: rgba(26, 122, 60, 0.50); }
 
+.btn-floating-save-sel {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1500;
+  min-height: 48px;
+  padding: 10px 18px;
+  border: 1px solid rgba(26, 122, 60, 0.75);
+  border-radius: 999px;
+  background: var(--green);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+.btn-floating-save-sel:hover {
+  background: #17643a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
+}
+.btn-floating-save-sel:active {
+  transform: translateY(0);
+}
+.btn-floating-save-sel:focus-visible {
+  outline: 3px solid rgba(255, 193, 7, 0.95);
+  outline-offset: 3px;
+}
+
 .btn-save-copy {
   background: rgba(37, 99, 235, 0.28);
   border: 1px solid rgba(147, 197, 253, 0.65);
@@ -1790,7 +1821,7 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
    ===================================================== */
 .nfs-toast {
   position: fixed;
-  bottom: 28px;
+  bottom: 82px;
   right: 28px;
   background: var(--green);
   color: #fff;
@@ -2041,6 +2072,7 @@ input:focus { outline: 2px solid var(--blue-mid); outline-offset: 1px; border-co
    ===================================================== */
 @media print {
   body { background: #fff; font-size: 10px; min-width: auto; }
+  .btn-floating-save-sel { display: none; }
   .page-header { background: var(--navy) !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
   .section-title { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
   .card { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }

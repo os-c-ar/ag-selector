@@ -1212,6 +1212,109 @@ nuevo commit (`01239d1`); la salida de `git push` confirmó la creación de la r
 
 ---
 
+## 2026-11-21 13:06 — Revisión y actualización del historial
+
+**Solicitud:** revisar el documento `FILES/Historial_Chat_Desarrollo.md` y mantenerlo actualizado
+como registro narrativo del trabajo realizado en la conversación.
+
+**Revisión realizada:**
+- Se verificó el contenido completo del historial y su estructura cronológica.
+- Se confirmó que el estado técnico actual coincide con la última entrada documentada: la rama
+  activa es `dev`, está sincronizada con `origin/dev` y el working tree está limpio.
+- Se comprobó que no existen cambios locales pendientes ni modificaciones nuevas que deban
+  registrarse además de esta revisión del propio historial.
+- Se mantuvo el contenido previo sin reescribir ni eliminar entradas anteriores.
+
+**Cambios implementados:**
+- Se añadió esta entrada para dejar trazabilidad del cierre y revisión del documento.
+- Se actualizó la sección "Cómo se mantiene actualizado" para describir correctamente el flujo
+  actual con la rama `dev`, sin asumir que toda la trazabilidad técnica ocurre necesariamente en
+  `main`.
+
+**Validación:** `git status --short --branch` confirmó que `dev` está sincronizada con
+`origin/dev` y no tiene cambios pendientes antes de incorporar esta actualización documental.
+
+---
+
+## 2026-11-21 23:59 — Botón flotante para guardar o actualizar selecciones
+
+**Solicitud:** agregar, adicional al botón existente dentro de **Opciones**, un botón flotante
+siempre visible para guardar o actualizar la selección actual.
+
+**Cambios implementados:**
+- Se añadió en `index.html` un botón flotante permanente identificado como
+  `btnFloatingSaveSelection`.
+- El botón reutiliza directamente `saveCurrentSelection()` de `records.js`, conservando la lógica
+  existente: crea un registro nuevo cuando no hay una selección cargada y actualiza el registro
+  activo cuando sí existe.
+- Se sincronizó el texto y el título del nuevo botón con `_setSaveButtonMode()`: muestra
+  **Guardar selección** inicialmente y **Actualizar selección** al cargar un registro del historial.
+- Se agregaron estilos en `styles.css` para ubicarlo con `position: fixed` cerca de la esquina
+  inferior derecha, mantenerlo por encima de las pestañas y ocultarlo al imprimir.
+- Se mantuvo el botón original dentro del menú **Opciones** sin modificar su comportamiento.
+
+**Validación:** se verificaron los tres archivos modificados y `git diff --check` finalizó sin
+errores. No existe un controlador de pruebas disponible en el workspace ni un entorno de ejecución
+JavaScript local para ejecutar validaciones adicionales del navegador.
+
+---
+
+## 2026-11-24 22:35 — Auditoría de preparación para beta y continuidad entre equipos
+
+**Solicitud:** realizar una revisión crítica global de arquitectura, prácticas de programación,
+funcionalidad y estética, sin cambiar el código; luego actualizar el historial y publicar el estado
+en GitHub para continuar desde otro computador.
+
+**Alcance y resultado de la revisión:**
+- Se leyó este historial y se inspeccionó la estructura de los módulos, el flujo de cálculo,
+  persistencia, controles de interfaz y pantalla inicial en navegador. La auditoría no modificó
+  código.
+- La herramienta ya cubre selección, geometría y cálculo de ejes, costeo, oferta, codificación,
+  catálogos, historial y exportación. La recomendación general es consolidar fiabilidad y
+  verificabilidad antes de añadir más módulos.
+- **Prioridad P0, previa a beta:** crear pruebas de regresión de cálculos contra casos aprobados y
+  hojas de referencia; unificar validación de entradas/unidades y evitar exportar resultados
+  incompletos; hacer visibles y recuperables los fallos de persistencia, respaldos y conflictos.
+- **Prioridad P1, durante la preparación:** reducir gradualmente dependencias globales y lógica de
+  persistencia duplicada; establecer versionado de esquema para archivos compartidos; añadir
+  validación automática y una rutina reproducible de publicación.
+- **Prioridad P2:** mejorar etiquetas y accesibilidad de controles/diálogos, adaptar la interfaz a
+  pantallas menores, revisar el botón flotante porque puede cubrir campos, documentar operación y
+  gestionar la disponibilidad de bibliotecas CDN sin conexión.
+- No se encontró una suite automatizada de pruebas ni configuración de build/CI en la raíz revisada.
+  Los cálculos se coordinan en varios módulos; los archivos se cargan mediante scripts globales en
+  orden explícito. La persistencia local y por archivos vinculados no siempre informa claramente de
+  errores de guardado. Son observaciones de auditoría para planificar, no cambios realizados.
+
+**Decisiones de alcance confirmadas por el usuario:**
+- La beta inicial se dirigirá a escritorio con Chrome/Edge.
+- Los datos se compartirán mediante archivos JSON en carpetas sincronizadas.
+- Los resultados son apoyo de ingeniería y deben ser revisados/aprobados por un ingeniero; no se
+  consideran aprobación autónoma del diseño.
+
+**Estado de código y publicación:**
+- La auditoría no alteró código. Al inicio de esta tarea había cambios locales pendientes de la
+  tanda anterior del botón flotante y su ajuste visual en `index.html`, `records.js` y `styles.css`,
+  además de sus entradas de historial.
+- Se actualizará y publicará ese conjunto en la rama `dev` (`origin/dev`). `main` se mantiene sin
+  cambios y no se solicita desplegar GitHub Pages.
+
+**Contexto para iniciar el siguiente chat en el otro PC:**
+- Hacer `git checkout dev` y `git pull origin dev`; comprobar `git status` y leer esta entrada junto
+  con las prioridades P0 anteriores. Continuar el trabajo en `dev`; no fusionar ni publicar en
+  `main` sin autorización explícita.
+- Empezar acordando casos de cálculo de referencia para convertirlos en pruebas repetibles, después
+  abordar validación/persistencia. No iniciar una reescritura completa de arquitectura.
+- Prompt sugerido: “Lee `FILES/Historial_Chat_Desarrollo.md` y continúa el plan de preparación para
+  beta en la rama `dev`. Mantén el alcance acordado (Chrome/Edge de escritorio, JSON compartido en
+  carpeta sincronizada, revisión humana de cálculos). Comencemos por definir e implementar pruebas
+  de regresión de los cálculos, sin publicar en `main`.”
+
+**Validación:** el diff será revisado y comprobado con `git diff --check`; la rama remota se
+verificará después de publicar. No se ejecutarán pruebas funcionales nuevas en esta tarea.
+
+---
+
 ## Cómo se mantiene actualizado
 
 Este archivo **no se regenera automáticamente** (es un documento narrativo, no un reporte generado
@@ -1228,5 +1331,7 @@ por un script ni por un hook de git). La forma en que se mantiene al día es:
 3. **Trazabilidad técnica vía git (activa desde 2026-10-22 12:34)**: los cambios de este chat se
    van confirmando con `git commit` y mensajes descriptivos tras cada tanda aceptada; `git log`
    queda como fuente de verdad técnica (diffs exactos, autoría, fecha), y este Markdown sigue
-   sirviendo como resumen narrativo legible en español. Los commits quedan en `main` local; **no se
-   publican al remoto (`git push`) a menos que se solicite explícitamente**.
+   sirviendo como resumen narrativo legible en español. Desde 2026-11-20 se utiliza la rama `dev`
+   para trabajo en progreso y su sincronización con `origin/dev`; `main` se mantiene reservada para
+   despliegues mediante publicación explícita. Los commits y pushes al remoto requieren la
+   autorización correspondiente del usuario.

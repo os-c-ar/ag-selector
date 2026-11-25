@@ -115,8 +115,15 @@ let _activeRecordId = null;
 
 function _setSaveButtonMode() {
   const btn = document.getElementById('btnSaveSelection');
-  if (!btn) return;
-  btn.textContent = _activeRecordId ? '✏ Actualizar selección' : '💾 Guardar selección';
+  const floatingBtn = document.getElementById('btnFloatingSaveSelection');
+  const label = _activeRecordId ? '✏ Actualizar selección' : '💾 Guardar selección';
+  if (btn) btn.textContent = label;
+  if (floatingBtn) {
+    floatingBtn.textContent = label;
+    floatingBtn.title = _activeRecordId
+      ? 'Actualizar la selección cargada en el historial'
+      : 'Guardar la selección actual en el historial';
+  }
   const copyButton = document.getElementById('btnSaveAsNewSelection');
   if (copyButton) copyButton.classList.toggle('hidden', !_activeRecordId);
 }
